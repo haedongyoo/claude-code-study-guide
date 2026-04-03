@@ -1129,17 +1129,11 @@ pre code {
 /* --- Footer --- */
 .site-footer {
   padding: var(--sp-6) var(--sp-8);
-  margin-left: var(--sidebar-width);
   text-align: center;
   font-size: var(--text-xs);
   color: var(--text-muted);
   border-top: 1px solid var(--border-subtle);
-}
-
-@media (max-width: 768px) {
-  .site-footer {
-    margin-left: 0;
-  }
+  margin-top: var(--sp-8);
 }
 
 /* --- Hamburger (mobile) --- */
@@ -1457,6 +1451,10 @@ html.dark .article-area tr:nth-child(even) td {
             </button>
           </nav>
 
+          <footer class="site-footer">
+            <p>&copy; Haedong Yoo. All rights reserved.</p>
+          </footer>
+
         </div>
       </main>
 
@@ -1479,10 +1477,6 @@ html.dark .article-area tr:nth-child(even) td {
     </div>
 
   </div><!-- /app -->
-
-  <footer class="site-footer">
-    <p>&copy; Haedong Yoo. All rights reserved.</p>
-  </footer>
 
   <template id="tpl-glossary"><section class="part" data-part="glossary">
   <div class="part-header">
