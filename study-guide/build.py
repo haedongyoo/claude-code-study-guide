@@ -51,11 +51,8 @@ const INLINED_QUIZZES = {json.dumps(quizzes, ensure_ascii=False)};
 
 inline_script = f'<script>\n{preamble}\n{app_js}\n</script>'
 
-# Replace external script tag
-html = html.replace('<script src="app.js"></script>', inline_script)
-
-# Insert templates before </body>
-html = html.replace('</body>', f'{templates_html}\n</body>')
+# Insert templates before the script tag, then inline the script
+html = html.replace('<script src="app.js"></script>', f'{templates_html}\n{inline_script}')
 
 # Write output
 os.makedirs(DIST, exist_ok=True)
