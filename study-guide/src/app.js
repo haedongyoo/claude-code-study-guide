@@ -358,13 +358,13 @@ function renderQuiz(questions, partId) {
   if (!section) return;
 
   if (!questions || questions.length === 0) {
-    section.classList.remove('active');
+    section.style.display = 'none';
     section.innerHTML = '';
     return;
   }
 
   // Don't auto-show quiz — user clicks "Take Quiz" button to reveal
-  section.classList.remove('active');
+  section.style.display = 'none';
 
   let answered = 0;
   let correct = 0;
@@ -662,7 +662,7 @@ async function navigateTo(partId) {
   document.getElementById('quiz-trigger-btn')?.addEventListener('click', () => {
     const qs = document.getElementById('quiz-section');
     if (qs) {
-      qs.classList.add('active');
+      qs.style.display = 'block';
       qs.scrollIntoView({ behavior: 'smooth' });
     }
   });
@@ -759,7 +759,7 @@ async function init() {
   document.getElementById('quiz-trigger-btn')?.addEventListener('click', () => {
     const qs = document.getElementById('quiz-section');
     if (qs) {
-      qs.classList.add('active');
+      qs.style.display = 'block';
       qs.scrollIntoView({ behavior: 'smooth' });
     }
   });

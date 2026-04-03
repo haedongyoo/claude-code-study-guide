@@ -78,19 +78,16 @@
       <main class="content" id="content">
         <div class="content-inner">
 
-          <!-- Tab bar -->
-          <div class="tab-bar" id="tab-bar">
-            <button class="tab active" data-tab="study">Study</button>
-            <button class="tab" data-tab="quiz" data-i18n="ui.quiz_title">Quiz</button>
-          </div>
+          <!-- Tab bar (populated by JS with part navigation) -->
+          <div class="tab-bar" id="tab-bar"></div>
 
           <!-- Article area (study tab) -->
           <div class="article-area" id="article-area">
             <!-- Content loaded by JS -->
           </div>
 
-          <!-- Quiz section (quiz tab) -->
-          <div class="quiz-section" id="quiz-section">
+          <!-- Quiz section (hidden until user clicks Take Quiz) -->
+          <div class="quiz-section" id="quiz-section" style="display:none"
             <!-- Quiz cards loaded by JS -->
           </div>
 

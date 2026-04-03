@@ -1433,19 +1433,16 @@ html.dark .article-area tr:nth-child(even) td {
       <main class="content" id="content">
         <div class="content-inner">
 
-          <!-- Tab bar -->
-          <div class="tab-bar" id="tab-bar">
-            <button class="tab active" data-tab="study">Study</button>
-            <button class="tab" data-tab="quiz" data-i18n="ui.quiz_title">Quiz</button>
-          </div>
+          <!-- Tab bar (populated by JS with part navigation) -->
+          <div class="tab-bar" id="tab-bar"></div>
 
           <!-- Article area (study tab) -->
           <div class="article-area" id="article-area">
             <!-- Content loaded by JS -->
           </div>
 
-          <!-- Quiz section (quiz tab) -->
-          <div class="quiz-section" id="quiz-section">
+          <!-- Quiz section (hidden until user clicks Take Quiz) -->
+          <div class="quiz-section" id="quiz-section" style="display:none"
             <!-- Quiz cards loaded by JS -->
           </div>
 
@@ -1853,13 +1850,13 @@ function renderQuiz(questions, partId) {
   if (!section) return;
 
   if (!questions || questions.length === 0) {
-    section.classList.remove('active');
+    section.style.display = 'none';
     section.innerHTML = '';
     return;
   }
 
   // Don't auto-show quiz — user clicks "Take Quiz" button to reveal
-  section.classList.remove('active');
+  section.style.display = 'none';
 
   let answered = 0;
   let correct = 0;
@@ -2157,7 +2154,7 @@ async function navigateTo(partId) {
   document.getElementById('quiz-trigger-btn')?.addEventListener('click', () => {
     const qs = document.getElementById('quiz-section');
     if (qs) {
-      qs.classList.add('active');
+      qs.style.display = 'block';
       qs.scrollIntoView({ behavior: 'smooth' });
     }
   });
@@ -2254,7 +2251,7 @@ async function init() {
   document.getElementById('quiz-trigger-btn')?.addEventListener('click', () => {
     const qs = document.getElementById('quiz-section');
     if (qs) {
-      qs.classList.add('active');
+      qs.style.display = 'block';
       qs.scrollIntoView({ behavior: 'smooth' });
     }
   });
