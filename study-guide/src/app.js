@@ -363,7 +363,8 @@ function renderQuiz(questions, partId) {
     return;
   }
 
-  section.classList.add('active');
+  // Don't auto-show quiz — user clicks "Take Quiz" button to reveal
+  section.classList.remove('active');
 
   let answered = 0;
   let correct = 0;
@@ -634,7 +635,12 @@ async function navigateTo(partId) {
 
   const html = await loadPart(partId);
   const article = document.getElementById('article-area');
-  if (article) article.innerHTML = html;
+  if (article) {
+    article.innerHTML = html + `
+      <div class="quiz-trigger-wrap">
+        <button class="quiz-trigger-btn" id="quiz-trigger-btn">${t('ui.quiz_title')} →</button>
+      </div>`;
+  }
 
   // Apply accordion and progress state after inserting HTML
   applyCollapsedState();
@@ -651,6 +657,15 @@ async function navigateTo(partId) {
     questions = langData.quizzes[partId];
   }
   renderQuiz(questions, partId);
+
+  // Wire up "Take Quiz" button
+  document.getElementById('quiz-trigger-btn')?.addEventListener('click', () => {
+    const qs = document.getElementById('quiz-section');
+    if (qs) {
+      qs.classList.add('active');
+      qs.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
 
   // Close sidebar on mobile after navigation
   document.getElementById('sidebar')?.classList.remove('open');
@@ -721,7 +736,12 @@ async function init() {
   renderTabBar();
 
   const article = document.getElementById('article-area');
-  if (article) article.innerHTML = PARTS[State.currentPart] || '';
+  if (article) {
+    article.innerHTML = (PARTS[State.currentPart] || '') + `
+      <div class="quiz-trigger-wrap">
+        <button class="quiz-trigger-btn" id="quiz-trigger-btn">${t('ui.quiz_title')} →</button>
+      </div>`;
+  }
 
   // Apply interactive state to initial content
   applyCollapsedState();
@@ -734,6 +754,15 @@ async function init() {
     questions = initLangData.quizzes[State.currentPart];
   }
   renderQuiz(questions, State.currentPart);
+
+  // Wire up "Take Quiz" button
+  document.getElementById('quiz-trigger-btn')?.addEventListener('click', () => {
+    const qs = document.getElementById('quiz-section');
+    if (qs) {
+      qs.classList.add('active');
+      qs.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
 
   window.scrollTo(0, 0);
 }

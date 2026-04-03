@@ -597,6 +597,30 @@ pre code {
   color: var(--error);
 }
 
+/* --- Quiz Trigger --- */
+.quiz-trigger-wrap {
+  text-align: center;
+  padding: var(--sp-8) 0;
+  margin-top: var(--sp-6);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.quiz-trigger-btn {
+  padding: var(--sp-3) var(--sp-8);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.quiz-trigger-btn:hover {
+  background: var(--accent-hover);
+}
+
 /* --- Quiz --- */
 .quiz-section {
   display: none;
