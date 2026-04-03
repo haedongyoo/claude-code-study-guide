@@ -1,0 +1,149 @@
+<section class="part" data-part="glossary">
+  <div class="part-header">
+    <h2 data-i18n="parts.glossary.title">Glossary &amp; Quick Reference</h2>
+    <p class="part-subtitle">Appendix</p>
+    <div class="part-controls">
+      <button class="expand-all-btn" data-i18n="ui.expand_all">Expand All</button>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="G.1">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>G.1 Context &amp; Assembly Terms</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="glossary.G.1"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.glossary.sections.G_1.content">
+      <p>These terms describe how information is gathered, managed, and degraded within Claude's working memory.</p>
+
+      <table>
+        <tr><th>Term</th><th>Definition</th></tr>
+        <tr><td><strong>Context Assembly</strong></td><td>The process of gathering rules, files, memos, and tool descriptions needed for the current task into the actual input context. A selection process, not a dumping process.</td></tr>
+        <tr><td><strong>Context Rot</strong></td><td>The phenomenon where early signals weaken as the context grows longer. Long conversations gradually lose coherence because important early instructions get diluted by later content.</td></tr>
+        <tr><td><strong>Memoized Context</strong></td><td>Background information held across turns so Claude doesn't need re-briefing each time. "Computed once, reused many times."</td></tr>
+        <tr><td><strong>Prompt Cache</strong></td><td>A mechanism that provides reuse benefits when similar context prefixes are sent repeatedly. Stable prefixes (CLAUDE.md, rules) should remain consistent to maximize cache hits.</td></tr>
+        <tr><td><strong>Token Economy</strong></td><td>The discipline of deciding what information stays permanently loaded, what loads on demand, and what gets trimmed — balancing quality against cost.</td></tr>
+        <tr><td><strong>Tool Result Budget</strong></td><td>The practice of controlling how much context space tool outputs consume. Long logs and verbose results eat the context window and degrade quality.</td></tr>
+      </table>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> Context Assembly is not "more is better." It is the selective process of including only what matters for the current task. Tool Result Budget is not optional — it is what prevents a single verbose test run from consuming half your context window.
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="G.2">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>G.2 Session &amp; Continuity Terms</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="glossary.G.2"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.glossary.sections.G_2.content">
+      <table>
+        <tr><th>Term</th><th>Definition</th></tr>
+        <tr><td><strong>Resumable Session</strong></td><td>The ability to pick up where you left off after disconnection or session change, using saved state files.</td></tr>
+        <tr><td><strong>Resume Hygiene</strong></td><td>The habit of cleaning up state before resuming — keeping only what the next session needs and discarding accumulated noise.</td></tr>
+        <tr><td><strong>Session Memory</strong></td><td>Structured state preserved for continuation: current status, important files, workflow, errors, and results. Not the raw conversation transcript.</td></tr>
+        <tr><td><strong>Handoff</strong></td><td>A formatted memo left for the next session or person, containing current state, next steps, and unresolved risks.</td></tr>
+        <tr><td><strong>Slash Command</strong></td><td>Session management commands like <code>/compact</code>, <code>/clear</code>, <code>/context</code>, <code>/memory</code>, <code>/cost</code> used within Claude Code.</td></tr>
+        <tr><td><strong>Fork Session</strong></td><td>Creating a new session branch when the current direction needs to diverge, preserving the original session state.</td></tr>
+        <tr><td><strong>Background Execution</strong></td><td>Work that continues after you leave the terminal — the session keeps running without active human monitoring.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="G.3">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>G.3 Harness &amp; Structure Terms</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="glossary.G.3"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.glossary.sections.G_3.content">
+      <table>
+        <tr><th>Term</th><th>Definition</th></tr>
+        <tr><td><strong>Harness</strong></td><td>The outer structure defining what Claude can read, modify, and verify. Like a colleague's workspace: reference materials, accessible drawers, and a checklist.</td></tr>
+        <tr><td><strong>Harness Engineering</strong></td><td>Designing the entire work environment — not just better prompts, but the rules, permissions, files, and verification structures Claude operates within.</td></tr>
+        <tr><td><strong>CLAUDE.md</strong></td><td>The project contract file — always loaded, contains execution commands, forbidden boundaries, and structural descriptions.</td></tr>
+        <tr><td><strong>Worktree</strong></td><td>A separate working directory from the same repository, used for parallel work without file conflicts.</td></tr>
+        <tr><td><strong>Plan Mode</strong></td><td>A pattern where exploration and execution are separated — Claude plans before editing, reducing wrong-assumption implementations.</td></tr>
+        <tr><td><strong>Review Split</strong></td><td>Separating implementation and review into different sessions to reduce context pollution and approval fatigue.</td></tr>
+        <tr><td><strong>Agentic Loop</strong></td><td>The recurring cycle: read → judge → use tools → continue. Work that spans multiple turns, not a single question-answer pair.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="G.4">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>G.4 Extension &amp; Tool Terms</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="glossary.G.4"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.glossary.sections.G_4.content">
+      <table>
+        <tr><th>Term</th><th>Definition</th></tr>
+        <tr><td><strong>Skill</strong></td><td>A reusable procedure file (folder) that standardizes repeated tasks. Contains instructions, scripts, references, and assets.</td></tr>
+        <tr><td><strong>Plugin</strong></td><td>A deployable package bundling skills, commands, hooks, and connection settings. The "onboarding box" for teams.</td></tr>
+        <tr><td><strong>MCP (Model Context Protocol)</strong></td><td>The standardized connection protocol for Claude to reach external tools and services. Like USB-C for AI tool integration.</td></tr>
+        <tr><td><strong>Connector</strong></td><td>A user-facing interface for connecting to external services (Notion, Drive, Slack). Simpler than MCP, less control.</td></tr>
+        <tr><td><strong>Hook</strong></td><td>An automatic intervention rule at specific moments (pre-tool-use, post-edit, pre-push). Turns "remember to check" into "always check."</td></tr>
+        <tr><td><strong>Subagent</strong></td><td>A secondary worker within the current session with isolated context. Used for research, review, or risk-checking without polluting the main session.</td></tr>
+        <tr><td><strong>Agent Team</strong></td><td>Multiple sessions operating in parallel with message exchange and task allocation — like a real team with a lead and members.</td></tr>
+        <tr><td><strong>Control Surface</strong></td><td>Where users can adjust work behavior — not a feature list, but the points where you can intervene in the workflow.</td></tr>
+      </table>
+
+      <div class="callout callout-tip">
+        <strong>&#128161; Pro Tip:</strong> Quick decision framework: "Same format every time?" → Skill. "Need external data?" → MCP/Connector. "Deploy to the whole team?" → Plugin. "Must verify automatically?" → Hook. "Need parallel context?" → Subagent/Worktree.
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="G.5">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>G.5 Governance &amp; Safety Terms</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="glossary.G.5"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.glossary.sections.G_5.content">
+      <table>
+        <tr><th>Term</th><th>Definition</th></tr>
+        <tr><td><strong>Permission Gate</strong></td><td>The boundary between allow, ask, and deny — evaluated before any action executes.</td></tr>
+        <tr><td><strong>Approval Gate</strong></td><td>A checkpoint requiring human sign-off before the next step proceeds. Critical for external communications, deployments, and data modifications.</td></tr>
+        <tr><td><strong>Allowlist</strong></td><td>A policy that only passes specifically permitted items (commands, users, domains). Safer than blocking specific threats.</td></tr>
+        <tr><td><strong>Auditability</strong></td><td>The ability to explain later: what was read, what was changed, who approved, and what remains. The foundation of sustainable automation.</td></tr>
+        <tr><td><strong>Alignment Faking</strong></td><td>A research concept where a model appears to follow instructions while internally maintaining different objectives. The practical takeaway: don't trust model compliance alone — build external verification.</td></tr>
+        <tr><td><strong>Autonomy</strong></td><td>How far work can proceed without human intervention. Higher autonomy requires stronger verification, approval, and permission boundaries.</td></tr>
+        <tr><td><strong>Agency</strong></td><td>Human initiative in choosing what to delegate, when, and with what constraints. Not about giving more commands — about making better delegation decisions.</td></tr>
+        <tr><td><strong>Tool Orchestration</strong></td><td>The layer deciding which tools to invoke, in what sequence, and with what parameters.</td></tr>
+      </table>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> Observability (seeing system state via dashboards and analytics) and auditability (explaining what happened and why after the fact) are different. You need both: observability for operational efficiency, auditability for accountability and trust.
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="G.6">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>G.6 Ecosystem &amp; Infrastructure Terms</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="glossary.G.6"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.glossary.sections.G_6.content">
+      <table>
+        <tr><th>Term</th><th>Definition</th></tr>
+        <tr><td><strong>LLM OS</strong></td><td>A metaphor for the emerging work layer: context, tools, permissions, and memory surrounding a model, analogous to how an OS manages programs, files, permissions, and devices.</td></tr>
+        <tr><td><strong>Software 3.0</strong></td><td>The concept that natural language itself is becoming a programming interface — work instructions are code.</td></tr>
+        <tr><td><strong>Vibe Coding</strong></td><td>Generating code through natural language, extended now to include testing, reviewing, refactoring, documentation, and deployment.</td></tr>
+        <tr><td><strong>Remote Control</strong></td><td>A human resuming or steering a running session from a distance (different device, different location).</td></tr>
+        <tr><td><strong>Channels</strong></td><td>External systems pushing events into Claude (webhooks, messages) — the trigger comes from outside, not from a human.</td></tr>
+        <tr><td><strong>Scheduled Tasks</strong></td><td>Time-triggered automation — cron-like execution where the clock starts the work.</td></tr>
+        <tr><td><strong>Agent SDK</strong></td><td>Developer tools for building custom agent applications with Claude as the execution engine inside your own product.</td></tr>
+        <tr><td><strong>Adaptive Thinking</strong></td><td>Claude adjusting its reasoning depth based on task complexity — thinking longer for hard tasks, shorter for simple ones.</td></tr>
+      </table>
+
+      <div class="callout callout-tip">
+        <strong>&#128161; Pro Tip:</strong> When confused by a term, ask: "Is this about how work flows (mechanics), how mistakes are prevented (safety), or how sessions persist (continuity)?" This three-bucket mental model covers the vast majority of Claude Code terminology.
+      </div>
+    </div>
+  </div>
+</section>

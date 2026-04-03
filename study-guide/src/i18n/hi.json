@@ -1,0 +1,680 @@
+{
+  "ui": {
+    "title": "Claude Code अध्ययन मार्गदर्शिका",
+    "search_placeholder": "खोजें...",
+    "next": "अगला →",
+    "prev": "← पिछला",
+    "quiz_title": "स्व-परीक्षण प्रश्नोत्तरी",
+    "progress": "प्रगति",
+    "expand_all": "सभी खोलें",
+    "collapse_all": "सभी बंद करें",
+    "retry": "पुनः प्रयास करें",
+    "score": "{correct}/{total} सही",
+    "mark_complete": "पढ़ा हुआ चिह्नित करें",
+    "completed": "पूर्ण"
+  },
+  "parts": {
+    "part1": {
+      "title": "भाग 1: मूलभूत निर्माण",
+      "sections": {
+        "1_1": {
+          "title": "पारिस्थितिकी तंत्र क्यों चर्चित है",
+          "content": "<p>AI परिदृश्य \"कौन सा मॉडल अधिक स्मार्ट है\" से बदलकर \"कौन सा टूल फ़ाइलें, टेस्ट, Git, ब्राउज़र और बाहरी सेवाओं को सबसे कम घर्षण के साथ जोड़ता है\" हो गया है। इसीलिए Claude Code, Codex और Gemini CLI को एक साथ चर्चित किया जाता है — प्रतिस्पर्धा अब <strong>कार्य पथों</strong> पर है, बेंचमार्क स्कोर पर नहीं।</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> Claude Code केवल एक कोडिंग ऐप नहीं है। यह एक <em>work harness</em> है जो memoized context, tool orchestration, permission gates और resumable sessions को एक साथ जोड़ता है। Cowork, Skills, Plugins और Scheduled Tasks इस मूल harness के गैर-कोडिंग कार्य में विस्तार हैं।\n      </div>\n\n<p>शोध इस दिशा की पुष्टि करता है। METR रिपोर्ट करता है कि एजेंट कार्य क्षितिज तेज़ी से बढ़ रहे हैं, और Anthropic ने नोट किया है कि वास्तविक प्रदर्शन अंतर कार्य संरचना और सत्यापन आदतों से आता है, मॉडल नामों से नहीं। प्रश्न अब \"मॉडल कितना स्मार्ट है?\" नहीं रहा बल्कि \"कौन प्रतिनिधित्व नियम और सत्यापन harnesses तेज़ी से सीखता है?\"</p>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; प्रो टिप:</strong> यह पूछकर शुरू करें: \"क्या मेरा कार्य प्रश्न-आधारित, दस्तावेज़-आधारित या कार्यान्वयन-आधारित है?\" यह एकल प्रश्न तय करता है कि आपको Chat, Projects, Cowork या Claude Code का उपयोग करना चाहिए।\n      </div>\n\n      <table>\n        <tr><th>क्या तेज़ बदलता है</th><th>क्या स्थायी रहता है</th></tr>\n        <tr><td>मेनू स्थान, प्लान टियर, प्रीव्यू स्थिति, फ़ीचर नाम</td><td>कौन सा कार्य पथ उपयोग करें, फ़ाइलें और सत्यापन कैसे अलग करें, मानव चेकपॉइंट कहाँ रखें</td></tr>\n      </table>"
+        },
+        "1_2": {
+          "title": "याद रखने योग्य चार मुख्य शब्द",
+          "content": "<p>गहराई में जाने से पहले, इन चार शब्दों को आत्मसात करें। हर अध्याय इन पर आधारित है।</p>\n\n      <table>\n        <tr><th>शब्द</th><th>अर्थ</th></tr>\n        <tr><td><strong>Memoized Context</strong></td><td>पृष्ठभूमि जानकारी जो हर बार फिर से समझाने की ज़रूरत को खत्म करने के लिए बातचीत के दौरान बनी रहती है</td></tr>\n        <tr><td><strong>Tool Orchestration</strong></td><td>वह परत जो तय करती है कि कौन से टूल्स किस क्रम में उपयोग करने हैं</td></tr>\n        <tr><td><strong>Permission Gate</strong></td><td>वह सीमा जो निष्पादन से पहले allow, ask और deny को अलग करती है</td></tr>\n        <tr><td><strong>Resumable Session</strong></td><td>डिस्कनेक्शन के बाद भी जहाँ छोड़ा था वहाँ से जारी रखने की क्षमता</td></tr>\n      </table>\n\n      <p>ये एक पाइपलाइन बनाते हैं: <strong>उपयोगकर्ता अनुरोध → Memoized Context → Tool Orchestration → Permission Gate → निष्पादन और सत्यापन → Resumable Session → अगला कार्य</strong>। चाहे कार्यप्रवाह कितना भी जटिल हो, यह हमेशा इन पाँच चरणों का एक रूपांतर होता है।</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> \"Memoized\" का अर्थ \"याद किया हुआ\" नहीं है। इसका अर्थ है \"एक बार गणना की, बार-बार उपयोग की\" — जैसे पृष्ठभूमि नियम सेट करना जो हर बार फिर से भेजे बिना हर बातचीत में बने रहते हैं।\n      </div>"
+        },
+        "1_3": {
+          "title": "Harness की अवधारणा",
+          "content": "<p>एक <strong>harness</strong> वह बाहरी संरचना है जो परिभाषित करती है कि Claude क्या पढ़ सकता है, क्या बदल सकता है और क्या सत्यापित कर सकता है। इसे किसी सहयोगी का कार्यस्थल स्थापित करने जैसा सोचें: आप मेज़ पर संदर्भ सामग्री रखते हैं, तय करते हैं कौन से दराज सुलभ हैं, और काम पूरा करने से पहले एक चेकलिस्ट लगाते हैं।</p>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; सामान्य गलती:</strong> बिना किसी सीमा के \"लॉगिन बग ठीक करो\" भेजना। एक मजबूत harness अनुरोध ऐसा दिखता है: \"केवल <code>auth/</code> पढ़ें, <code>.env</code> को मत छुएँ, लॉगिन टेस्ट पास करें, 3-लाइन बदलाव नोट छोड़ें।\"\n      </div>\n\n      <p><strong>Harness Engineering</strong> बेहतर prompt लिखने के बारे में नहीं है — यह उस कार्यस्थल को डिज़ाइन करने के बारे में है जहाँ Claude काम करता है। इसमें शामिल है: कौन सी फ़ाइलें हमेशा लोड हैं, क्या अनुमतियाँ सेट हैं, कौन से टेस्ट पास होने चाहिए, और परिणाम कहाँ संग्रहीत होते हैं।</p>\n\n      <p>International AI Safety Report 2026 पुष्टि करता है: जैसे-जैसे मॉडल क्षमताएँ बढ़ती हैं, harness और सत्यापन संरचनाएँ <em>अधिक</em> महत्वपूर्ण होती जाती हैं, कम नहीं। वास्तविक दुनिया के कार्यों में संसाधन बाधाएँ, अपूर्ण जानकारी, अपवाद और अनुमोदन प्रवाह होते हैं जिन्हें कच्ची मॉडल बुद्धिमत्ता अकेले नहीं संभाल सकती।</p>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; प्रो टिप:</strong> शुरुआती लोग भी harness बनाना शुरू कर सकते हैं: <code>CLAUDE.md</code> में बुनियादी नियम लिखें, <code>settings.json</code> में allow/deny स्कोप सेट करें, <code>plan.md</code> से बड़े कार्य विभाजित करें, और <code>handoff.md</code> में सत्र स्थिति छोड़ें।\n      </div>"
+        },
+        "1_4": {
+          "title": "कार्य सतहें: Chat, Projects, Cowork, Claude Code",
+          "content": "<p>वही Claude मॉडल अलग-अलग सतहों पर अलग व्यवहार करता है। गलत सतह चुनना कौशल की समस्या नहीं है — यह रूटिंग की समस्या है।</p>\n\n      <table>\n        <tr><th>सतह</th><th>सबसे उपयुक्त</th><th>प्रभावित करने वाला</th></tr>\n        <tr><td><strong>Chat</strong></td><td>त्वरित प्रश्न, विचार क्रमबद्ध करना</td><td>प्रश्न की गुणवत्ता</td></tr>\n        <tr><td><strong>Projects</strong></td><td>स्थायी पृष्ठभूमि ज्ञान</td><td>फ़ोल्डर संरचना, टेम्पलेट</td></tr>\n        <tr><td><strong>Cowork</strong></td><td>दस्तावेज़ प्रतिनिधित्व — शोध, संक्षेप, फ़ाइल संगठन</td><td>फ़ोल्डर संरचना, टेम्पलेट</td></tr>\n        <tr><td><strong>Claude Code</strong></td><td>कार्यान्वयन और सत्यापन — कोड, टेस्ट, समीक्षा</td><td>नियम फ़ाइलें, सत्यापन लूप</td></tr>\n      </table>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; सामान्य गलती:</strong> तीन भ्रांतियाँ: (1) \"एक ही मॉडल का मतलब हर जगह एक ही अनुभव\" — गलत, सतह बहुत मायने रखती है। (2) \"Cowork आसान मोड है, Claude Code कठिन मोड है\" — गलत, वे प्रतिनिधित्व शैली में भिन्न हैं, कठिनाई में नहीं। (3) \"एक साथ सभी सतहें आज़माएँ\" — गलत, पहले एक में महारत हासिल करें फिर आगे बढ़ें।\n      </div>\n\n      <p><strong>सतह के अनुसार पहले अच्छे कार्य:</strong></p>\n      <ul>\n        <li><strong>Chat:</strong> \"इस रिपोर्ट को 3 प्रश्नों के साथ 5 वाक्यों में सारांशित करें।\"</li>\n        <li><strong>Projects:</strong> \"इस फ़ोल्डर को पढ़ें और एक पेज का पृष्ठभूमि ज्ञान सारांश बनाएँ।\"</li>\n        <li><strong>Cowork:</strong> \"मीटिंग नोट्स पढ़ें और <code>outputs/</code> में साप्ताहिक संक्षेप का मसौदा सहेजें।\"</li>\n        <li><strong>Claude Code:</strong> \"इस बग रिप्रोडक्शन पाथ को पढ़ें, फिर <code>plan.md</code> में एक परिकल्पना और फिक्स प्लान लिखें।\"</li>\n      </ul>"
+        },
+        "1_5": {
+          "title": "क्या तेज़ी से बदलता है बनाम क्या स्थिर रहता है",
+          "content": "<p>तकनीकी उत्पाद तेज़ी से विकसित होते हैं। स्थिर रहने के लिए, अस्थिर विवरणों और स्थायी सिद्धांतों के बीच अंतर करें।</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> पारिस्थितिकी तंत्र \"चर्चित\" होता है जब चार शर्तें एक साथ पूरी होती हैं: (1) उपयोगकर्ता व्यवहार बदलता है — लोग prompts बनाने के बजाय कार्यस्थल डिज़ाइन करते हैं, (2) परिचालन आदतें बदलती हैं — टीमें <code>CLAUDE.md</code> को साझा अनुबंध के रूप में रखती हैं, (3) पारिस्थितिकी तंत्र फैलता है — आधिकारिक और समुदाय skills, plugins, MCP सर्वर बढ़ते हैं, (4) नौकरी की भूमिकाएँ पुनर्निर्मित होती हैं — मार्केटिंग, टैक्स, PM, डिज़ाइन टीमें Claude को ऑटोमेशन परत के रूप में उपयोग करती हैं, न कि केवल chatbot के रूप में।\n      </div>\n\n      <p><strong>पूरी पुस्तक पढ़ने के चार फ्रेम:</strong></p>\n      <table>\n        <tr><th>फ्रेम</th><th>भूमिका</th><th>उपमा</th></tr>\n        <tr><td>Work Path</td><td>आप कहाँ से शुरू करते हैं (Chat, Cowork, Claude Code)</td><td>जिस मेज़ पर आप बैठते हैं</td></tr>\n        <tr><td>Harness</td><td>निष्पादन वातावरण (अनुमतियाँ, नियम, टेस्ट)</td><td>मेज़ पर दराज, ताले, चेकलिस्ट</td></tr>\n        <tr><td>Operations Layer</td><td>शेड्यूलिंग, डिप्लॉयमेंट, एनालिटिक्स</td><td>प्रशासनिक कार्यालय</td></tr>\n        <tr><td>System</td><td>मानव समीक्षा लूप के साथ सब कुछ मिलाकर</td><td>पूरी ऑफिस बिल्डिंग</td></tr>\n      </table>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; प्रो टिप:</strong> जब कोई नया फ़ीचर लॉन्च हो, तो मत पूछें \"क्या यह स्मार्ट है?\" पूछें: \"उन्होंने कौन सी परत जोड़ी — ज्ञान, टूल्स, पैकेज या नियंत्रण?\" यह ओवर-कॉन्फ़िगरेशन से बचाता है और आपका सेटअप स्थिर रखता है।\n      </div>"
+        }
+      }
+    },
+    "part2": {
+      "title": "भाग 2: व्यावहारिक कार्यपुस्तिका",
+      "sections": {
+        "2_1": {
+          "title": "Cowork और Claude Code: प्रथम अनुप्रयोग सीमाएँ",
+          "content": "<p>इंस्टॉलेशन के बाद सबसे आम भ्रम है: \"मैं कहाँ से शुरू करूँ?\" उत्तर आपके कार्य के प्रकार पर निर्भर करता है।</p>\n\n      <table>\n        <tr><th>Cowork</th><th>Claude Code</th></tr>\n        <tr><td>दस्तावेज़-प्रथम कार्य: मीटिंग नोट्स, शोध संक्षेप, फ़ोल्डर पढ़ना, मसौदा तैयार करना</td><td>विकास-प्रथम कार्य: बग फिक्स, टेस्ट, रिफैक्टरिंग, प्लान दस्तावेज़</td></tr>\n        <tr><td>इसे सार्वभौमिक बैकएंड सिस्टम होने की उम्मीद मत करें</td><td>एक साथ पूरी नई सुविधा सौंपकर शुरू मत करें</td></tr>\n      </table>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> यह अध्याय <em>Claude Code का उपयोग कैसे करें</em> के बारे में नहीं है — यह <em>इसे कैसे संचालित करें</em> के बारे में है। मूल आदतें हैं: edit से पहले plan, resume hygiene, review split, worktree separation, allowlists और structured handoffs।\n      </div>\n\n      <p>सत्र प्रबंधन एक निर्णय वृक्ष का अनुसरण करता है:</p>\n      <ul>\n        <li><strong>एक ही लक्ष्य, जारी?</strong> → <code>claude --continue</code> या <code>--resume</code></li>\n        <li><strong>अलग दिशा चाहिए?</strong> → <code>--fork-session</code></li>\n        <li><strong>फ़ाइल टकराव या भूमिका टकराव?</strong> → <code>--worktree</code> (अलग कार्यशील निर्देशिका)</li>\n      </ul>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; प्रो टिप:</strong> जो लोग समय के साथ Claude Code का अच्छा उपयोग करते हैं, वे बेहतर prompts लिखने वाले नहीं होते — वे काम को कम बाधित करने वाले होते हैं।\n      </div>"
+        },
+        "2_2": {
+          "title": "Claude Code संचालन सिद्धांत",
+          "content": "<p>आठ आदतें उत्पादक Claude Code उपयोगकर्ताओं को निराश लोगों से अलग करती हैं:</p>\n      <ol>\n        <li><strong>Edit से पहले Plan</strong> — कोड छूने से पहले स्कोप, सत्यापन और प्रतिबंधित क्षेत्र तय करें। बड़े कार्यों के लिए पहले <code>plan.md</code> लिखें।</li>\n        <li><strong>Resident context पतला रखें</strong> — <code>CLAUDE.md</code> एक कार्य अनुबंध है, विश्वकोश नहीं। दीर्घकालिक स्थिति को <code>handoff.md</code>, <code>decision-log.md</code> में ले जाएँ।</li>\n        <li><strong>पहले Allowlist, बाद में bypass</strong> — संकीर्ण <code>allow</code> और <code>deny</code> नियमों से शुरू करें। उन्हें समझने के बाद ही अनुमतियाँ बढ़ाएँ।</li>\n        <li><strong>सही समय पर Manual <code>/compact</code></strong> — महत्वपूर्ण स्थिति फ़ाइलों में सहेजने के बाद संपीड़ित करें, जब सत्र पहले से खराब हो जाए तब नहीं।</li>\n        <li><strong>जानबूझकर resume का उपयोग करें</strong> — एक ही दिशा के लिए <code>--continue</code>, दिशा बँटने पर <code>--fork-session</code>।</li>\n        <li><strong>Plan / implement / review अलग करें</strong> — सभी भूमिकाओं को एक सत्र में न भरें। विभाजन context प्रदूषण और अनुमोदन थकान को कम करता है।</li>\n        <li><strong>Worktrees का उपयोग करें</strong> — परस्पर विरोधी कार्य, प्रयोगों या समानांतर समीक्षाओं के लिए कार्यशील निर्देशिका अलग करें।</li>\n        <li><strong>संरचना से लागत प्रबंधित करें, token गिनती से नहीं</strong> — cache misses, टूल आउटपुट लंबाई, सत्र लंबाई और टेस्ट लॉग की विस्तारता कम करें।</li>\n      </ol>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; सामान्य गलती:</strong> बिना plan के सीधे implementation में कूदना। बड़े कार्यों में यह तेज़ लगता है लेकिन दोबारा काम की ओर ले जाता है। plan कोई नौकरशाही कदम नहीं है — यह दोबारा काम को कम करने वाला उपकरण है।\n      </div>"
+        },
+        "2_3": {
+          "title": "टेम्पलेट्स: CLAUDE.md, settings.json, Hooks",
+          "content": "<p>एक सुव्यवस्थित रिपॉज़िटरी फ़ाइलों में ज़िम्मेदारियाँ अलग करती है। यहाँ harness का ब्लूप्रिंट है:</p>\n\n      <pre><code>repo/\n├── CLAUDE.md                    # Project contract (always loaded)\n├── .claude/\n│   ├── settings.json            # Allow/ask/deny boundaries\n│   ├── rules/\n│   │   ├── architecture.md      # Structure rules\n│   │   ├── testing.md           # Test standards\n│   │   └── frontend.md          # UI conventions\n│   └── hooks.json               # Auto-enforcement rules\n└── tasks/\n    ├── plan.md                  # What to do next\n    ├── verify.md                # Exit criteria\n    ├── decision-log.md          # Why this path was chosen\n    └── handoff.md               # Current state for next session</code></pre>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> हर फ़ाइल एक अलग प्रकार की विफलता रोकती है। <code>CLAUDE.md</code> context drift रोकता है। <code>settings.json</code> असुरक्षित क्रियाएँ रोकता है। <code>rules/*</code> डोमेन-विशिष्ट गलतियाँ रोकता है। <code>hooks.json</code> \"X करना याद रखो\" को \"X हमेशा करो\" में बदलता है। <code>tasks/*</code> सत्र भूलने से बचाता है।\n      </div>\n\n      <p><strong>Settings स्कोप प्राथमिकता:</strong> Managed &gt; Command-line &gt; Local &gt; Project &gt; User। संगठन-लॉक नियमों को व्यक्तिगत सेटिंग्स से ओवरराइड नहीं किया जा सकता — इसीलिए \"मेरी सेटिंग काम नहीं करती\" का भ्रम अक्सर होता है।</p>\n\n      <p><strong>Team vs. local अलगाव:</strong> टीम-साझा मानक <code>CLAUDE.md</code> और <code>.claude/settings.json</code> में जाते हैं। व्यक्तिगत प्रयोग <code>CLAUDE.local.md</code> या <code>.claude/settings.local.json</code> में जाते हैं।</p>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; प्रो टिप:</strong> एक न्यूनतम hook उदाहरण जो खतरनाक Bash कमांड ब्लॉक करता है:\n      </div>\n      <pre><code>{\n  \"hooks\": {\n    \"PreToolUse\": [{\n      \"matcher\": \"Bash\",\n      \"hooks\": [{\n        \"type\": \"command\",\n        \"command\": \".claude/hooks/block-rm.sh\"\n      }]\n    }]\n  }\n}</code></pre>"
+        },
+        "2_4": {
+          "title": "Prompt टेम्पलेट्स और इंजीनियरिंग परतें",
+          "content": "<p>प्रभावी prompts चतुराई के बारे में नहीं हैं — वे पैटर्न का अनुसरण करते हैं। यहाँ मुख्य prompt शैलियाँ हैं:</p>\n\n      <p><strong>Context-first prompt (अनुशंसित शुरुआत दिनचर्या):</strong></p>\n      <pre><code>Read CLAUDE.md, relevant rules, and tasks/verify.md first.\nDo NOT implement yet. Summarize:\n1. Task type\n2. Modification scope\n3. Off-limits areas\n4. Verification commands\nThen proceed only after approval.</code></pre>\n\n      <p><strong>Shortcut-prevention prompt (कोडिंग कार्यों के लिए):</strong></p>\n      <pre><code>Goal: maintainable implementation, not just passing tests.\nRules:\n1. No hardcoding or special-casing to pass tests.\n2. If tests conflict with requirements, report first.\n3. If using external code, explain why before importing.\n4. Separate direct implementation from external references.\n5. After changes, report what passed and what's unverified.</code></pre>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> तीन इंजीनियरिंग परतें: (1) <strong>Prompt Engineering</strong> — बेहतर निर्देश तैयार करना, (2) <strong>Context Engineering</strong> — Claude को क्या दिखाना है यह चुनना, (3) <strong>Harness Engineering</strong> — पूरा कार्य वातावरण डिज़ाइन करना। अधिकांश लोग परत 1 पर रुक जाते हैं। वास्तविक लाभ परतें 2 और 3 से आते हैं।\n      </div>\n\n      <p><strong>Compact Instructions टेम्पलेट</strong> — नियंत्रित करता है कि <code>/compact</code> के बाद क्या बचता है:</p>\n      <pre><code>## Compact Instructions\nWhen compacting, always preserve:\n- Last modified files and why\n- Passed tests, failed tests, untested items\n- Rejected alternatives and reasons\n- The ONE thing next turn should do immediately\n- Risk points requiring human review</code></pre>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; प्रो टिप:</strong> अच्छे compression निर्देश सारांश को सुंदर नहीं बनाते — वे अगले सत्र को तुरंत जारी रखने में सक्षम बनाते हैं।\n      </div>"
+        },
+        "2_5": {
+          "title": "मूल्यांकन चक्र और सत्र आदेश",
+          "content": "<p>छह slash commands आपके सत्र प्रबंधन टूलकिट का निर्माण करते हैं:</p>\n\n      <table>\n        <tr><th>आदेश</th><th>कब उपयोग करें</th></tr>\n        <tr><td><code>/clear</code></td><td>जमा हुई बातचीत मिटाएँ और ताज़ा शुरू करें</td></tr>\n        <tr><td><code>/compact [focus]</code></td><td>लंबी बातचीत का सारांश बनाएँ, क्या रखना है यह निर्दिष्ट करते हुए</td></tr>\n        <tr><td><code>/context</code></td><td>जाँचें कि context स्थान क्या खा रहा है</td></tr>\n        <tr><td><code>/memory</code></td><td>देखें कौन सी मेमोरी फ़ाइलें और CLAUDE.md परतें लोड हैं</td></tr>\n        <tr><td><code>/init</code></td><td>नई रिपॉज़िटरी के लिए CLAUDE.md मसौदा स्वतः-बनाएँ</td></tr>\n        <tr><td><code>/cost</code></td><td>वर्तमान token उपयोग और लागत जाँचें</td></tr>\n      </table>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> साप्ताहिक मूल्यांकन में ट्रैक करें: कौन सा CLAUDE.md / rules / hook संस्करण सक्रिय था, कौन से skills या टेम्पलेट उपयोग हुए, पिछले सप्ताह से क्या बदला, और क्या पास दरें और मानव सुधार मात्रा बेहतर हुई। इष्टतम कॉन्फ़िगरेशन खोजने के लिए केवल prompts नहीं — rules और hooks बदलें।\n      </div>\n\n      <p><strong>आधिकारिक संसाधनों के लिए अनुशंसित सीखने का मार्ग:</strong></p>\n      <ol>\n        <li>Release notes → अभी क्या संभव है</li>\n        <li>Claude Help Center → उत्पाद पथ (Cowork, Skills, Connectors)</li>\n        <li>Claude Code Docs → उन्नत फ़ीचर (plugins, hooks, agent teams)</li>\n        <li>API / Agent SDK docs → कस्टम agent एप्लिकेशन बनाना</li>\n        <li>GitHub repositories → वास्तविक उदाहरण और संरचनाएँ</li>\n      </ol>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; सामान्य गलती:</strong> डेमो पोस्ट को विशिष्टताओं के रूप में पढ़ना, या आधिकारिक docs को परिचालन सुझावों के रूप में। भूमिकाएँ अलग रखें: आधिकारिक docs तथ्य और सीमाएँ पुष्टि करते हैं; समुदाय पोस्ट पैटर्न और विफलता मोड प्रकट करते हैं; repositories वास्तविक संरचना दिखाती हैं।\n      </div>"
+        }
+      }
+    },
+    "part3": {
+      "title": "भाग 3: सिस्टम डिज़ाइन",
+      "sections": {
+        "3_1": {
+          "title": "Context इंजीनियरिंग की गहरी समझ",
+          "content": "<p><strong>Context Engineering</strong> वह अनुशासन है जो चुनता है कि किसी भी क्षण Claude क्या जानकारी देखता है। यह लंबे prompts लिखने के बारे में नहीं है — यह सही context window असेंबल करने के बारे में है।</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> <em>Context Assembly</em> = वर्तमान कार्य के लिए आवश्यक नियमों, फ़ाइलों, मेमो और टूल विवरणों को वास्तविक इनपुट में इकट्ठा करना। यह एक चयन प्रक्रिया है, ढेर लगाने की प्रक्रिया नहीं। अधिक context बेहतर context नहीं होता।\n      </div>\n\n      <p>हर बारी में context window क्या भरता है (एक-लाइन prompt पर भी):</p>\n      <ul>\n        <li>आपका वर्तमान प्रश्न</li>\n        <li>हाल की बातचीत का इतिहास</li>\n        <li>Claude ने जो फ़ाइलें पढ़ी हैं</li>\n        <li><code>CLAUDE.md</code> और नियम फ़ाइलें</li>\n        <li>टूल निष्पादन परिणाम</li>\n        <li>Claude का खुद का हाल का आउटपुट</li>\n      </ul>\n\n      <p><strong>Context Rot</strong> तब होता है जब context इतना लंबा हो जाता है कि शुरुआती संकेत कमज़ोर पड़ जाते हैं। लंबी बातचीत धीरे-धीरे सुसंगति खो देती है — इसलिए नहीं कि मॉडल भूल जाता है, बल्कि इसलिए कि महत्वपूर्ण शुरुआती निर्देश बाद के शोर में घुल जाते हैं।</p>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; सामान्य गलती:</strong> पूरी रिपॉज़िटरी को context में लोड करना। एक बग ठीक करते समय भी, कुछ उपयोगकर्ता हर फ़ाइल डाल देते हैं। यह धीमा, महँगा और कम गुणवत्ता के परिणाम देता है। Claude को केवल वह फ़ंक्शन और एरर लॉग की 20 लाइनें दिखाएँ जिनकी उसे ज़रूरत है।\n      </div>\n\n      <p><strong>एक साथ डिज़ाइन करने के तीन अलगाव:</strong></p>\n      <ol>\n        <li><strong>Context isolation</strong> — जाँच, योजना, कार्यान्वयन और समीक्षा को एक लंबे सत्र में मत मिलाएँ। Subagents या अलग सत्रों का उपयोग करें।</li>\n        <li><strong>File state isolation</strong> — टकराव-प्रवण कार्य के लिए worktrees या अलग आउटपुट फ़ोल्डर उपयोग करें।</li>\n        <li><strong>Approval isolation</strong> — अनुमतियों और hooks के माध्यम से अक्सर-अनुमत क्रियाओं को हमेशा-समीक्षा क्रियाओं से अलग करें।</li>\n      </ol>"
+        },
+        "3_2": {
+          "title": "Harness इंजीनियरिंग",
+          "content": "<p>Harness Engineering prompt tuning से परे जाती है। इसमें पूरा कार्यस्थल शामिल है: अनुमतियाँ, फ़ोल्डर संरचना, टेस्ट नीतियाँ, सत्र resume नियम, handoff प्रोटोकॉल, worktree isolation और remote control सेटअप।</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> एक harness एक साथ तीन चीज़ें डिज़ाइन करता है: (1) Claude क्या जानता है (context), (2) Claude क्या कर सकता है (टूल्स और अनुमतियाँ), (3) Claude को क्या सत्यापित करना चाहिए (टेस्ट और exit criteria)। इनमें से किसी एक की कमी विफलता का एक अलग वर्ग बनाती है।\n      </div>\n\n      <p><strong>शुरुआती दिनचर्या शुरुआती prompt से अधिक महत्वपूर्ण है:</strong></p>\n      <ol>\n        <li>Resident contract जाँचें — <code>CLAUDE.md</code>, प्रासंगिक नियम, वर्तमान branch पढ़ें</li>\n        <li>कार्य वर्गीकृत करें — जाँच, कार्यान्वयन, या समीक्षा?</li>\n        <li>Plan लिखें — स्कोप, प्रतिबंधित क्षेत्र, सत्यापन कमांड</li>\n        <li>Exit criteria पुष्टि करें — <code>tasks/verify.md</code> जाँचें</li>\n        <li>उसके बाद ही वास्तविक काम शुरू करें</li>\n      </ol>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; प्रो टिप:</strong> Subagents और worktrees एक ही समस्या को अलग-अलग कोणों से हल करते हैं। Subagents <em>context</em> को अलग करते हैं (शोध या समीक्षा को एक अस्थायी कर्मचारी को सौंपते हैं)। Worktrees <em>file state</em> को अलग करते हैं (भौतिक रूप से अलग कार्यशील निर्देशिकाएँ)। संक्षिप्त जाँचों के लिए subagents; समानांतर प्रयोगों के लिए worktrees उपयोग करें।\n      </div>\n\n      <p>सबसे प्रभावी subagent उपयोगों में से एक कोड को तेज़ बनाना नहीं, बल्कि <em>अलग-अलग उपयोगकर्ता भूमिकाओं का अनुकरण</em> करना है: एक संशयी वरिष्ठ इंजीनियर, एक नया maintainer, एक सुरक्षा समीक्षक, एक ops व्यक्ति। अलग दृष्टिकोण विश्वास तोड़ने वाली समस्याएँ पकड़ते हैं जैसे गायब READMEs, status commands में side effects और observability gaps।</p>"
+        },
+        "3_3": {
+          "title": "सत्यापन संरचनाएँ",
+          "content": "<p>सत्यापन वह है जो demos को production से अलग करता है। एक अच्छी सत्यापन योजना उत्तर देती है: \"यह कार्य पूरा होने से पहले क्या पास होना चाहिए?\"</p>\n\n      <p><strong><code>tasks/verify.md</code> टेम्पलेट:</strong></p>\n      <pre><code># Verification Plan\n## Must Pass\n- [ ] Unit tests: `pnpm test -- signup`\n- [ ] Lint: `pnpm lint`\n- [ ] Type check: `pnpm typecheck`\n## Must Review (human)\n- [ ] Manual browser check on mobile\n- [ ] CTA text approved by stakeholder\n## Must Not Break\n- [ ] Existing auth flow unchanged\n- [ ] No new dependencies added</code></pre>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> सत्यापन skills (यह जाँचना कि signup flows end-to-end काम करते हैं, checkout states सही हैं, CLI TTY environments में काम करता है) अक्सर generation skills से अधिक ROI वाली होती हैं। एक \"अच्छी तरह से लिखा मसौदा\" सस्ता है — एक \"सत्यापित पास परिणाम\" महँगा और मूल्यवान है।\n      </div>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; सामान्य गलती:</strong> टेस्ट पास करने को लक्ष्य मानना, maintainable implementation के बजाय। मॉडल टेस्ट को हरा करने के लिए मान hardcode कर सकते हैं या special cases जोड़ सकते हैं। आपका सत्यापन prompt शॉर्टकट को स्पष्ट रूप से मना करे और जब टेस्ट गलत लगें तो रिपोर्ट करने की माँग करे।\n      </div>"
+        },
+        "3_4": {
+          "title": "Token अर्थशास्त्र और लागत प्रबंधन",
+          "content": "<p>Tokens बिलिंग इकाई और इस बात का संकेत दोनों हैं कि आपका कार्य कितना फैल गया है। एक-लाइन prompt भी बहुत कुछ भेजता है: प्रश्न, बातचीत का इतिहास, लोड की गई फ़ाइलें, CLAUDE.md, नियम, टूल आउटपुट और हाल का मॉडल आउटपुट सब context window में जाते हैं।</p>\n\n      <table>\n        <tr><th>Token प्रकार</th><th>इसमें क्या शामिल है</th></tr>\n        <tr><td><strong>Input tokens</strong></td><td>Prompts, फ़ाइलें, बातचीत इतिहास, नियम फ़ाइलें, टूल आउटपुट</td></tr>\n        <tr><td><strong>Output tokens</strong></td><td>स्पष्टीकरण, कोड, सारांश, टूल कॉल परिणाम</td></tr>\n      </table>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> \"Tokens बचाना\" कंजूसी के बारे में नहीं है — यह इस तरह डिज़ाइन करने के बारे में है कि Claude केवल वही पढ़े जो उसे चाहिए। <strong>Prompt Cache</strong> तब पुनः उपयोग लाभ देता है जब समान पृष्ठभूमि बार-बार भेजी जाती है। अपना context इस तरह संरचित करें कि स्थिर prefix (CLAUDE.md, नियम) सुसंगत और cacheable रहे।\n      </div>\n\n      <p><strong>लागत संरचना से प्रबंधित होती है, गिनती से नहीं:</strong></p>\n      <ul>\n        <li>टूल आउटपुट की विस्तारता कम करें (पूरे logs मत डालें)</li>\n        <li>सत्र केंद्रित रखें — असंबंधित कार्य मत मिलाएँ</li>\n        <li>आखिरी उपाय के बजाय रणनीतिक बिंदुओं पर <code>/compact</code> उपयोग करें</li>\n        <li>जाँच को कार्यान्वयन से अलग सत्रों में करें</li>\n        <li>सहज ज्ञान बनाने के लिए <code>/cost</code> से लागत ट्रैक करें</li>\n      </ul>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; प्रो टिप:</strong> <strong>Tool Result Budget</strong> अवधारणा का अर्थ है टूल आउटपुट द्वारा context कितना उपभोग हो यह नियंत्रित करना। एक टेस्ट suite जो 500 लाइनों का आउटपुट देती है आपका context तेज़ी से खा जाती है। टूल्स को कच्चे logs के बजाय सारांश लौटाने के लिए कॉन्फ़िगर करें।\n      </div>"
+        },
+        "3_5": {
+          "title": "सत्र प्रबंधन और पुनरारंभ स्वच्छता",
+          "content": "<p><strong>Resume Hygiene</strong> का अर्थ है केवल वही रखना जो अगले सत्र को चाहिए और जमा हुए शोर को छोड़ना। लंबे सत्र स्वाभाविक रूप से बेहतर नहीं होते — वे context rot जमा करते हैं।</p>\n\n      <p><strong>Session Memory टेम्पलेट:</strong></p>\n      <pre><code># Current State\n- What I'm doing right now\n\n# Task Specification\n- What the user actually requested\n\n# Files and Functions\n- Important files and why they matter\n\n# Workflow\n- Frequently used commands and order\n\n# Errors &amp; Corrections\n- Failed attempts — do NOT repeat these\n\n# Key Results\n- Confirmed results and answers\n\n# Worklog\n- Recent steps (keep very short)</code></pre>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> लंबे सत्र तब टिकते हैं जब जानकारी पाँच श्रेणियों में परिवर्तित होती है: वर्तमान स्थिति, फ़ाइलें, कार्यप्रवाह, त्रुटियाँ और परिणाम। बाकी सब शोर है। <code>Errors &amp; Corrections</code> अनुभाग शर्म का लॉग नहीं है — यह दोबारा विफलता रोकने का उपकरण है।\n      </div>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; प्रो टिप:</strong> status line (<code>/statusline</code>) को dashboard के रूप में उपयोग करें। यह कार्यशील निर्देशिका, Git branch और context उपयोग दिखाता है। जब context उपयोग बढ़े, स्थिति फ़ाइलों में सहेजें और ताज़ा सत्र शुरू करें — गुणवत्ता खराब होने तक आगे मत बढ़ते रहें।\n      </div>"
+        }
+      }
+    },
+    "part4": {
+      "title": "भाग 4: विस्तार और स्वचालन",
+      "sections": {
+        "4_1": {
+          "title": "Skills: Claude को दोहराने योग्य प्रक्रियाएँ सिखाना",
+          "content": "<p>जब आप दसवीं बार वही प्रक्रिया समझाते हैं — मीटिंग नोट फ़ॉर्मेट, साप्ताहिक संक्षेप संरचना, कोड समीक्षा चेकलिस्ट — तो एक <strong>Skill</strong> बनाने का समय है। एक Skill एक पुनः उपयोगी कार्य मैनुअल है जो स्पष्टीकरण लागत को कम करता है।</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> Skills prompt snippets नहीं हैं। ये एक मुख्य दस्तावेज़ (<code>SKILL.md</code>), सहायक scripts, संदर्भ फ़ाइलें और assets के साथ फ़ोल्डर संरचनाएँ हैं। आधिकारिक गाइड <em>progressive disclosure</em> की सिफारिश करता है: frontmatter और description पहले लोड होते हैं; विवरण केवल तब लोड होते हैं जब skill सक्रिय होती है।\n      </div>\n\n      <table>\n        <tr><th>Skill बनाएँ जब...</th><th>बातचीत में रखें जब...</th></tr>\n        <tr><td>आउटपुट फ़ॉर्मेट दोहराता है, विविधता कम होनी चाहिए, स्टोरेज स्थान और टूल क्रम तय करने हों</td><td>विषय अक्सर बदलता है, यह एक बार की brainstorming खोज है</td></tr>\n      </table>\n\n      <p><strong>Projects बनाम Skills:</strong> Projects वह पृष्ठभूमि ज्ञान है जो हमेशा मौजूद रहता है। Skills वे प्रक्रियाएँ हैं जो मिलान कार्य आने पर सक्रिय होती हैं। प्रक्रिया के बिना पृष्ठभूमि असंगत आउटपुट देती है; context के बिना प्रक्रिया खाली परिणाम देती है।</p>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; सामान्य गलती:</strong> skill का <code>description</code> फ़ील्ड परिचय पैराग्राफ नहीं है — यह एक routing नियम है। यदि description अस्पष्ट है, skill या तो कभी trigger नहीं होती (undertriggering) या असंबंधित कार्यों के लिए trigger होती है (overtriggering)। ऐसे descriptions लिखें: \"जब उपयोगकर्ता साप्ताहिक competitor brief, market review या industry trend summary माँगे तब इस skill का उपयोग करें।\"\n      </div>"
+        },
+        "4_2": {
+          "title": "Skill के प्रकार और डिज़ाइन टेम्पलेट",
+          "content": "<p>Skills अपने विशिष्ट डोमेन के बावजूद कुछ सामान्य भूमिकाओं में एकत्रित होती हैं:</p>\n      <ul>\n        <li><strong>Library/SDK reference</strong> — आंतरिक या जटिल बाहरी libraries के लिए उपयोग पैटर्न तय करती है</li>\n        <li><strong>Verification/testing</strong> — जाँच प्रक्रियाओं को मानकीकृत करती है (Playwright flows, CLI tests)</li>\n        <li><strong>Data pipeline</strong> — डेटा स्रोतों और रिपोर्ट पथों को व्यवस्थित करती है</li>\n        <li><strong>Recurring operations</strong> — साप्ताहिक समीक्षाएँ, standups, ticket निर्माण</li>\n        <li><strong>Scaffolding</strong> — प्रारंभिक service या handler संरचनाएँ उत्पन्न करती है</li>\n        <li><strong>Quality gate</strong> — समीक्षा मानक, टेस्ट नियम, सुरक्षा चेकलिस्ट</li>\n      </ul>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; प्रो टिप:</strong> Skills जो सब कुछ करने की कोशिश करती हैं (\"शोध, कोड, टेस्ट और deploy\") शक्तिशाली लगती हैं लेकिन नाज़ुक होती हैं। Skills जो एक bottleneck को सटीक रूप से हल करती हैं सबसे लंबे समय तक टिकती हैं। Verification skills अक्सर generation skills से अधिक ROI वाली होती हैं।\n      </div>\n\n      <p><strong>Skill Design टेम्पलेट:</strong></p>\n      <pre><code>---\nname: weekly-brief\ndescription: >\n  Use for weekly competitor briefs, recurring market checks,\n  and industry trend summary requests.\ndisable-model-invocation: false\n---\n# Goal\nCreate a weekly competitor brief using only the last 7 days of evidence.\n\n# Input Sources\n- Competitor list: `references/competitors.md`\n- Template: `assets/weekly-brief-template.md`\n\n# Steps\n1. Read competitor list and template\n2. Search for changes in the last 7 days\n3. Draft brief following template structure\n4. Flag uncertain items separately\n5. Save to `outputs/weekly-brief-YYYY-MM-DD.md`\n\n# Rules\n- Max 3 action items\n- Sources and dates required\n- No speculation — mark unknowns as \"Needs verification\"</code></pre>"
+        },
+        "4_3": {
+          "title": "Plugins: टीमों के लिए भूमिका पैकेज",
+          "content": "<p>एक <strong>Plugin</strong> कई skills, commands, hooks और connection settings को एक single deployable पैकेज में बंडल करता है। यदि Skill एक कार्य मैनुअल है, तो Plugin वह onboarding box है जो आप किसी नए टीम सदस्य को देते हैं।</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> \"plugin\" शब्द का अर्थ सतह के अनुसार अलग होता है। <strong>Claude Code plugins</strong> विकास कार्यप्रवाह के लिए commands, agents, hooks, skills, MCP और LSP बंडल करते हैं। <strong>Cowork plugins</strong> ज्ञान कार्य भूमिकाओं के लिए skills, connectors, slash commands और sub-agents बंडल करते हैं। एक ही नाम, अलग इंस्टॉलेशन अनुभव।\n      </div>\n\n      <p><strong>प्रगति:</strong> MCP बाहरी टूल्स से जुड़ता है → Skills प्रक्रियाएँ परिभाषित करती हैं → Plugins सब कुछ deploy के लिए पैकेज करते हैं। एक पंक्ति में: <em>Skills \"कैसे करें\" हैं, MCP \"वहाँ पहुँचने का रास्ता\" है, Plugins \"वह box है जो इसे deploy करता है।\"</em></p>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; सामान्य गलती:</strong> बाहरी Skills और Plugins को केवल दस्तावेज़ मानना। इनमें tool calls, file access, बाहरी URL fetch और execution scripts हो सकते हैं। कोई भी बाहरी skill install करने से पहले जाँचें: (1) क्या यह बाहरी URLs fetch करती है? (2) क्या यह Bash, file writes या network उपयोग करती है? (3) क्या इसकी फ़ाइलें इसके बताए उद्देश्य से मेल खाती हैं? (4) क्या यह संवेदनशील डेटा के पास चलेगी? (5) क्या आप इसे जल्दी disable कर सकते हैं?\n      </div>"
+        },
+        "4_4": {
+          "title": "MCP: बाहरी टूल कनेक्शन",
+          "content": "<p><strong>Model Context Protocol (MCP)</strong> वह मानकीकृत तरीका है जिससे Claude बाहरी टूल्स और सेवाओं से जुड़ता है — AI टूल integration के लिए USB-C पोर्ट की तरह।</p>\n\n      <p><strong>MCP बनाम Connector:</strong></p>\n      <table>\n        <tr><th>Connector</th><th>MCP</th></tr>\n        <tr><td>उपयोगकर्ता-सामना — settings screen से खोजें और जोड़ें</td><td>डेवलपर-सामना — server, tool interface और response format डिज़ाइन करें</td></tr>\n        <tr><td>app store connection की तरह</td><td>आंतरिक wiring panel डिज़ाइन करने की तरह</td></tr>\n        <tr><td>सबसे अच्छा जब connection ही लक्ष्य हो</td><td>सबसे अच्छा जब connection के बाद tool structure पर नियंत्रण चाहिए</td></tr>\n      </table>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; प्रो टिप:</strong> त्वरित निर्णय: \"मैं बस connect करके उपयोग करना चाहता हूँ\" → Connector। \"मैं नियंत्रित करना चाहता हूँ कि कौन से टूल expose हों, response formats और कौन से projects इसे सक्रिय करें\" → MCP। दोनों को मिलाने से या तो सरल connections का over-engineering होता है या जटिल automation का under-engineering।\n      </div>"
+        },
+        "4_5": {
+          "title": "Hooks, Subagents और नियंत्रण सतहें",
+          "content": "<p><strong>Hooks</strong> \"जाँचना याद रखो\" को \"हमेशा जाँचो\" में बदलते हैं। ये विशिष्ट क्षणों पर स्वचालित हस्तक्षेप नियम हैं — pre-tool-use, post-edit, pre-push आदि।</p>\n\n      <p>यदि prompts सड़क संकेत हैं (\"कृपया सावधानी से गाड़ी चलाएँ\"), तो hooks सीटबेल्ट अलार्म और स्वचालित ब्रेकिंग हैं। संकेतों को अनदेखा किया जा सकता है; सुरक्षा प्रणालियाँ वास्तविक व्यवहार बदलती हैं। इसीलिए टीमों के बड़े होने पर hooks अधिक महत्वपूर्ण होते हैं।</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> Hook प्रकारों में command hooks (shell scripts), prompt-based hooks, agent-based hooks और HTTP hooks शामिल हैं। टीमों के लिए, managed-only hooks और HTTP hook allowlists संगठनात्मक नियंत्रण प्रदान करते हैं जो व्यक्तिगत shell scripts से कहीं आगे जाते हैं।\n      </div>\n\n      <p><strong>Subagents</strong> context को अलग करते हैं। जब मुख्य सत्र खोज, कार्यान्वयन, समीक्षा और दस्तावेज़ीकरण संभालता है, context शोरगुल वाला हो जाता है। शोध या समीक्षा को subagent को सौंपना मुख्य सत्र को केंद्रित रखता है। सोचें: टीम लीड तथ्य-जाँच को खुद करने के बजाय एक विश्लेषक को सौंपता है।</p>\n\n      <p><strong>Remote Control / Channels / Scheduled Tasks</strong> सभी काम फिर से शुरू करते हैं, लेकिन trigger अलग होता है:</p>\n      <table>\n        <tr><th>फ़ीचर</th><th>बटन कौन दबाता है</th></tr>\n        <tr><td>Remote Control</td><td>एक मानव, दूर से</td></tr>\n        <tr><td>Channels</td><td>एक बाहरी सिस्टम (webhook, message)</td></tr>\n        <tr><td>Scheduled Tasks</td><td>समय स्वयं (cron जैसा)</td></tr>\n      </table>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; प्रो टिप:</strong> चार व्यावहारिक नियम: (1) यदि आप बार-बार वही स्पष्टीकरण दोहराते हैं, इसे Skill या नियम फ़ाइल में निकालें। (2) यदि आप बाहरी टूल्स जोड़ते रहते हैं, अधिक MCP connections जोड़ने से पहले अनुमति scope सँकरा करें। (3) यदि सत्यापन भूलता रहता है, इसे hooks में डालें। (4) यदि आपको parallelism चाहिए, पूरी agent teams शुरू करने से पहले एक छोटा subagent या worktree आज़माएँ।\n      </div>"
+        }
+      }
+    },
+    "part5": {
+      "title": "भाग 5: भूमिका-आधारित कार्यपुस्तिकाएँ",
+      "sections": {
+        "5_1": {
+          "title": "PM, रणनीति और संस्थापक",
+          "content": "<p>Product managers, strategists और founders का एक साझा शुरुआती बिंदु है: शोध को व्यवस्थित करना और जल्दी निर्णय लेना। पहली सफलताएँ <strong>research briefs</strong>, मीटिंग नोट संरचना और निर्णय दस्तावेज़ीकरण से आती हैं — पूर्ण स्वचालन से नहीं।</p>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; प्रो टिप:</strong> PMs के लिए, Claude अपनाने का आदर्श पथ है: (1) मीटिंग नोट सारांश → (2) साप्ताहिक research briefs → (3) PRD मसौदा तैयार करना → (4) टेम्पलेट के साथ competitive analysis। हर कदम पिछली फ़ाइल संरचना पर आधारित होता है।\n      </div>\n\n      <p><strong>Founder / Solo Operator न्यूनतम फ़ाइल सेट:</strong></p>\n      <pre><code>workspace/\n├── about-me.md          # Background, industry, goals\n├── working-rules.md     # Tone, forbidden topics, priorities\n├── projects/\n│   └── current/\n│       ├── brief.md     # This week's focus\n│       └── competitors.md\n├── templates/\n│   └── weekly-brief.md\n└── outputs/</code></pre>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> strategists के लिए, मानव को हमेशा यह सुनिश्चित करना चाहिए: बाज़ार व्याख्या, प्राथमिकता निर्णय और stakeholder alignment। Claude शोध और संरचना को तेज़ करता है — निर्णय को नहीं।\n      </div>\n\n      <p><strong>मानव को क्या रखना चाहिए:</strong> बाज़ार व्याख्या, प्राथमिकता निर्धारण और stakeholder वार्तालाप। Claude शोध संकलन, मसौदा संरचना और फ़ॉर्मेट सुसंगतता संभालता है।</p>"
+        },
+        "5_2": {
+          "title": "मार्केटिंग और सामग्री",
+          "content": "<p>Marketing टीमें Claude से सबसे तेज़ परिणाम तब पाती हैं जब वे पहले brand voice फ़ाइलें और content टेम्पलेट स्थापित करती हैं। <code>brand-voice.md</code> और <code>anti-ai-writing-style.md</code> के बिना, हर सामग्री को व्यापक tone सुधार की ज़रूरत होती है।</p>\n\n      <p><strong>Content operations अपनाने का पथ:</strong></p>\n      <ol>\n        <li>विषय शोध और content संरचना रूपरेखाएँ</li>\n        <li>brand voice टेम्पलेट के साथ पहले मसौदे</li>\n        <li>बहु-चैनल अनुकूलन (blog → social → newsletter)</li>\n        <li>संरचित टेम्पलेट के साथ SEO अनुकूलन</li>\n        <li>नियमित content calendar स्वचालन</li>\n      </ol>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; सामान्य गलती:</strong> <code>brand-voice.md</code> दिए बिना \"हमारी कंपनी के tone में लिखो\" कहना। Claude आपके brand का अनुमान नहीं लगा सकता। एक फ़ाइल बनाएँ जिसमें हो: पसंदीदा वाक्यांश, वर्जित वाक्यांश, वाक्य लंबाई दिशानिर्देश, औपचारिकता स्तर, और आदर्श tone दिखाने वाले 2–3 उदाहरण अनुच्छेद।\n      </div>\n\n      <p><strong>मानव को क्या रखना चाहिए:</strong> अंतिम संदेश निर्णय, brand tone अनुमोदन और बाहरी प्रकाशन sign-off। Claude शोध संश्लेषण, संरचनात्मक मसौदा और फ़ॉर्मेट अनुकूलन संभालता है।</p>"
+        },
+        "5_3": {
+          "title": "बिक्री, ग्राहक सफलता और संचालन",
+          "content": "<p>Sales और customer success टीमें <strong>account briefs</strong> और <strong>follow-up email drafts</strong> से सबसे अधिक लाभ उठाती हैं। मुख्य बाधा: सभी बाहरी संचार मानव अनुमोदन gates से गुज़रने चाहिए।</p>\n\n      <p><strong>Operations और back-office स्वचालन</strong> सबसे कम जोखिम वाले कार्यों से शुरू होना चाहिए: फ़ोल्डर संगठन, वर्गीकरण, मसौदा सारांश और टेम्पलेट-आधारित रिपोर्ट। उच्च जोखिम स्वचालन (वास्तविक data entry, भुगतान प्रसंस्करण, विलोपन) केवल governance संरचनाएँ स्थापित होने के बाद ही आना चाहिए।</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> agency और टीम operators के लिए, महत्वपूर्ण सिद्धांत <em>client context isolation</em> है। एक साथ कई clients प्रबंधित करते समय, सबसे बड़ा जोखिम धीमा आउटपुट नहीं है — यह clients के बीच context contamination है। प्रत्येक client के लिए अलग फ़ोल्डर, साझा टेम्पलेट और सख्त naming conventions cross-client leakage रोकते हैं।\n      </div>\n\n      <pre><code>clients/\n├── client-a/\n│   ├── brief.md\n│   ├── glossary.md\n│   └── approval-rules.md\n├── client-b/\n│   ├── brief.md\n│   └── ...\ntemplates/\n├── client-report-template.md\n└── review-checklist.md\nteam/\n├── shared-rules.md\n└── naming-convention.md</code></pre>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; प्रो टिप:</strong> agency संदर्भ में, एक फ़ोल्डर सीमा एक चतुर prompt से अधिक दुर्घटनाएँ रोकती है। गति उतनी महत्वपूर्ण नहीं है जितनी यह सुनिश्चित करना कि Client A का डेटा Client B के आउटपुट में कभी न जाए।\n      </div>"
+        },
+        "5_4": {
+          "title": "डिज़ाइन, इंजीनियरिंग और अनुसंधान",
+          "content": "<p><strong>Design/Branding:</strong> Designers को reference-based exploration और implementation QA से सबसे अधिक मूल्य मिलता है। इनपुट के रूप में images उपयोग करें — bugs के screenshots, reference layouts, desired states। Visual context अक्सर वह बताता है जो CSS विवरण के पैराग्राफ नहीं बता सकते।</p>\n\n      <p><strong>Engineering:</strong> सबसे मजबूत पहला कार्य हमेशा एक छोटा bug fix होता है जिसमें test हो, न कि कोई बड़ा नया फ़ीचर। अपनाने का पथ: (1) bug fix + test → (2) plan के साथ refactoring → (3) review split के साथ code review → (4) parallel worktree प्रयोग → (5) CI integration और automated hooks।</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> researchers और analysts के लिए, Claude इनमें उत्कृष्ट है: सारांश बनाना, glossary निर्माण, comparison tables, प्रश्न तैयार करना और संरचित literature reviews। मानव को हमेशा यह सुनिश्चित करना चाहिए: दावा व्याख्या, प्रजनन परिणाम निर्णय और मूल अंतर्दृष्टि।\n      </div>\n\n      <p><strong>सभी भूमिकाओं में अपनाने की प्राथमिकता एक ही पैटर्न का अनुसरण करती है:</strong></p>\n      <ol>\n        <li>जानकारी एकत्र और व्यवस्थित करें (सबसे कम जोखिम)</li>\n        <li>टेम्पलेट के साथ पहले मसौदे बनाएँ</li>\n        <li>सत्यापन loops के साथ समीक्षा और परिष्कार करें</li>\n        <li>skills के साथ आवर्ती workflows स्वचालित करें</li>\n        <li>parallel agents और scheduled tasks के साथ स्केल करें (सबसे अधिक जोखिम, अंतिम कदम)</li>\n      </ol>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; सामान्य गलती:</strong> end-to-end स्वचालन से शुरू करना। जो टीमें सबसे आगे जाती हैं वे प्रक्रिया के front-end (व्यवस्थित करना, संरचना बनाना, मसौदा तैयार करना) से शुरू होती हैं और governance स्थापित होने के बाद ही back-end (निष्पादन, deployment, वितरण) स्वचालित करती हैं।\n      </div>"
+        },
+        "5_5": {
+          "title": "परिदृश्य मार्गदर्शिका: बाधाओं को कार्यप्रवाह से मिलाना",
+          "content": "<p>अध्याय 8 कोई feature encyclopedia नहीं है — यह एक <em>situation matching table</em> है। दृष्टिकोण: आज की बाधा पहचानें → कार्य का आकार वर्गीकृत करें → फ़ाइल सेट चुनें → निष्पादन करें → approval gate से सत्यापन करें → संरचित handoff छोड़ें।</p>\n\n      <p><strong>किसी भी बाधित परिदृश्य के लिए workflow:</strong></p>\n      <ol>\n        <li><strong>आज की बाधा</strong> — कौन सा विशिष्ट कार्य अटका हुआ है?</li>\n        <li><strong>कार्य का आकार</strong> — क्या यह शोध, मसौदा, कार्यान्वयन या समीक्षा है?</li>\n        <li><strong>फ़ाइल सेट चयन</strong> — इस कार्य को न्यूनतम कौन सी फ़ाइलें चाहिए?</li>\n        <li><strong>निष्पादन</strong> — output contract के साथ workflow चलाएँ</li>\n        <li><strong>Approval gate</strong> — कुछ भी बाहर जाने से पहले मानव जाँच</li>\n        <li><strong>संरचित handoff</strong> — अगले सत्र के लिए state और अगले कदम</li>\n      </ol>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> परिदृश्य matching के लिए मुख्य शब्द: <em>output contract</em> (परिणाम किस फ़ॉर्मेट और स्थान पर होने चाहिए), <em>token hotspot</em> (जहाँ context अचानक महँगा हो जाता है), <em>approval gate</em> (बाहरी वितरण से पहले अनिवार्य मानव जाँच) और <em>structured handoff</em> (सत्र निरंतरता के लिए फ़ॉर्मेटेड state memo)।\n      </div>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; प्रो टिप:</strong> आगे का अंतर उन लोगों के बीच नहीं बढ़ेगा जो अधिक features जानते हैं, बल्कि उन टीमों के बीच जो भूमिका-विशिष्ट delegation strategies तेज़ी से सीखती हैं। Development और customer support पहले अपनाते हैं (व्यापक, कम जोखिम वाले कार्य); legal, finance और research अधिक सावधानी से अपनाते हैं (पहले सारांश और वर्गीकरण, बाद में निर्णय)।\n      </div>"
+        }
+      }
+    },
+    "part6": {
+      "title": "भाग 6: समुदाय पैटर्न और टूल्स",
+      "sections": {
+        "6_1": {
+          "title": "स्मृति, स्मरण और खोज पैटर्न",
+          "content": "<p>समुदाय के practitioners ने समय के साथ Claude की memory और context प्रबंधित करने के लिए आवर्ती patterns विकसित किए हैं। ये आधिकारिक features नहीं हैं — ये वे operational आदतें हैं जो भारी दैनिक उपयोग से उभरती हैं।</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> <strong>Session Memory</strong> पूरी बातचीत सहेजने के बारे में नहीं है। यह संरचित state फ़ाइलें बनाए रखने के बारे में है (<code>handoff.md</code>, <code>decision-log.md</code>, <code>worklog.md</code>) जिन्हें अगला सत्र शुरू होने पर पढ़ता है। बातचीत disposable है; फ़ाइलें असली memory हैं।\n      </div>\n\n      <p><strong>सामान्य memory patterns:</strong></p>\n      <ul>\n        <li><strong>File-based memory:</strong> <code>CLAUDE.md</code> + rule files + handoff files एक persistent memory layer बनाते हैं जो सत्र सीमाओं से परे रहती है</li>\n        <li><strong>Structured recall:</strong> हर सत्र की शुरुआत में किसी नए काम से पहले <code>tasks/handoff.md</code> और <code>tasks/plan.md</code> पढ़ना</li>\n        <li><strong>Progressive disclosure:</strong> पृष्ठभूमि को ऊपर लोड करना, task-specific विवरण केवल तब जब सक्रिय हो (जैसे skill frontmatter पूरी skill content trigger करता है)</li>\n      </ul>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; प्रो टिप:</strong> सबसे प्रभावी memory strategy सबसे सरल है: हर सत्र के अंत में <code>handoff.md</code> को वर्तमान state, अगले कदम और अनसुलझे जोखिमों के साथ अपडेट करें। यह एकल आदत 80% \"मैं कहाँ था?\" भ्रम को रोकती है।\n      </div>"
+        },
+        "6_2": {
+          "title": "Plan.md और फ़ाइल-आधारित योजना",
+          "content": "<p><code>plan.md</code> pattern सबसे व्यापक रूप से अपनाई गई community practices में से एक है। बातचीत में plan रखने के बजाय, इसे एक ऐसी फ़ाइल में लिखें जिसे Claude और मानव दोनों संदर्भित कर सकें।</p>\n\n      <p><strong>Plans फ़ाइलों में क्यों होनी चाहिए, बातचीत में नहीं:</strong></p>\n      <ul>\n        <li>फ़ाइलें सत्र सीमाओं से परे रहती हैं; बातचीत नहीं</li>\n        <li>फ़ाइलों को मानव स्वतंत्र रूप से समीक्षा कर सकते हैं</li>\n        <li>फ़ाइलों को Git के साथ version-control किया जा सकता है</li>\n        <li>फ़ाइलें बातचीत को re-planning के बजाय निष्पादन पर केंद्रित रखती हैं</li>\n      </ul>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> plan file नौकरशाही नहीं है — यह rework-prevention device है। editing से पहले plan करने वाली टीमें लगातार कम rollbacks, छोटे review cycles और लंबे सत्रों में कम context प्रदूषण की रिपोर्ट करती हैं।\n      </div>\n\n      <p><strong>प्रभावी plan.md संरचना:</strong></p>\n      <pre><code># Plan\n## Goal\nOne sentence describing the desired end state.\n\n## Scope\n- Files to modify: [list]\n- Off-limits: [list]\n\n## Steps\n1. ...\n2. ...\n\n## Verification\n- Tests to pass: [list]\n- Manual checks: [list]\n\n## Open Questions\n- [Any unresolved items before starting]</code></pre>"
+        },
+        "6_3": {
+          "title": "समानांतर सत्र और बहु-एजेंट संचालन",
+          "content": "<p>उन्नत उपयोगकर्ता समानांतर में कई Claude सत्र चलाते हैं, प्रत्येक अलग भूमिका के साथ। यह गति के बारे में नहीं है — यह <em>context isolation</em> के बारे में है।</p>\n\n      <p><strong>सामान्य parallel patterns:</strong></p>\n      <ul>\n        <li><strong>Plan + Implement:</strong> एक सत्र plan करता है, दूसरा लिखित plan के आधार पर implement करता है</li>\n        <li><strong>Implement + Review:</strong> एक सत्र कोड लिखता है, दूसरा अलग worktree में समीक्षा करता है</li>\n        <li><strong>Main + Subagent research:</strong> मुख्य सत्र केंद्रित रहता है जबकि Subagent documentation explore करता है या डेटा एकत्र करता है</li>\n        <li><strong>Multi-worktree experiments:</strong> isolated working directories में अलग-अलग approaches test करें, परिणाम compare करें</li>\n      </ul>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; सामान्य गलती:</strong> भूमिका स्पष्टता के बिना parallelism अराजकता बनाती है, गति नहीं। parallel सत्र शुरू करने से पहले परिभाषित करें: कौन क्या करता है, प्रत्येक सत्र कौन सी फ़ाइलें छू सकता है और परिणाम कैसे वापस मिलाए जाते हैं। असंरचित parallelism क्रमिक काम से भी बुरी है।\n      </div>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; प्रो टिप:</strong> \"OpenClaw-style\" operation जिसके लिए कई community members प्रयास करते हैं, का अर्थ है: always-on sessions, multi-channel access (terminal, phone, web), sessions में persistent state, scheduled tasks और remote control। Claude ecosystem में, यह Claude Code + CLAUDE.md + hooks + subagents + MCP + Remote Control + Channels + Scheduled Tasks को मिलाकर हासिल होता है।\n      </div>"
+        },
+        "6_4": {
+          "title": "स्व-सुधार और SEO/सामग्री चक्र",
+          "content": "<p>Community patterns में Claude का उपयोग अपने environment को बेहतर बनाने के लिए भी शामिल है — skills बनाना, नियम परिष्कृत करना और पिछले outputs का मूल्यांकन करना।</p>\n\n      <p><strong>Self-improvement loop:</strong></p>\n      <ol>\n        <li>वर्तमान नियमों और skills के साथ कार्य चलाएँ</li>\n        <li>आउटपुट का मूल्यांकन करें (मैन्युअल रूप से या review Subagent से)</li>\n        <li>विफलताओं के आधार पर नियम, skill descriptions या टेम्पलेट अपडेट करें</li>\n        <li>फिर से चलाएँ और compare करें</li>\n      </ol>\n\n      <p><strong>SEO और content automation patterns:</strong></p>\n      <ul>\n        <li>Keyword research → content structure → मसौदा → SEO review skill → प्रकाशन</li>\n        <li>Multi-channel adaptation: एक research सत्र blog, social, newsletter और email templates को feed करता है</li>\n        <li>Scheduled tasks के साथ content calendar automation</li>\n      </ul>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> meta-skill <code>skill-creator</code> descriptions से initial skill drafts generate कर सकती है। हालाँकि, यह पहले मसौदे बनाती है, production-ready skills नहीं। विफलता cases, edge conditions और सत्यापन loops के लिए अभी भी मानव समीक्षा और iteration की आवश्यकता है।\n      </div>"
+        },
+        "6_5": {
+          "title": "टूल चयन मानदंड",
+          "content": "<p>skills, plugins और MCP servers के बढ़ते ecosystems के साथ, सही tools का चयन अनुशासन की माँग करता है।</p>\n\n      <p><strong>किसी भी बाहरी टूल को install करने से पहले मूल्यांकन checklist:</strong></p>\n      <ol>\n        <li>इसे आखिरी बार कब maintain किया गया था?</li>\n        <li>क्या इसके पास वास्तविक README और उदाहरण हैं?</li>\n        <li>इसे कौन सी security-sensitive permissions चाहिए?</li>\n        <li>क्या context लागत utility से उचित है?</li>\n        <li>क्या कुछ गलत होने पर आप इसे जल्दी disable कर सकते हैं?</li>\n      </ol>\n\n      <p><strong>टूल कहाँ खोजें:</strong></p>\n      <table>\n        <tr><th>स्रोत</th><th>प्रकार</th></tr>\n        <tr><td>Anthropic Skills GitHub</td><td>आधिकारिक / अर्ध-आधिकारिक</td></tr>\n        <tr><td>Anthropic Claude Plugins GitHub</td><td>आधिकारिक</td></tr>\n        <tr><td>agentskills.io</td><td>मानक दस्तावेज़ीकरण</td></tr>\n        <tr><td>skillsmp.com, skill hubs</td><td>Community marketplace</td></tr>\n        <tr><td>GitHub पर awesome-claude-skills सूचियाँ</td><td>Community द्वारा curated</td></tr>\n      </table>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; सामान्य गलती:</strong> ऐसे tools एकत्र करना जो आप कभी उपयोग नहीं करते। \"बाद के लिए सहेजे\" tools operational assets बने बिना ढेर हो जाते हैं। केवल वही tools install करें जिन्हें आप इस सप्ताह तीन या अधिक बार उपयोग करेंगे। अपने installed tools की मासिक समीक्षा करें और अप्रयुक्त हटाएँ।\n      </div>"
+        }
+      }
+    },
+    "part7": {
+      "title": "भाग 7: शासन और अंतिम अभ्यास",
+      "sections": {
+        "7_1": {
+          "title": "शासन क्यों महत्वपूर्ण है",
+          "content": "<p>Governance कोई compliance checkbox नहीं है — यह वह संरचना है जो टीमों को AI को चिंता के बजाय आत्मविश्वास के साथ उपयोग करने देती है। Governance के बिना, हर automation एक demo है जो infrastructure नहीं बन सकती।</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> governance जिस मूल प्रश्न का उत्तर देती है: \"Claude बिना पूछे क्या कर सकता है, उसे किस बारे में पूछना चाहिए, और उसे क्या कभी नहीं करना चाहिए?\" यह allow/ask/deny framework को organizational scale पर लागू करना है।\n      </div>\n\n      <p><strong>जोखिम वर्गीकरण उदाहरण:</strong></p>\n      <table>\n        <tr><th>जोखिम स्तर</th><th>उदाहरण</th><th>अनुमोदन मोड</th></tr>\n        <tr><td><strong>कम</strong></td><td>मीटिंग सारांश, आंतरिक मसौदे, test additions</td><td>Auto-execute</td></tr>\n        <tr><td><strong>मध्यम</strong></td><td>Customer-facing मसौदे, नियमित रिपोर्ट, refactoring</td><td>मानव समीक्षा फिर निष्पादन</td></tr>\n        <tr><td><strong>उच्च</strong></td><td>Production deployment, customer emails, accounting entries, permission बदलाव, संवेदनशील डेटा queries</td><td>मानव अनुमोदन आवश्यक — इसके बिना कोई निष्पादन नहीं</td></tr>\n      </table>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; प्रो टिप:</strong> Governance rollout चरणों में सबसे अच्छा काम करती है: सप्ताह 1 — <code>.env</code> access और destructive commands block करें, deployments के लिए अनुमोदन की आवश्यकता। सप्ताह 2 — allowed plugins/skills मानकीकृत करें, प्रति project CLAUDE.md और rules व्यवस्थित करें। सप्ताह 3 — cost monitoring जोड़ें और handoff/approval logging आदतें स्थापित करें।\n      </div>"
+        },
+        "7_2": {
+          "title": "अनुमति मॉडल और चार शासन परतें",
+          "content": "<p>permission model तीन modes उपयोग करता है: <strong>allow</strong> (स्वचालित रूप से आगे बढ़ें), <strong>ask</strong> (मानव निर्णय के लिए रोकें) और <strong>deny</strong> (पूरी तरह ब्लॉक करें)। नियमों का मूल्यांकन क्रम में होता है: deny → ask → allow, पहला मिलान लागू होता है।</p>\n\n      <p><strong>चार governance परतें:</strong></p>\n      <ol>\n        <li><strong>Document layer</strong> — <code>CLAUDE.md</code>, rule files, skill instructions: Claude को क्या जानना और पालन करना चाहिए</li>\n        <li><strong>Settings layer</strong> — <code>settings.json</code>, permission rules, managed settings: Claude क्या कर सकता है और क्या नहीं</li>\n        <li><strong>Runtime layer</strong> — Hooks, approval gates, plan mode: निष्पादन के दौरान क्या होता है</li>\n        <li><strong>Trace layer</strong> — Work logs, approval logs, decision logs, handoff files: क्या हुआ और क्यों</li>\n      </ol>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; सामान्य गलती:</strong> टीम default के रूप में <code>bypassPermissions</code> का उपयोग करना। Community posts अक्सर \"गति के लिए सभी permissions बंद करें\" की सिफारिश करते हैं। Anthropic इसे एक permission mode मानता है जिसे organizations <code>disableBypassPermissionsMode</code> के माध्यम से पूरी तरह disable कर सकती हैं। व्यक्तिगत प्रयोग और टीम मानकों को कभी एक ही permission level साझा नहीं करना चाहिए।\n      </div>\n\n      <p><strong>टीमों के लिए दो-परत permission संरचना:</strong></p>\n      <ul>\n        <li><strong>Global (user-level):</strong> <code>rm -rf</code>, secret files, force pushes block करें</li>\n        <li><strong>Project-level:</strong> migration folders, deployment scripts, इस repository के लिए विशिष्ट payment configs block करें</li>\n      </ul>"
+        },
+        "7_3": {
+          "title": "मानव-लूप-में और लेखापरीक्षा योग्यता",
+          "content": "<p><strong>Human-in-the-loop</strong> design का अर्थ है स्पष्ट checkpoints बनाना जहाँ मानव निर्णय लेते हैं — हर action पर मँडराना नहीं। लक्ष्य strategic intervention है, निरंतर पर्यवेक्षण नहीं।</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> <strong>Auditability</strong> का अर्थ है बाद में समझाने में सक्षम होना: क्या पढ़ा गया, क्या बनाया गया, किसने अनुमोदित किया और क्या अधूरा रहा। audit trails के साथ वही automation infrastructure बन जाती है; उनके बिना, यह demo रहती है।\n      </div>\n\n      <p><strong>उच्च-दाँव काम के लिए न्यूनतम audit trail:</strong></p>\n      <pre><code>1. source/          — मूल सामग्री या लिंक\n2. outputs/         — Claude के मसौदे और संशोधन\n3. work-log.md      — क्या निष्पादित हुआ और कब\n4. approval-log.md  — किसने क्या और कब अनुमोदित किया\n5. handoff.md       — शेष जोखिम और अगले कदम</code></pre>\n\n      <p><strong>Operations logs बनाम decision traces:</strong> Operations logs <em>क्या हुआ</em> रिकॉर्ड करते हैं (commands, tool calls, timestamps)। Decision traces <em>क्यों</em> रिकॉर्ड करते हैं (क्या विचार किया गया, कौन से विकल्प अस्वीकार किए गए, यह पथ क्यों चुना गया)। लंबे कार्यों पर काम करने वाले agents को दोनों की ज़रूरत होती है। Decision traces के बिना, आप देख सकते हैं विफलता कहाँ हुई लेकिन क्यों नहीं।</p>\n\n      <p><strong>Incident review टेम्पलेट:</strong></p>\n      <pre><code># Incident Review\n- यह कब खोजा गया?\n- कौन सा automation / session शामिल था?\n- input materials क्या थे?\n- कौन सा approval बिंदु गायब था?\n- कौन से नियम, Hook या permission को बदलना होगा?</code></pre>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; प्रो टिप:</strong> Cowork बातचीतें locally संग्रहीत होती हैं और Audit Logs, Compliance API या Data Exports में नहीं दिखतीं। Cowork का उपयोग regulated workloads के लिए न करें। audit-critical काम के लिए, Git-based logging, hooks और external approval tracking के साथ Claude Code उपयोग करें।\n      </div>"
+        },
+        "7_4": {
+          "title": "टीम अपनाने की रणनीति",
+          "content": "<p>Team adoption व्यक्तिगत उपयोग से उस क्षण अलग हो जाती है जब आप shared rules और assets deploy करना शुरू करते हैं। यह एक tool वितरित करने के बारे में नहीं है — यह <em>नीतियों के साथ एक operating environment deploy करने</em> के बारे में है।</p>\n\n      <p><strong>मुख्य team/enterprise capabilities:</strong></p>\n      <ul>\n        <li>Skills provisioning — organization-wide shared skills deploy करें</li>\n        <li>Managed settings — admin-enforced configurations जिन्हें व्यक्ति override नहीं कर सकते</li>\n        <li>Plugin marketplace management — नियंत्रित करें कि कौन से plugins उपलब्ध हैं</li>\n        <li>Usage analytics dashboard और Analytics API</li>\n        <li>Seat policies — किसे कौन से features तक access</li>\n      </ul>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> Standardization creativity को नहीं मारती — यह बार-बार स्पष्टीकरण की लागत को मारती है। जब shared meeting summary skills, client response टेम्पलेट, PR review skills और weekly brief टेम्पलेट team-wide deploy होते हैं, लोग format पर कम और निर्णय पर अधिक समय बिताते हैं।\n      </div>\n\n      <p><strong>organizations के लिए external skill adoption flow:</strong></p>\n      <ol>\n        <li>स्रोत सत्यापित करें</li>\n        <li>शामिल फ़ाइलें और tool scope समीक्षा करें</li>\n        <li>sandbox या isolated workspace में test करें</li>\n        <li>permissions को आवश्यक न्यूनतम तक घटाएँ</li>\n        <li>उसके बाद ही team/organization-managed distribution में deploy करें</li>\n      </ol>\n\n      <p><strong>Cost as a governance signal:</strong> Usage data केवल finance के लिए नहीं है — यह एक design feedback loop है। \"यह agent हर सत्र में एक लंबी regulation file फिर से पढ़ता है\" → caching जाँचें। \"यह automation verbose tool output देती है\" → output budget कम करें। Cost management operational design है, budget policing नहीं।</p>"
+        },
+        "7_5": {
+          "title": "अंतिम अभ्यास: Claude Code के साथ निर्माण",
+          "content": "<p>अंतिम अध्याय दो व्यावहारिक projects के साथ सब कुछ एक साथ लाता है: एक छोटी website बनाना और एक automation workflow बनाना। दोनों दिखाते हैं कि पतले, पूर्ण परिणाम विस्तृत अधूरी plans से अधिक मूल्यवान हैं।</p>\n\n      <p><strong>Website project दृष्टिकोण:</strong></p>\n      <ol>\n        <li>पहले तीन पंक्तियाँ तय करें: <strong>Reader</strong> (यह कौन पढ़ता है?), <strong>Goal</strong> (उन्हें क्या समझना चाहिए?), <strong>Action</strong> (उन्हें क्या करना चाहिए?)</li>\n        <li>फ़ाइल सेट बनाएँ: <code>brief.md</code>, <code>tone.md</code>, <code>references/</code>, <code>site/</code></li>\n        <li>Cowork का उपयोग संरचना और copy का मसौदा बनाने के लिए करें, फिर Claude Code implement करने के लिए</li>\n        <li>तीन prompts में विभाजित करें: design (संरचना), implement (निर्माण), review (सत्यापन)</li>\n      </ol>\n\n      <p><strong>Automation project दृष्टिकोण:</strong></p>\n      <ol>\n        <li>\"कब चलाना है\" से पहले input boundaries और output contract परिभाषित करें</li>\n        <li>सफलता = re-run पर एक ही format, न केवल पहली बार की सफलता</li>\n        <li>उच्च-जोखिम कदमों को मानव अनुमोदन से गुज़रना चाहिए</li>\n      </ol>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> ecosystem जिन पाँच दिशाओं में जा रहा है: (1) Conversational → asynchronous operations, (2) Pop-up approval → policy-based approval, (3) Long transcripts → structured task state, (4) Single surface → multi-surface continuity, (5) Prompt tricks → analytics और evaluation loops के साथ measurable operations।\n      </div>\n\n      <p><strong>Deployment checklist:</strong></p>\n      <ul>\n        <li>प्राथमिक work surface चुना (terminal, IDE, desktop, web)?</li>\n        <li><code>CLAUDE.md</code> और rules भूमिका के अनुसार अलग?</li>\n        <li>Permissions और hooks वास्तविक जोखिम सीमाओं को cover करते हैं?</li>\n        <li><code>plan.md</code>, <code>verify.md</code>, <code>handoff.md</code> मौजूद हैं?</li>\n        <li>Implementation और review के बीच review split?</li>\n        <li>Cost और विफलता measurement स्थापित?</li>\n        <li>टीमों के लिए scope separation (user/project/local/managed)?</li>\n      </ul>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; प्रो टिप:</strong> पुस्तक का निष्कर्ष सरल है: जो लोग Claude Code का अच्छा उपयोग करते हैं वे वे लोग नहीं हैं जो लंबे prompts लिखते हैं — वे वे लोग हैं जो context स्थिर करते हैं, tokens और cache प्रबंधित करते हैं, permissions संकीर्ण करते हैं, और review splits और handoffs को आदत बनाते हैं। एक पतला पूर्ण परिणाम plus इसे फिर बनाने की संरचना किसी भी प्रभावशाली demo से अधिक मूल्यवान है।\n      </div>"
+        }
+      }
+    },
+    "glossary": {
+      "title": "शब्दावली और त्वरित संदर्भ",
+      "sections": {
+        "G_1": {
+          "title": "Context और संयोजन शब्द",
+          "content": "<p>ये शब्द बताते हैं कि Claude की working memory में जानकारी कैसे एकत्र, प्रबंधित और खराब होती है।</p>\n\n      <table>\n        <tr><th>शब्द</th><th>परिभाषा</th></tr>\n        <tr><td><strong>Context Assembly</strong></td><td>वर्तमान कार्य के लिए आवश्यक नियमों, फ़ाइलों, memos और tool विवरणों को वास्तविक input context में एकत्र करने की प्रक्रिया। एक चयन प्रक्रिया, ढेर लगाने की नहीं।</td></tr>\n        <tr><td><strong>Context Rot</strong></td><td>वह घटना जहाँ context लंबा होने पर शुरुआती संकेत कमज़ोर पड़ जाते हैं। लंबी बातचीतें धीरे-धीरे सुसंगति खो देती हैं क्योंकि महत्वपूर्ण शुरुआती निर्देश बाद की सामग्री से पतले पड़ जाते हैं।</td></tr>\n        <tr><td><strong>Memoized Context</strong></td><td>पृष्ठभूमि जानकारी जो बातचीत के दौरान बनी रहती है ताकि Claude को हर बार re-briefing न देनी पड़े। \"एक बार गणना, बार-बार उपयोग।\"</td></tr>\n        <tr><td><strong>Prompt Cache</strong></td><td>एक mechanism जो समान context prefixes बार-बार भेजने पर पुनः उपयोग लाभ देता है। Cache hits अधिकतम करने के लिए stable prefixes (CLAUDE.md, rules) सुसंगत रहनी चाहिए।</td></tr>\n        <tr><td><strong>Token Economy</strong></td><td>यह तय करने का अनुशासन कि कौन सी जानकारी स्थायी रूप से लोड रहे, कौन सी माँग पर लोड हो, और क्या काटा जाए — गुणवत्ता और लागत के बीच संतुलन।</td></tr>\n        <tr><td><strong>Tool Result Budget</strong></td><td>यह नियंत्रित करने का अभ्यास कि tool outputs कितना context space उपभोग करें। लंबे logs और verbose results context window खाते हैं और गुणवत्ता गिराते हैं।</td></tr>\n      </table>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> Context Assembly \"अधिक बेहतर\" नहीं है। यह केवल वही शामिल करने की चयनात्मक प्रक्रिया है जो वर्तमान कार्य के लिए मायने रखता है। Tool Result Budget वैकल्पिक नहीं है — यह वही है जो एक verbose test run को आपकी आधी context window उपभोग करने से रोकता है।\n      </div>"
+        },
+        "G_2": {
+          "title": "सत्र और निरंतरता शब्द",
+          "content": "<table>\n        <tr><th>शब्द</th><th>परिभाषा</th></tr>\n        <tr><td><strong>Resumable Session</strong></td><td>डिस्कनेक्शन या सत्र बदलने के बाद saved state files का उपयोग करके जहाँ छोड़ा था वहाँ से जारी रखने की क्षमता।</td></tr>\n        <tr><td><strong>Resume Hygiene</strong></td><td>Resume करने से पहले state साफ़ करने की आदत — केवल वही रखना जो अगले सत्र को चाहिए और जमा शोर छोड़ना।</td></tr>\n        <tr><td><strong>Session Memory</strong></td><td>निरंतरता के लिए preserved structured state: वर्तमान स्थिति, महत्वपूर्ण फ़ाइलें, workflow, त्रुटियाँ और परिणाम। raw conversation transcript नहीं।</td></tr>\n        <tr><td><strong>Handoff</strong></td><td>अगले सत्र या व्यक्ति के लिए छोड़ा गया formatted memo, जिसमें वर्तमान state, अगले कदम और अनसुलझे जोखिम हों।</td></tr>\n        <tr><td><strong>Slash Command</strong></td><td>Session management commands जैसे <code>/compact</code>, <code>/clear</code>, <code>/context</code>, <code>/memory</code>, <code>/cost</code> जो Claude Code के भीतर उपयोग होते हैं।</td></tr>\n        <tr><td><strong>Fork Session</strong></td><td>जब वर्तमान दिशा अलग होनी हो तब नई session branch बनाना, मूल session state preserve करते हुए।</td></tr>\n        <tr><td><strong>Background Execution</strong></td><td>वह काम जो terminal छोड़ने के बाद जारी रहता है — सत्र सक्रिय मानव निगरानी के बिना चलता रहता है।</td></tr>\n      </table>"
+        },
+        "G_3": {
+          "title": "Harness और संरचना शब्द",
+          "content": "<table>\n        <tr><th>शब्द</th><th>परिभाषा</th></tr>\n        <tr><td><strong>Harness</strong></td><td>वह बाहरी संरचना जो परिभाषित करती है कि Claude क्या पढ़, बदल और सत्यापित कर सकता है। किसी सहयोगी के कार्यस्थल की तरह: संदर्भ सामग्री, सुलभ दराज और एक checklist।</td></tr>\n        <tr><td><strong>Harness Engineering</strong></td><td>पूरे work environment को डिज़ाइन करना — केवल बेहतर prompts नहीं, बल्कि वे नियम, permissions, फ़ाइलें और सत्यापन संरचनाएँ जिनमें Claude काम करता है।</td></tr>\n        <tr><td><strong>CLAUDE.md</strong></td><td>Project contract file — हमेशा लोड, execution commands, forbidden boundaries और structural descriptions शामिल।</td></tr>\n        <tr><td><strong>Worktree</strong></td><td>एक ही repository से एक अलग working directory, file conflicts के बिना parallel काम के लिए उपयोग होती है।</td></tr>\n        <tr><td><strong>Plan Mode</strong></td><td>वह pattern जहाँ exploration और execution अलग होते हैं — Claude editing से पहले plan करता है, गलत-assumption implementations कम होती हैं।</td></tr>\n        <tr><td><strong>Review Split</strong></td><td>Context प्रदूषण और approval थकान कम करने के लिए implementation और review को अलग सत्रों में अलग करना।</td></tr>\n        <tr><td><strong>Agentic Loop</strong></td><td>आवर्ती चक्र: पढ़ें → निर्णय करें → tools उपयोग करें → जारी रखें। काम जो कई turns में फैलता है, एकल प्रश्न-उत्तर pair नहीं।</td></tr>\n      </table>"
+        },
+        "G_4": {
+          "title": "विस्तार और टूल शब्द",
+          "content": "<table>\n        <tr><th>शब्द</th><th>परिभाषा</th></tr>\n        <tr><td><strong>Skill</strong></td><td>एक पुनः उपयोगी procedure file (folder) जो दोहराए जाने वाले कार्यों को मानकीकृत करती है। Instructions, scripts, references और assets शामिल।</td></tr>\n        <tr><td><strong>Plugin</strong></td><td>Skills, commands, hooks और connection settings बंडल करने वाला deployable package। टीमों के लिए \"onboarding box\"।</td></tr>\n        <tr><td><strong>MCP (Model Context Protocol)</strong></td><td>Claude के लिए बाहरी tools और services तक पहुँचने का मानकीकृत connection protocol। AI tool integration के लिए USB-C की तरह।</td></tr>\n        <tr><td><strong>Connector</strong></td><td>बाहरी services (Notion, Drive, Slack) से जोड़ने के लिए user-facing interface। MCP से सरल, कम नियंत्रण।</td></tr>\n        <tr><td><strong>Hook</strong></td><td>विशिष्ट क्षणों पर स्वचालित हस्तक्षेप नियम (pre-tool-use, post-edit, pre-push)। \"जाँचना याद रखो\" को \"हमेशा जाँचो\" में बदलता है।</td></tr>\n        <tr><td><strong>Subagent</strong></td><td>वर्तमान सत्र के भीतर isolated context के साथ secondary worker। मुख्य सत्र को प्रदूषित किए बिना शोध, समीक्षा या जोखिम-जाँच के लिए उपयोग।</td></tr>\n        <tr><td><strong>Agent Team</strong></td><td>Message exchange और task allocation के साथ parallel में operate करने वाले कई sessions — lead और members के साथ एक real team की तरह।</td></tr>\n        <tr><td><strong>Control Surface</strong></td><td>जहाँ users काम के व्यवहार को adjust कर सकते हैं — feature list नहीं, बल्कि वे बिंदु जहाँ आप workflow में हस्तक्षेप कर सकते हैं।</td></tr>\n      </table>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; प्रो टिप:</strong> त्वरित निर्णय framework: \"हर बार एक ही format?\" → Skill। \"बाहरी डेटा चाहिए?\" → MCP/Connector। \"पूरी टीम में deploy करना है?\" → Plugin। \"स्वचालित रूप से सत्यापित करना होगा?\" → Hook। \"Parallel context चाहिए?\" → Subagent/Worktree।\n      </div>"
+        },
+        "G_5": {
+          "title": "शासन और सुरक्षा शब्द",
+          "content": "<table>\n        <tr><th>शब्द</th><th>परिभाषा</th></tr>\n        <tr><td><strong>Permission Gate</strong></td><td>Allow, ask और deny के बीच की सीमा — किसी भी action निष्पादित होने से पहले मूल्यांकन।</td></tr>\n        <tr><td><strong>Approval Gate</strong></td><td>अगला कदम आगे बढ़ने से पहले मानव sign-off की आवश्यकता वाला checkpoint। बाहरी communications, deployments और data modifications के लिए महत्वपूर्ण।</td></tr>\n        <tr><td><strong>Allowlist</strong></td><td>एक policy जो केवल विशेष रूप से अनुमत items (commands, users, domains) पास करती है। विशिष्ट खतरों को block करने से अधिक सुरक्षित।</td></tr>\n        <tr><td><strong>Auditability</strong></td><td>बाद में समझाने की क्षमता: क्या पढ़ा गया, क्या बदला गया, किसने अनुमोदित किया और क्या रहा। टिकाऊ automation की नींव।</td></tr>\n        <tr><td><strong>Alignment Faking</strong></td><td>एक research concept जहाँ model instructions का पालन करता दिखता है जबकि आंतरिक रूप से अलग objectives रखता है। व्यावहारिक सबक: model compliance पर अकेले भरोसा न करें — external verification बनाएँ।</td></tr>\n        <tr><td><strong>Autonomy</strong></td><td>काम मानव हस्तक्षेप के बिना कितना आगे जा सकता है। उच्च autonomy को मजबूत verification, approval और permission सीमाओं की आवश्यकता है।</td></tr>\n        <tr><td><strong>Agency</strong></td><td>यह चुनने में मानव पहल कि क्या delegate करें, कब और किन constraints के साथ। अधिक commands देने के बारे में नहीं — बेहतर delegation निर्णय लेने के बारे में।</td></tr>\n        <tr><td><strong>Tool Orchestration</strong></td><td>वह layer जो तय करती है कि कौन से tools invoke करने हैं, किस sequence में और किन parameters के साथ।</td></tr>\n      </table>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; मुख्य अवधारणा:</strong> Observability (dashboards और analytics के माध्यम से system state देखना) और auditability (बाद में क्या हुआ और क्यों समझाना) अलग हैं। आपको दोनों चाहिए: operational efficiency के लिए observability, accountability और trust के लिए auditability।\n      </div>"
+        },
+        "G_6": {
+          "title": "पारिस्थितिकी तंत्र और बुनियादी ढाँचे के शब्द",
+          "content": "<table>\n        <tr><th>शब्द</th><th>परिभाषा</th></tr>\n        <tr><td><strong>LLM OS</strong></td><td>उभरती work layer के लिए एक metaphor: model के चारों ओर context, tools, permissions और memory, analogous to how an OS manages programs, files, permissions and devices।</td></tr>\n        <tr><td><strong>Software 3.0</strong></td><td>वह अवधारणा कि natural language स्वयं एक programming interface बन रही है — काम के instructions code हैं।</td></tr>\n        <tr><td><strong>Vibe Coding</strong></td><td>Natural language के माध्यम से code generate करना, जो अब testing, reviewing, refactoring, documentation और deployment को भी शामिल करता है।</td></tr>\n        <tr><td><strong>Remote Control</strong></td><td>एक मानव दूर से (अलग device, अलग स्थान) चल रहे सत्र को resume या steer करता है।</td></tr>\n        <tr><td><strong>Channels</strong></td><td>बाहरी systems Claude में events push करते हैं (webhooks, messages) — trigger बाहर से आता है, मानव से नहीं।</td></tr>\n        <tr><td><strong>Scheduled Tasks</strong></td><td>Time-triggered automation — cron-like execution जहाँ घड़ी काम शुरू करती है।</td></tr>\n        <tr><td><strong>Agent SDK</strong></td><td>आपके अपने product के अंदर Claude को execution engine के रूप में उपयोग करके custom agent applications बनाने के लिए developer tools।</td></tr>\n        <tr><td><strong>Adaptive Thinking</strong></td><td>Claude कार्य जटिलता के आधार पर reasoning depth adjust करता है — कठिन कार्यों के लिए अधिक सोचता है, सरल के लिए कम।</td></tr>\n      </table>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; प्रो टिप:</strong> किसी शब्द से भ्रम होने पर पूछें: \"क्या यह काम के बहाव (mechanics), गलतियाँ रोकने (safety) या सत्र persistence (continuity) के बारे में है?\" यह तीन-bucket mental model Claude Code terminology के विशाल बहुमत को cover करता है।\n      </div>"
+        }
+      }
+    }
+  },
+  "quizzes": {
+    "part1": [
+      {
+        "question": "Claude Code harness में 'memoized context' का क्या अर्थ है?",
+        "options": [
+          "सभी चैट इतिहास को डेटाबेस में स्थायी रूप से संग्रहीत करना",
+          "पृष्ठभूमि context को बातचीत के दौरान पुनः उपयोग करना ताकि हर बार फिर से समझाना न पड़े",
+          "उपयोगकर्ता की व्यक्तिगत प्राथमिकताओं को याद रखना",
+          "तेज़ प्रदर्शन के लिए API प्रतिक्रियाओं को cache करना"
+        ],
+        "answer": 1,
+        "explanation": "Memoized context का अर्थ है बातचीत के दौरान पृष्ठभूमि जानकारी बनाए रखना ताकि Claude को हर बार फिर से briefing न देनी पड़े।"
+      },
+      {
+        "question": "अध्याय 1 में कौन से चार मुख्य शब्द पेश किए गए हैं?",
+        "options": [
+          "API, CLI, MCP, VM",
+          "Prompt, Context, Response, Token",
+          "Memoized Context, Tool Orchestration, Permission Gate, Resumable Session",
+          "Skills, Plugins, Hooks, Subagents"
+        ],
+        "answer": 2,
+        "explanation": "अध्याय 1 पेश करता है: Memoized Context (पुनः उपयोगी पृष्ठभूमि), Tool Orchestration (टूल समन्वय), Permission Gate (allow/ask/deny), और Resumable Session (जहाँ छोड़ा था वहाँ से जारी)।"
+      },
+      {
+        "question": "Claude Code के संदर्भ में 'harness' क्या है?",
+        "options": [
+          "Claude के सर्वरों से जुड़ने वाला एक भौतिक उपकरण",
+          "वह बाहरी संरचना जो परिभाषित करती है कि Claude कौन सी फ़ाइलें पढ़, बदल और सत्यापित कर सकता है",
+          "unit tests चलाने के लिए एक testing framework",
+          "Claude Code का ग्राफिकल यूज़र इंटरफेस"
+        ],
+        "answer": 1,
+        "explanation": "एक harness सीमाएँ और सत्यापन नियम परिभाषित करता है — जैसे संदर्भ सामग्री, सुलभ दराज और चेकलिस्ट के साथ कार्यस्थल स्थापित करना।"
+      },
+      {
+        "question": "पुस्तक अन्य Claude उत्पादों के बजाय Claude Code पर क्यों केंद्रित है?",
+        "options": [
+          "Claude Code सबसे सस्ता उत्पाद है",
+          "Claude Code के सबसे अधिक वैश्विक उपयोगकर्ता हैं",
+          "यह फ़ाइलें, नियम, सत्यापन, अनुमतियाँ और टूल कनेक्शन एक जगह एकत्रित करता है",
+          "Claude Code एकमात्र उपलब्ध उत्पाद है"
+        ],
+        "answer": 2,
+        "explanation": "Claude Code file access, नियम, सत्यापन, अनुमतियाँ, resumable sessions और बाहरी टूल कनेक्शन एकत्रित करता है। Cowork, Skills, Plugins इस मूल के विस्तार हैं।"
+      },
+      {
+        "question": "कमज़ोर और मज़बूत harness अनुरोध में क्या अंतर है?",
+        "options": [
+          "कमज़ोर में कम tokens, मज़बूत में अधिक tokens",
+          "कमज़ोर: 'बग ठीक करो।' मज़बूत: 'केवल auth/ पढ़ें, .env मत छुएँ, login tests पास करें, बदलाव नोट छोड़ें।'",
+          "कमज़ोर का मतलब शुरुआती, मज़बूत का मतलब विशेषज्ञ",
+          "कोई अंतर नहीं है"
+        ],
+        "answer": 1,
+        "explanation": "कमज़ोर harness कोई सीमाएँ नहीं देता। मज़बूत harness निर्दिष्ट करता है कि क्या पढ़ना है, क्या नहीं छूना है, कौन से टेस्ट पास होने चाहिए और क्या दस्तावेज़ छोड़ना है।"
+      }
+    ],
+    "part2": [
+      {
+        "question": "बड़े कार्य के लिए Claude Code सत्र शुरू करते समय पहली अनुशंसित क्रिया क्या है?",
+        "options": [
+          "सभी context के साथ सबसे लंबा संभव prompt लिखें",
+          "CLAUDE.md, प्रासंगिक नियम और verify.md पढ़ें — फिर implement करने से पहले scope का सारांश बनाएँ",
+          "समय बचाने के लिए तुरंत coding शुरू करें",
+          "तेज़ workflow के लिए सभी अनुमतियाँ बंद करें"
+        ],
+        "answer": 1,
+        "explanation": "शुरुआती दिनचर्या शुरुआती prompt से अधिक महत्वपूर्ण है। implementation से पहले project contract, नियम और exit criteria पढ़ना दोबारा काम और गलत दिशा रोकता है।"
+      },
+      {
+        "question": "Skill और Plugin में क्या अंतर है?",
+        "options": [
+          "वे अलग-अलग नामों वाली एक ही चीज़ हैं",
+          "Skills कोडिंग के लिए हैं, Plugins दस्तावेज़ों के लिए",
+          "Skill एक पुनः उपयोगी प्रक्रिया है; Plugin skills, commands, hooks और connections को टीम deployment के लिए बंडल करता है",
+          "Plugins मुफ़्त हैं, Skills भुगतान योग्य"
+        ],
+        "answer": 2,
+        "explanation": "Skills 'कैसे करें' परिभाषित करती हैं (प्रक्रियाएँ)। Plugins skills, टूल्स, hooks और connections को एक deployable box में पैकेज करते हैं — टीम सदस्यों के लिए onboarding kit की तरह।"
+      },
+      {
+        "question": "CLAUDE.md को व्यापक के बजाय पतला क्यों रखना चाहिए?",
+        "options": [
+          "डिस्क स्थान बचाने के लिए",
+          "क्योंकि Claude केवल छोटी फ़ाइलें पढ़ सकता है",
+          "यह एक कार्य अनुबंध है, विश्वकोश नहीं — लंबा resident context tokens बर्बाद करता है और महत्वपूर्ण नियम पतले पड़ जाते हैं",
+          "पतली फ़ाइलें browser में तेज़ लोड होती हैं"
+        ],
+        "answer": 2,
+        "explanation": "CLAUDE.md हर बारी में लोड होता है। इसे पतला रखने से महत्वपूर्ण नियम प्रमुख रहते हैं। दीर्घकालिक स्थिति handoff.md, decision-log.md और अन्य task फ़ाइलों में होनी चाहिए।"
+      },
+      {
+        "question": "Claude Code संचालन में 'review split' का क्या अर्थ है?",
+        "options": [
+          "code review को कई pull requests में विभाजित करना",
+          "context प्रदूषण कम करने के लिए implementation और review को अलग सत्रों में अलग करना",
+          "दो लोगों का एक ही कोड समीक्षा करना",
+          "समीक्षा बजट को टीमों के बीच बाँटना"
+        ],
+        "answer": 1,
+        "explanation": "Review split का अर्थ है planning, implementation और review को एक सत्र में नहीं भरना। अलग सत्र context प्रदूषण और अनुमोदन थकान कम करते हैं।"
+      },
+      {
+        "question": "Claude Code में /compact चलाने के बाद क्या बचता है?",
+        "options": [
+          "सब कुछ — /compact केवल display छोटा करता है",
+          "केवल अंतिम 5 messages",
+          "Compact Instructions जो निर्दिष्ट करें: अंतिम modified फ़ाइलें, टेस्ट परिणाम, अस्वीकृत विकल्प, अगली क्रिया और जोखिम बिंदु",
+          "कुछ नहीं — /compact पूरा सत्र reset करता है"
+        ],
+        "answer": 2,
+        "explanation": "Compact Instructions नियंत्रित करते हैं कि compression के बाद कौन सी जानकारी बचती है। इनके बिना महत्वपूर्ण context खो सकता है। अच्छे निर्देश उस state को preserve करते हैं जिसे अगली बारी तुरंत जारी रखने के लिए चाहिए।"
+      }
+    ],
+    "part3": [
+      {
+        "question": "Claude Code सत्रों में 'Context Rot' क्या है?",
+        "options": [
+          "जब Claude की API key समाप्त हो जाती है",
+          "जब डिस्क पर फ़ाइलें दूषित हो जाती हैं",
+          "जब context लंबा होने पर शुरुआती निर्देश कमज़ोर पड़ जाते हैं, बाद की सामग्री से पतले होकर",
+          "जब बातचीत गलती से हट जाती है"
+        ],
+        "answer": 2,
+        "explanation": "Context rot तब होता है जब बातचीत बढ़ती है — महत्वपूर्ण शुरुआती संकेत जमा बाद की सामग्री से पतले पड़ जाते हैं, जिससे गुणवत्ता गिरती है भले ही मॉडल ने 'कुछ नहीं भुलाया।'"
+      },
+      {
+        "question": "एक harness को एक साथ कौन से तीन प्रकार के अलगाव डिज़ाइन करने चाहिए?",
+        "options": [
+          "Input isolation, output isolation, display isolation",
+          "Context isolation, file state isolation, approval isolation",
+          "Network isolation, disk isolation, memory isolation",
+          "User isolation, model isolation, tool isolation"
+        ],
+        "answer": 1,
+        "explanation": "Context isolation सत्र bloat रोकता है, file state isolation ओवरराइट और टकराव रोकता है, और approval isolation सुरक्षित क्रियाओं को खतरनाक से अलग करता है। हर एक अलग वर्ग की विफलता रोकता है।"
+      },
+      {
+        "question": "Verification skills अक्सर generation skills से अधिक ROI क्यों देती हैं?",
+        "options": [
+          "क्योंकि verification को license करना अधिक महँगा है",
+          "क्योंकि models generation में कभी गलती नहीं करते",
+          "क्योंकि 'अच्छी तरह से लिखा मसौदा' सस्ता है, लेकिन 'सत्यापित पास परिणाम' वास्तव में मूल्यवान और कठिन है",
+          "क्योंकि verification में कम compute लगता है"
+        ],
+        "answer": 2,
+        "explanation": "Generation मसौदे बनाती है; verification पुष्टि करती है कि वे वास्तव में काम करते हैं। यह जाँचना कि signup flows पूरे होते हैं, checkout states सही हैं, या CLI TTY environments में काम करता है — अधिक कोड generate करने से अधिक मूल्यवान है।"
+      },
+      {
+        "question": "Prompt Cache क्या है और आप इससे कैसे लाभ उठाते हैं?",
+        "options": [
+          "एक browser cache जो Claude की प्रतिक्रियाओं को offline उपयोग के लिए संग्रहीत करता है",
+          "बार-बार API उपयोगकर्ताओं के लिए छूट",
+          "एक mechanism जो समान context prefixes बार-बार भेजने पर computation पुनः उपयोग करता है — stable सामग्री आगे रखें",
+          "एक memory फ़ाइल जिसे Claude स्वचालित रूप से पढ़ता है"
+        ],
+        "answer": 2,
+        "explanation": "Prompt Cache के लाभ stable prefix (CLAUDE.md, नियम) को बातचीत के दौरान सुसंगत रखने से मिलते हैं। जब prefix मेल खाता है, computation पुनः उपयोग होती है, लागत और समय दोनों बचते हैं।"
+      },
+      {
+        "question": "Claude Code सत्र में /compact कब उपयोग करना चाहिए?",
+        "options": [
+          "एकदम अंत में जब सत्र पूरी तरह समाप्त हो",
+          "महत्वपूर्ण state फ़ाइलों में सहेजने के बाद, सत्र खराब होने से पहले",
+          "केवल जब error message दिखे",
+          "कभी नहीं — यह महत्वपूर्ण context हटा देता है"
+        ],
+        "answer": 1,
+        "explanation": "महत्वपूर्ण state फ़ाइलों में सहेजने के बाद संपीड़ित करें — अंतिम उपाय के रूप में नहीं जब सत्र पहले से खराब हो। अच्छे चेकपॉइंट पर रणनीतिक compression लंबे सत्रों में गुणवत्ता बनाए रखती है।"
+      }
+    ],
+    "part4": [
+      {
+        "question": "आपको एक दोहराए जाने वाले कार्य को Skill में कब बदलना चाहिए?",
+        "options": [
+          "जब कार्य बहुत जटिल हो",
+          "जब आउटपुट फ़ॉर्मेट दोहराता है, विविधता कम होनी चाहिए, और storage/tool क्रम तय करने हों",
+          "जब आप अपनी टीम को automation से प्रभावित करना चाहते हों",
+          "केवल जब Anthropic आधिकारिक skill टेम्पलेट प्रदान करे"
+        ],
+        "answer": 1,
+        "explanation": "Skill बनाने का संकेत है दोहराया जाने वाला आउटपुट फ़ॉर्मेट, सुसंगतता की आवश्यकता और निश्चित storage स्थान/टूल अनुक्रम। एकबारगी खोज बातचीत में ही रहनी चाहिए।"
+      },
+      {
+        "question": "MCP और Connector के बीच महत्वपूर्ण अंतर क्या है?",
+        "options": [
+          "MCP मुफ़्त है, Connectors भुगतान योग्य",
+          "MCP पुरानी तकनीक है, Connectors नई",
+          "Connectors user-facing app connections हैं; MCP tool structure, response format और project-specific activation पर developer-level नियंत्रण देता है",
+          "कोई अंतर नहीं है — वे एक ही feature हैं"
+        ],
+        "answer": 2,
+        "explanation": "Connectors सरल UI-आधारित connections हैं (app store की तरह)। MCP गहरा नियंत्रण देता है: कौन से servers, कौन से टूल expose करें, response formats और project-scoped activation। त्वरित connections के लिए Connectors, system design के लिए MCP उपयोग करें।"
+      },
+      {
+        "question": "Skill का 'description' फ़ील्ड इतना महत्वपूर्ण क्यों है?",
+        "options": [
+          "यह marketing सामग्री में दिखता है",
+          "यह skill का file size निर्धारित करता है",
+          "यह routing नियम की तरह काम करता है — अस्पष्ट descriptions undertriggering या overtriggering का कारण बनती हैं",
+          "यह केवल documentation उद्देश्यों के लिए है"
+        ],
+        "answer": 2,
+        "explanation": "Description वह है जो Claude सत्र शुरू में पढ़कर तय करता है कि skill activate करनी है या नहीं। यदि यह अस्पष्ट है, skill या तो कभी fire नहीं होती (undertriggering) या असंबंधित कार्यों के लिए fire होती है (overtriggering)।"
+      },
+      {
+        "question": "बाहरी skill install करने से पहले आपको क्या जाँचना चाहिए?",
+        "options": [
+          "केवल GitHub पर star count",
+          "क्या यह बाहरी URLs fetch करती है, मज़बूत टूल (Bash/network) उपयोग करती है, अपने बताए उद्देश्य से मेल खाती है, संवेदनशील डेटा के पास चलेगी, और जल्दी disable हो सकती है",
+          "केवल README फ़ाइल",
+          "कुछ नहीं — सभी प्रकाशित skills सुरक्षित हैं"
+        ],
+        "answer": 1,
+        "explanation": "बाहरी skills में tool calls, file access और बाहरी URL fetches हो सकती हैं। इन्हें सुरक्षा समीक्षा की आवश्यकता वाले छोटे software installations की तरह मानें, न कि केवल दस्तावेज़ imports।"
+      },
+      {
+        "question": "Hooks की तुलना कार उपमा में किससे की गई है?",
+        "options": [
+          "स्टीयरिंग व्हील से — आप दिशा नियंत्रित करते हैं",
+          "गैस पेडल से — वे चीज़ें तेज़ बनाते हैं",
+          "सीटबेल्ट अलार्म और स्वचालित ब्रेकिंग से — वे वास्तविक व्यवहार बदलते हैं, सड़क संकेतों के विपरीत जिन्हें अनदेखा किया जा सकता है",
+          "रियरव्यू मिरर से — वे आपको देखने में मदद करते हैं क्या हुआ"
+        ],
+        "answer": 2,
+        "explanation": "Prompts सड़क संकेतों की तरह हैं (अनदेखा किया जा सकता है)। Hooks सीटबेल्ट अलार्म और स्वचालित ब्रेकिंग की तरह हैं — वे system स्तर पर नियम लागू करते हैं, model compliance की परवाह किए बिना।"
+      }
+    ],
+    "part5": [
+      {
+        "question": "लगभग हर भूमिका के लिए पहला अनुशंसित adoption कदम क्या है?",
+        "options": [
+          "तुरंत एक पूर्ण automation pipeline स्थापित करें",
+          "हर उपलब्ध Plugin और MCP connection install करें",
+          "जानकारी एकत्र और व्यवस्थित करने से शुरू करें — research briefs, मीटिंग नोट, दस्तावेज़ संरचना",
+          "टीम सदस्यों को AI agents से बदलें"
+        ],
+        "answer": 2,
+        "explanation": "सभी भूमिकाओं में (PM, marketing, sales, engineering, research), पहला कदम हमेशा जानकारी एकत्र करना और व्यवस्थित करना है — सबसे कम जोखिम वाले, उच्च-आवृत्ति कार्य जो workflow में विश्वास बनाते हैं।"
+      },
+      {
+        "question": "कई clients प्रबंधित करने वाले agency/team operators के लिए सबसे महत्वपूर्ण सिद्धांत क्या है?",
+        "options": [
+          "वितरण की गति",
+          "सबसे नए उपलब्ध model का उपयोग",
+          "Client context isolation — clients के बीच डेटा और context के रिसाव को रोकना",
+          "Install किए गए Plugins की संख्या अधिकतम करना"
+        ],
+        "answer": 2,
+        "explanation": "Client context isolation सर्वोच्च प्राथमिकता है। एक फ़ोल्डर सीमा एक चतुर prompt से अधिक दुर्घटनाएँ रोकती है। गति उतनी महत्वपूर्ण नहीं जितनी यह सुनिश्चित करना कि Client A का डेटा Client B के आउटपुट में कभी न दिखे।"
+      },
+      {
+        "question": "मानव को किस पर हमेशा नियंत्रण रखना चाहिए, भूमिका चाहे जो हो?",
+        "options": [
+          "हर एकल मसौदा संशोधन",
+          "सभी फ़ाइल नामकरण निर्णय",
+          "अंतिम जिम्मेदारी: अनुमोदन निर्णय, बाहरी संचार और वास्तविक-दुनिया परिणामों वाले निर्णय",
+          "Token गिनती और लागत प्रबंधन"
+        ],
+        "answer": 2,
+        "explanation": "AI बार-बार की संरचना और मसौदा तैयार करने को तेज़ करता है। मानव को बनाए रखना चाहिए: बाज़ार व्याख्या (PM), brand tone अनुमोदन (marketing), बाहरी send-off (sales), deployment निर्णय (engineering) और कानूनी निर्णय (compliance)।"
+      },
+      {
+        "question": "परिदृश्य मार्गदर्शिका में 'output contract' क्या है?",
+        "options": [
+          "उपयोगकर्ता और Anthropic के बीच एक कानूनी समझौता",
+          "परिणाम किस format और स्थान पर होने चाहिए इस बारे में पूर्व-परिभाषित समझौता",
+          "Claude कितने tokens output कर सकता है इसकी सीमा",
+          "Claude के API output की कीमत"
+        ],
+        "answer": 1,
+        "explanation": "Output contract निर्दिष्ट करता है कि परिणाम कहाँ सहेजे जाएँ, किस format में और किस संरचना का पालन करना चाहिए। यह परिणामों को runs में बिखरने या असंगत होने से रोकता है।"
+      },
+      {
+        "question": "वर्तमान में किन कार्यों में AI adoption के सबसे मजबूत संकेत दिख रहे हैं?",
+        "options": [
+          "शारीरिक श्रम और जटिल face-to-face वार्तालाप",
+          "Programming, data entry, customer support, बार-बार दस्तावेज़ समीक्षा और channel-specific content adaptation",
+          "केवल software engineering",
+          "ऐसे कार्य जिन्हें कोई मानव निगरानी नहीं चाहिए"
+        ],
+        "answer": 1,
+        "explanation": "उच्च adoption का संबंध है: digital text, structured निर्णय, मौजूदा digital डेटा, दोहराए जाने वाले formats और स्पष्ट गुणवत्ता मानदंड। शारीरिक काम और उच्च-दाँव professional निर्णय अधिक धीरे-धीरे adopt होते हैं।"
+      }
+    ],
+    "part6": [
+      {
+        "question": "Claude Code सत्रों के लिए सबसे प्रभावी memory strategy क्या है?",
+        "options": [
+          "हर सत्र के बाद पूरा conversation transcript सहेजें",
+          "सब कुछ याद रखने के लिए Claude की built-in memory पर निर्भर रहें",
+          "हर सत्र के अंत में handoff.md को वर्तमान state, अगले कदम और अनसुलझे जोखिमों के साथ अपडेट करें",
+          "सभी जानकारी स्थायी रूप से संग्रहीत करने के लिए /memory उपयोग करें"
+        ],
+        "answer": 2,
+        "explanation": "सबसे सरल और प्रभावी memory strategy: सत्र के अंत में handoff.md अपडेट करें। यह एकल आदत 80% 'मैं कहाँ था?' भ्रम रोकती है। बातचीतें disposable हैं; फ़ाइलें असली memory हैं।"
+      },
+      {
+        "question": "Plans को बातचीत में रखने के बजाय फ़ाइलों में क्यों लिखा जाना चाहिए?",
+        "options": [
+          "फ़ाइलें conversation tokens से सस्ती हैं",
+          "फ़ाइलें सत्र सीमाओं से परे रहती हैं, स्वतंत्र रूप से समीक्षा हो सकती है, version-controlled हो सकती है और बातचीत को निष्पादन पर केंद्रित रखती है",
+          "Claude conversation format में plans नहीं समझ सकता",
+          "File plans और conversation plans में कोई अंतर नहीं है"
+        ],
+        "answer": 1,
+        "explanation": "File-based plans सत्रों में persist होती हैं, स्वतंत्र मानव समीक्षा की अनुमति देती हैं, Git versioning enable करती हैं और बातचीतों को re-planning के बजाय निष्पादन पर केंद्रित रखती हैं।"
+      },
+      {
+        "question": "Parallel Claude सत्र चलाने का मुख्य सिद्धांत क्या है?",
+        "options": [
+          "अधिकतम गति के लिए जितना हो सके उतने सत्र चलाएँ",
+          "सभी सत्रों के लिए एक ही फ़ाइलें और directories उपयोग करें",
+          "पहले भूमिकाएँ परिभाषित करें: कौन क्या करता है, प्रत्येक कौन सी फ़ाइलें छूता है और परिणाम कैसे मिलते हैं",
+          "Parallel सत्र अनुशंसित नहीं हैं"
+        ],
+        "answer": 2,
+        "explanation": "भूमिका स्पष्टता के बिना parallelism अराजकता बनाती है। Parallel सत्र शुरू करने से पहले जिम्मेदारियाँ, फ़ाइल सीमाएँ और merge strategies परिभाषित करें। असंरचित parallelism क्रमिक काम से भी बुरी है।"
+      },
+      {
+        "question": "किसी भी बाहरी tool (skill, Plugin, MCP server) को install करने से पहले क्या जाँचें?",
+        "options": [
+          "केवल download count",
+          "Last maintenance date, README quality, security permissions needed, context cost vs. utility और disable करने की आसानी",
+          "क्या इसका cool logo है",
+          "कुछ नहीं — marketplace quality control संभालता है"
+        ],
+        "answer": 1,
+        "explanation": "पाँच मानदंड: maintenance recency, documentation quality, security-sensitive permissions, cost-benefit ratio और reversibility। 'बाद के लिए सहेजे' tools operational assets बने बिना ढेर हो जाते हैं।"
+      },
+      {
+        "question": "Community में 'OpenClaw-style' operation का क्या मतलब है?",
+        "options": [
+          "किसी प्रतिस्पर्धी के उत्पाद का उपयोग",
+          "Scheduled tasks और remote control capabilities के साथ always-on, multi-channel, persistent-state work system",
+          "Claude उपयोग का एक free tier",
+          "एक specific coding framework"
+        ],
+        "answer": 1,
+        "explanation": "'OpenClaw-style' एक operational goal describe करता है: हमेशा सुलभ, न टूटने वाले sessions, time/event-triggered काम, embedded skills और safety boundaries के साथ remote control। Claude ecosystem में यह Claude Code + hooks + MCP + Remote Control + Scheduled Tasks को मिलाकर हासिल होता है।"
+      }
+    ],
+    "part7": [
+      {
+        "question": "Claude Code के governance model में तीन permission modes क्या हैं?",
+        "options": [
+          "Read, Write, Execute",
+          "Admin, User, Guest",
+          "Allow (स्वचालित रूप से आगे बढ़ें), Ask (मानव के लिए रोकें), Deny (पूरी तरह block करें)",
+          "Public, Private, Protected"
+        ],
+        "answer": 2,
+        "explanation": "Permission model allow/ask/deny उपयोग करता है, क्रम में मूल्यांकन: deny → ask → allow, पहला मिलान नियम लागू होता है। यह Claude क्या autonomously कर सकता है इस पर fine-grained control देता है।"
+      },
+      {
+        "question": "चार governance परतें क्या हैं?",
+        "options": [
+          "Frontend, Backend, Database, Network",
+          "Document layer (CLAUDE.md/rules), Settings layer (permissions), Runtime layer (hooks/approvals), Trace layer (logs/decisions)",
+          "User, Team, Organization, Enterprise",
+          "Input, Processing, Output, Storage"
+        ],
+        "answer": 1,
+        "explanation": "Document layer ज्ञान परिभाषित करती है, Settings layer सीमाएँ परिभाषित करती है, Runtime layer execution-time controls संभालती है और Trace layer रिकॉर्ड करती है क्या हुआ और क्यों। चारों मिलकर पूर्ण governance बनाती हैं।"
+      },
+      {
+        "question": "AI automation के लिए auditability क्यों महत्वपूर्ण है?",
+        "options": [
+          "यह केवल कानून द्वारा आवश्यक है",
+          "यह demos को अधिक professional दिखाती है",
+          "Audit trails के साथ वही automation infrastructure बन जाती है; उनके बिना, यह एक demo रहती है जो scale नहीं हो सकती",
+          "Auditability अधिकांश टीमों के लिए महत्वपूर्ण नहीं है"
+        ],
+        "answer": 2,
+        "explanation": "Auditability का अर्थ है समझाने में सक्षम होना: क्या पढ़ा गया, क्या बनाया गया, किसने अनुमोदित किया और क्या रहा। इसके बिना, automation व्यक्तिगत demos से विश्वसनीय team infrastructure में transition नहीं कर सकती।"
+      },
+      {
+        "question": "Observability और auditability में क्या अंतर है?",
+        "options": [
+          "वे एक ही चीज़ हैं",
+          "Observability developers के लिए है, auditability managers के लिए",
+          "Observability वर्तमान system state दिखाती है (dashboards); auditability समझाती है क्या हुआ और क्यों (accountability के लिए event records)",
+          "Observability auditability से अधिक महँगी है"
+        ],
+        "answer": 2,
+        "explanation": "Observability operational efficiency का dashboard है (उपयोग, लागत, patterns)। Auditability accountability का event record है (किसने क्या किया, क्यों, किस अनुमोदन के साथ)। Organizations को दोनों चाहिए।"
+      },
+      {
+        "question": "Claude Code के साथ निर्माण पर पुस्तक के अंतिम अध्याय का मुख्य सिद्धांत क्या है?",
+        "options": [
+          "हमेशा उपलब्ध सबसे उन्नत features उपयोग करें",
+          "एक पतला पूर्ण परिणाम plus इसे फिर बनाने की संरचना किसी भी प्रभावशाली demos से बेहतर है",
+          "गुणवत्ता से अधिक गति महत्वपूर्ण है",
+          "केवल developers को Claude Code से निर्माण करना चाहिए"
+        ],
+        "answer": 1,
+        "explanation": "निष्कर्ष: एक पूर्ण पतली website या automation workflow — brief, template, review split और handoff के साथ — जो अगले सप्ताह recreate हो सके, किसी भी विस्तृत अधूरी plan से अधिक मूल्यवान है।"
+      }
+    ],
+    "glossary": [
+      {
+        "question": "'Context Assembly' क्या है?",
+        "options": [
+          "एक साथ सभी उपलब्ध Plugins install करना",
+          "वर्तमान कार्य के लिए केवल प्रासंगिक नियम, फ़ाइलें और tool descriptions को input context में चुनने और एकत्र करने की प्रक्रिया",
+          "सबसे लंबा संभव prompt लिखना",
+          "पूरा codebase बातचीत में copy करना"
+        ],
+        "answer": 1,
+        "explanation": "Context Assembly एक चयन प्रक्रिया है, ढेर लगाने की नहीं। इसका अर्थ है केवल वही एकत्र करना जो वर्तमान कार्य को चाहिए — अधिक context बेहतर context नहीं है।"
+      },
+      {
+        "question": "'Resume Hygiene' का क्या अर्थ है?",
+        "options": [
+          "नौकरी interview से पहले अपना resume/CV साफ़ करना",
+          "Claude उपयोग करने से पहले कंप्यूटर restart करना",
+          "काम resume करने से पहले केवल वही रखना जो अगले सत्र को चाहिए और जमा शोर छोड़ना",
+          "टाइप करते समय hand sanitizer उपयोग करना"
+        ],
+        "answer": 2,
+        "explanation": "Resume Hygiene का अर्थ है resume करने से पहले state साफ़ करना — आवश्यक context preserve करते हुए पिछले सत्र का शोर छोड़ना। लंबे सत्र स्वाभाविक रूप से बेहतर नहीं होते; साफ़ handoffs बेहतर होती हैं।"
+      },
+      {
+        "question": "Hook एक prompt instruction से कैसे अलग है?",
+        "options": [
+          "Hooks चलाने में अधिक महँगे हैं",
+          "Hooks system level पर नियम लागू करते हैं (automatic braking), जबकि prompt instructions suggestions हैं जिन्हें अनदेखा किया जा सकता है (road signs)",
+          "Hooks केवल Cowork में काम करते हैं, Claude Code में नहीं",
+          "कोई व्यावहारिक अंतर नहीं है"
+        ],
+        "answer": 1,
+        "explanation": "Prompts व्यवहार का अनुरोध करते हैं; hooks इसे लागू करते हैं। 'editing के बाद lint चलाएँ' कहने वाला prompt skip हो सकता है। हर file edit के बाद lint चलाने के लिए configured Hook हमेशा निष्पादित होता है।"
+      },
+      {
+        "question": "Skill, Plugin और MCP के बीच क्या संबंध है?",
+        "options": [
+          "वे एक ही feature के तीन नाम हैं",
+          "Skill प्रक्रियाएँ परिभाषित करती है, MCP बाहरी tools से जुड़ती है, Plugin सब कुछ team deployment के लिए package करता है",
+          "Plugin सबसे सस्ता है, MCP mid-tier है, Skill premium है",
+          "उन्हें हमेशा एक साथ उपयोग करना होता है"
+        ],
+        "answer": 1,
+        "explanation": "Skills 'कैसे करें' हैं (प्रक्रियाएँ), MCP 'बाहरी tools तक पहुँचने का रास्ता' है (connections) और Plugins 'वह box है जो सब कुछ deploy करता है' (teams के लिए packages)। वे एक-दूसरे के पूरक हैं।"
+      },
+      {
+        "question": "Claude Code शब्द से भ्रम होने पर कौन सा तीन-bucket mental model मदद करता है?",
+        "options": [
+          "Cost, Speed, Quality",
+          "Input, Process, Output",
+          "Mechanics (काम कैसे बहता है), Safety (गलतियाँ कैसे रोकी जाती हैं), Continuity (सत्र कैसे persist होते हैं)",
+          "Frontend, Backend, Database"
+        ],
+        "answer": 2,
+        "explanation": "लगभग सभी Claude Code शब्द तीन श्रेणियों में आते हैं: mechanics (agentic loop, context assembly, tool orchestration), safety (permissions, hooks, approval gates) या continuity (session memory, handoff, resume hygiene)।"
+      }
+    ]
+  }
+}

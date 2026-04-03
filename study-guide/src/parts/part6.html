@@ -1,0 +1,169 @@
+<section class="part" data-part="part6">
+  <div class="part-header">
+    <h2 data-i18n="parts.part6.title">Part 6: Community Patterns &amp; Tools</h2>
+    <p class="part-subtitle">Chapters 9–10</p>
+    <div class="part-controls">
+      <button class="expand-all-btn" data-i18n="ui.expand_all">Expand All</button>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="6.1">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>6.1 Memory, Recall &amp; Search Patterns</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part6.6.1"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part6.sections.6_1.content">
+      <p>Community practitioners have developed recurring patterns for managing Claude's memory and context over time. These are not official features — they are operational habits that emerge from heavy daily use.</p>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> <strong>Session Memory</strong> is not about saving entire conversations. It is about maintaining structured state files (<code>handoff.md</code>, <code>decision-log.md</code>, <code>worklog.md</code>) that the next session reads on startup. The conversation is disposable; the files are the real memory.
+      </div>
+
+      <p><strong>Common memory patterns:</strong></p>
+      <ul>
+        <li><strong>File-based memory:</strong> <code>CLAUDE.md</code> + rule files + handoff files form a persistent memory layer that survives session boundaries</li>
+        <li><strong>Structured recall:</strong> Starting each session by reading <code>tasks/handoff.md</code> and <code>tasks/plan.md</code> before any new work</li>
+        <li><strong>Progressive disclosure:</strong> Loading background at the top, task-specific details only when activated (like skill frontmatter triggering full skill content)</li>
+      </ul>
+
+      <div class="callout callout-tip">
+        <strong>&#128161; Pro Tip:</strong> The most effective memory strategy is the simplest: at the end of every session, update <code>handoff.md</code> with current state, next steps, and unresolved risks. This single habit prevents 80% of "where was I?" confusion.
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="6.2">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>6.2 Plan.md &amp; File-Based Planning</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part6.6.2"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part6.sections.6_2.content">
+      <p>The <code>plan.md</code> pattern is one of the most widely adopted community practices. Instead of keeping the plan in conversation, write it to a file that both Claude and humans can reference.</p>
+
+      <p><strong>Why plans belong in files, not conversations:</strong></p>
+      <ul>
+        <li>Files survive session boundaries; conversations don't</li>
+        <li>Files can be reviewed by humans independently</li>
+        <li>Files can be version-controlled with Git</li>
+        <li>Files keep the conversation focused on execution, not re-planning</li>
+      </ul>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> The plan file is not bureaucracy — it is a rework-prevention device. Teams that plan before editing consistently report fewer rollbacks, shorter review cycles, and less context pollution in long sessions.
+      </div>
+
+      <p><strong>Effective plan.md structure:</strong></p>
+      <pre><code># Plan
+## Goal
+One sentence describing the desired end state.
+
+## Scope
+- Files to modify: [list]
+- Off-limits: [list]
+
+## Steps
+1. ...
+2. ...
+
+## Verification
+- Tests to pass: [list]
+- Manual checks: [list]
+
+## Open Questions
+- [Any unresolved items before starting]</code></pre>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="6.3">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>6.3 Parallel Sessions &amp; Multi-Agent Operations</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part6.6.3"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part6.sections.6_3.content">
+      <p>Advanced users run multiple Claude sessions in parallel, each with a different role. This is not about speed — it is about <em>context isolation</em>.</p>
+
+      <p><strong>Common parallel patterns:</strong></p>
+      <ul>
+        <li><strong>Plan + Implement:</strong> One session plans, another implements based on the written plan</li>
+        <li><strong>Implement + Review:</strong> One session writes code, another reviews in a separate worktree</li>
+        <li><strong>Main + Subagent research:</strong> Main session stays focused while a subagent explores documentation or gathers data</li>
+        <li><strong>Multi-worktree experiments:</strong> Test different approaches in isolated working directories, compare results</li>
+      </ul>
+
+      <div class="callout callout-warning">
+        <strong>&#9888;&#65039; Common Mistake:</strong> Parallelism without role clarity creates chaos, not speed. Before launching parallel sessions, define: who does what, which files each session can touch, and how results merge back. Unstructured parallelism is worse than sequential work.
+      </div>
+
+      <div class="callout callout-tip">
+        <strong>&#128161; Pro Tip:</strong> The "OpenClaw-style" operation that many community members aspire to means: always-on sessions, multi-channel access (terminal, phone, web), persistent state across sessions, scheduled tasks, and remote control. In the Claude ecosystem, you achieve this by combining Claude Code + CLAUDE.md + hooks + subagents + MCP + Remote Control + Channels + Scheduled Tasks.
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="6.4">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>6.4 Self-Improvement &amp; SEO/Content Loops</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part6.6.4"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part6.sections.6_4.content">
+      <p>Community patterns include using Claude to improve its own environment — creating skills, refining rules, and evaluating past outputs.</p>
+
+      <p><strong>Self-improvement loop:</strong></p>
+      <ol>
+        <li>Run a task with current rules and skills</li>
+        <li>Evaluate the output (manually or with a review subagent)</li>
+        <li>Update rules, skill descriptions, or templates based on failures</li>
+        <li>Re-run and compare</li>
+      </ol>
+
+      <p><strong>SEO and content automation patterns:</strong></p>
+      <ul>
+        <li>Keyword research → content structure → draft → SEO review skill → publication</li>
+        <li>Multi-channel adaptation: one research session feeds blog, social, newsletter, and email templates</li>
+        <li>Content calendar automation with scheduled tasks</li>
+      </ul>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> The meta-skill <code>skill-creator</code> can generate initial skill drafts from descriptions. However, it produces first drafts, not production-ready skills. Failure cases, edge conditions, and verification loops still require human review and iteration.
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="6.5">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>6.5 Tool Selection Criteria</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part6.6.5"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part6.sections.6_5.content">
+      <p>With growing ecosystems of skills, plugins, and MCP servers, selecting the right tools requires discipline.</p>
+
+      <p><strong>Evaluation checklist before installing any external tool:</strong></p>
+      <ol>
+        <li>When was it last maintained?</li>
+        <li>Does it have real README and examples?</li>
+        <li>What security-sensitive permissions does it need?</li>
+        <li>Is the context cost justified by the utility?</li>
+        <li>Can you disable it quickly if something goes wrong?</li>
+      </ol>
+
+      <p><strong>Where to find tools:</strong></p>
+      <table>
+        <tr><th>Source</th><th>Type</th></tr>
+        <tr><td>Anthropic Skills GitHub</td><td>Official / semi-official</td></tr>
+        <tr><td>Anthropic Claude Plugins GitHub</td><td>Official</td></tr>
+        <tr><td>agentskills.io</td><td>Standards documentation</td></tr>
+        <tr><td>skillsmp.com, skill hubs</td><td>Community marketplace</td></tr>
+        <tr><td>awesome-claude-skills lists on GitHub</td><td>Community curated</td></tr>
+      </table>
+
+      <div class="callout callout-warning">
+        <strong>&#9888;&#65039; Common Mistake:</strong> Collecting tools you never use. "Saved for later" tools pile up without becoming operational assets. Only install tools you will use three or more times this week. Review your installed tools monthly and remove unused ones.
+      </div>
+    </div>
+  </div>
+</section>

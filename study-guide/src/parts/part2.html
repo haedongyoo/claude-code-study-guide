@@ -1,0 +1,199 @@
+<section class="part" data-part="part2">
+  <div class="part-header">
+    <h2 data-i18n="parts.part2.title">Part 2: Practical Playbook</h2>
+    <p class="part-subtitle">Chapters 3–4</p>
+    <div class="part-controls">
+      <button class="expand-all-btn" data-i18n="ui.expand_all">Expand All</button>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="2.1">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>2.1 Cowork &amp; Claude Code: First Application Boundaries</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part2.2.1"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part2.sections.2_1.content">
+      <p>The most common confusion after installation is: "Where do I start?" The answer depends on your task type.</p>
+
+      <table>
+        <tr><th>Cowork</th><th>Claude Code</th></tr>
+        <tr><td>Document-first tasks: meeting notes, research briefs, folder reading, draft generation</td><td>Development-first tasks: bug fixes, tests, refactoring, plan documents</td></tr>
+        <tr><td>Don't expect it to be a universal backend system</td><td>Don't start by delegating an entire new feature at once</td></tr>
+      </table>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> This chapter is not about <em>how to use</em> Claude Code — it is about <em>how to operate</em> it. The core habits are: plan-before-edit, resume hygiene, review split, worktree separation, allowlists, and structured handoffs.
+      </div>
+
+      <p>Session management follows a decision tree:</p>
+      <ul>
+        <li><strong>Same goal, continuing?</strong> → <code>claude --continue</code> or <code>--resume</code></li>
+        <li><strong>Need a different direction?</strong> → <code>--fork-session</code></li>
+        <li><strong>File conflicts or role conflicts?</strong> → <code>--worktree</code> (separate working directory)</li>
+      </ul>
+
+      <div class="callout callout-tip">
+        <strong>&#128161; Pro Tip:</strong> People who use Claude Code well over time are not people who write better prompts — they are people who make work less interruptible.
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="2.2">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>2.2 Claude Code Operating Principles</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part2.2.2"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part2.sections.2_2.content">
+      <p>Eight habits separate productive Claude Code users from frustrated ones:</p>
+      <ol>
+        <li><strong>Plan before edit</strong> — Fix scope, verification, and no-go zones before touching code. For big tasks, write <code>plan.md</code> first.</li>
+        <li><strong>Keep resident context thin</strong> — <code>CLAUDE.md</code> is a work contract, not an encyclopedia. Move long-term state to <code>handoff.md</code>, <code>decision-log.md</code>.</li>
+        <li><strong>Allowlist first, bypass later</strong> — Start with narrow <code>allow</code> and <code>deny</code> rules. Only widen permissions after understanding them.</li>
+        <li><strong>Manual <code>/compact</code> at the right time</strong> — Compress after saving important state to files, not after the session has already degraded.</li>
+        <li><strong>Use resume deliberately</strong> — <code>--continue</code> for same direction, <code>--fork-session</code> when direction splits.</li>
+        <li><strong>Separate plan / implement / review</strong> — Don't cram all roles into one session. Split reduces context pollution and approval fatigue.</li>
+        <li><strong>Use worktrees</strong> — For conflicting work, experiments, or parallel reviews, separate the working directory.</li>
+        <li><strong>Manage cost by structure, not token counting</strong> — Reduce cache misses, tool output length, session length, and test log verbosity.</li>
+      </ol>
+
+      <div class="callout callout-warning">
+        <strong>&#9888;&#65039; Common Mistake:</strong> Jumping straight to implementation without a plan. In big tasks, this feels fast but leads to rework. The plan is not a bureaucratic step — it is a device that reduces rework.
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="2.3">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>2.3 Templates: CLAUDE.md, settings.json, Hooks</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part2.2.3"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part2.sections.2_3.content">
+      <p>A well-organized repository separates responsibilities across files. Here is the harness blueprint:</p>
+
+      <pre><code>repo/
+├── CLAUDE.md                    # Project contract (always loaded)
+├── .claude/
+│   ├── settings.json            # Allow/ask/deny boundaries
+│   ├── rules/
+│   │   ├── architecture.md      # Structure rules
+│   │   ├── testing.md           # Test standards
+│   │   └── frontend.md          # UI conventions
+│   └── hooks.json               # Auto-enforcement rules
+└── tasks/
+    ├── plan.md                  # What to do next
+    ├── verify.md                # Exit criteria
+    ├── decision-log.md          # Why this path was chosen
+    └── handoff.md               # Current state for next session</code></pre>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> Each file prevents a different type of failure. <code>CLAUDE.md</code> prevents context drift. <code>settings.json</code> prevents unsafe actions. <code>rules/*</code> prevents domain-specific mistakes. <code>hooks.json</code> turns "remember to do X" into "always do X." <code>tasks/*</code> prevents session amnesia.
+      </div>
+
+      <p><strong>Settings scope priority:</strong> Managed &gt; Command-line &gt; Local &gt; Project &gt; User. Organization-locked rules cannot be overridden by individual settings — this is why "my setting doesn't work" confusion often happens.</p>
+
+      <p><strong>Team vs. local separation:</strong> Team-shared standards go in <code>CLAUDE.md</code> and <code>.claude/settings.json</code>. Personal experiments go in <code>CLAUDE.local.md</code> or <code>.claude/settings.local.json</code>.</p>
+
+      <div class="callout callout-tip">
+        <strong>&#128161; Pro Tip:</strong> A minimal hook example that blocks dangerous Bash commands:
+      </div>
+      <pre><code>{
+  "hooks": {
+    "PreToolUse": [{
+      "matcher": "Bash",
+      "hooks": [{
+        "type": "command",
+        "command": ".claude/hooks/block-rm.sh"
+      }]
+    }]
+  }
+}</code></pre>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="2.4">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>2.4 Prompt Templates &amp; Engineering Layers</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part2.2.4"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part2.sections.2_4.content">
+      <p>Effective prompts are not about cleverness — they follow patterns. Here are the key prompt styles:</p>
+
+      <p><strong>Context-first prompt (recommended start routine):</strong></p>
+      <pre><code>Read CLAUDE.md, relevant rules, and tasks/verify.md first.
+Do NOT implement yet. Summarize:
+1. Task type
+2. Modification scope
+3. Off-limits areas
+4. Verification commands
+Then proceed only after approval.</code></pre>
+
+      <p><strong>Shortcut-prevention prompt (for coding tasks):</strong></p>
+      <pre><code>Goal: maintainable implementation, not just passing tests.
+Rules:
+1. No hardcoding or special-casing to pass tests.
+2. If tests conflict with requirements, report first.
+3. If using external code, explain why before importing.
+4. Separate direct implementation from external references.
+5. After changes, report what passed and what's unverified.</code></pre>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> The three engineering layers: (1) <strong>Prompt Engineering</strong> — crafting better instructions, (2) <strong>Context Engineering</strong> — choosing what to show Claude, (3) <strong>Harness Engineering</strong> — designing the entire work environment. Most people stop at layer 1. The real gains come from layers 2 and 3.
+      </div>
+
+      <p><strong>Compact Instructions template</strong> — controls what survives after <code>/compact</code>:</p>
+      <pre><code>## Compact Instructions
+When compacting, always preserve:
+- Last modified files and why
+- Passed tests, failed tests, untested items
+- Rejected alternatives and reasons
+- The ONE thing next turn should do immediately
+- Risk points requiring human review</code></pre>
+
+      <div class="callout callout-tip">
+        <strong>&#128161; Pro Tip:</strong> Good compression instructions don't make summaries pretty — they make the next session able to continue immediately.
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="2.5">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>2.5 Evaluation Loops &amp; Session Commands</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part2.2.5"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part2.sections.2_5.content">
+      <p>Six slash commands form your session management toolkit:</p>
+
+      <table>
+        <tr><th>Command</th><th>When to Use</th></tr>
+        <tr><td><code>/clear</code></td><td>Wipe accumulated conversation and restart fresh</td></tr>
+        <tr><td><code>/compact [focus]</code></td><td>Summarize long conversation, specifying what to keep</td></tr>
+        <tr><td><code>/context</code></td><td>Check what is consuming context space</td></tr>
+        <tr><td><code>/memory</code></td><td>See which memory files and CLAUDE.md layers are loaded</td></tr>
+        <tr><td><code>/init</code></td><td>Auto-generate a CLAUDE.md draft for a new repository</td></tr>
+        <tr><td><code>/cost</code></td><td>Check current token usage and cost</td></tr>
+      </table>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> Weekly evaluation should track: which CLAUDE.md / rules / hook versions were active, which skills or templates were used, what changed from last week, and whether pass rates and human correction amounts improved. Change rules and hooks — not just prompts — to find your optimal configuration.
+      </div>
+
+      <p><strong>Recommended learning path for official resources:</strong></p>
+      <ol>
+        <li>Release notes → what's possible now</li>
+        <li>Claude Help Center → product paths (Cowork, Skills, Connectors)</li>
+        <li>Claude Code Docs → advanced features (plugins, hooks, agent teams)</li>
+        <li>API / Agent SDK docs → building custom agent applications</li>
+        <li>GitHub repositories → real examples and structures</li>
+      </ol>
+
+      <div class="callout callout-warning">
+        <strong>&#9888;&#65039; Common Mistake:</strong> Reading demo posts as specifications, or official docs as operational tips. Keep the roles separate: official docs confirm facts and boundaries; community posts reveal patterns and failure modes; repositories show actual structure.
+      </div>
+    </div>
+  </div>
+</section>

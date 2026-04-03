@@ -1,0 +1,57 @@
+[
+  {
+    "question": "What is the recommended first action when starting a Claude Code session for a big task?",
+    "options": [
+      "Write the longest possible prompt with all context",
+      "Read CLAUDE.md, relevant rules, and verify.md — then summarize scope before implementing",
+      "Immediately start coding to save time",
+      "Turn off all permissions for faster workflow"
+    ],
+    "answer": 1,
+    "explanation": "The start routine matters more than the start prompt. Reading the project contract, rules, and exit criteria before implementation prevents rework and wrong-direction implementations."
+  },
+  {
+    "question": "What is the difference between a Skill and a Plugin?",
+    "options": [
+      "They are the same thing with different names",
+      "Skills are for coding, Plugins are for documents",
+      "A Skill is a reusable procedure; a Plugin bundles skills, commands, hooks, and connections for team deployment",
+      "Plugins are free, Skills are paid"
+    ],
+    "answer": 2,
+    "explanation": "Skills define 'how to do it' (procedures). Plugins package skills, tools, hooks, and connections into a deployable box — like an onboarding kit for team members."
+  },
+  {
+    "question": "Why should CLAUDE.md be kept thin rather than comprehensive?",
+    "options": [
+      "To save disk space",
+      "Because Claude can only read short files",
+      "It's a work contract, not an encyclopedia — long resident context wastes tokens and dilutes important rules",
+      "Thin files load faster in the browser"
+    ],
+    "answer": 2,
+    "explanation": "CLAUDE.md is loaded on every turn. Keeping it thin ensures important rules stay prominent. Long-term state belongs in handoff.md, decision-log.md, and other task files."
+  },
+  {
+    "question": "What does 'review split' mean in Claude Code operations?",
+    "options": [
+      "Splitting a code review into multiple pull requests",
+      "Separating implementation and review into different sessions to reduce context pollution",
+      "Having two people review the same code",
+      "Splitting the review budget between teams"
+    ],
+    "answer": 1,
+    "explanation": "Review split means not cramming planning, implementation, and review into one session. Separate sessions reduce context pollution and approval fatigue."
+  },
+  {
+    "question": "What survives after running /compact in Claude Code?",
+    "options": [
+      "Everything — /compact just makes the display shorter",
+      "Only the last 5 messages",
+      "Whatever the Compact Instructions specify: last modified files, test results, rejected alternatives, next action, and risk points",
+      "Nothing — /compact resets the entire session"
+    ],
+    "answer": 2,
+    "explanation": "Compact Instructions control what information survives compression. Without them, important context may be lost. Good instructions preserve state that the next turn needs to continue immediately."
+  }
+]

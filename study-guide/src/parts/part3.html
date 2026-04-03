@@ -1,0 +1,184 @@
+<section class="part" data-part="part3">
+  <div class="part-header">
+    <h2 data-i18n="parts.part3.title">Part 3: System Design</h2>
+    <p class="part-subtitle">Chapter 5</p>
+    <div class="part-controls">
+      <button class="expand-all-btn" data-i18n="ui.expand_all">Expand All</button>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="3.1">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>3.1 Context Engineering Deep Dive</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part3.3.1"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part3.sections.3_1.content">
+      <p><strong>Context Engineering</strong> is the discipline of choosing what information Claude sees at any given moment. It is not about writing longer prompts — it is about assembling the right context window.</p>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> <em>Context Assembly</em> = gathering the rules, files, memos, and tool descriptions needed for the current task into the actual input. It is a selection process, not a dumping process. More context is not better context.
+      </div>
+
+      <p>What fills the context window on every turn (even a one-line prompt):</p>
+      <ul>
+        <li>Your current question</li>
+        <li>Recent conversation history</li>
+        <li>Files Claude has read</li>
+        <li><code>CLAUDE.md</code> and rule files</li>
+        <li>Tool execution results</li>
+        <li>Claude's own recent output</li>
+      </ul>
+
+      <p><strong>Context Rot</strong> occurs when the context grows so long that early signals weaken. Long conversations gradually lose coherence — not because the model forgets, but because important early instructions get diluted by later noise.</p>
+
+      <div class="callout callout-warning">
+        <strong>&#9888;&#65039; Common Mistake:</strong> Loading the entire repository into context. Even when fixing a single bug, some users dump every file. This is slower, more expensive, and produces lower quality results. Show Claude only the function and the 20 lines of error log it needs.
+      </div>
+
+      <p><strong>Three isolations to design simultaneously:</strong></p>
+      <ol>
+        <li><strong>Context isolation</strong> — Don't mix investigation, planning, implementation, and review in one long session. Use subagents or separate sessions.</li>
+        <li><strong>File state isolation</strong> — Use worktrees or separate output folders for conflict-prone work.</li>
+        <li><strong>Approval isolation</strong> — Separate frequently-allowed actions from always-review actions via permissions and hooks.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="3.2">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>3.2 Harness Engineering</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part3.3.2"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part3.sections.3_2.content">
+      <p>Harness Engineering goes beyond prompt tuning. It encompasses the entire workspace: permissions, folder structure, test policies, session resume rules, handoff protocols, worktree isolation, and remote control setup.</p>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> A harness designs three things at once: (1) what Claude knows (context), (2) what Claude can do (tools and permissions), (3) what Claude must verify (tests and exit criteria). Missing any one of these creates a different class of failure.
+      </div>
+
+      <p><strong>The start routine matters more than the start prompt:</strong></p>
+      <ol>
+        <li>Check resident contract — read <code>CLAUDE.md</code>, relevant rules, current branch</li>
+        <li>Classify the task — investigation, implementation, or review?</li>
+        <li>Write the plan — scope, off-limits areas, verification commands</li>
+        <li>Confirm exit criteria — check <code>tasks/verify.md</code></li>
+        <li>Only then begin actual work</li>
+      </ol>
+
+      <div class="callout callout-tip">
+        <strong>&#128161; Pro Tip:</strong> Subagents and worktrees solve the same problem from different angles. Subagents isolate <em>context</em> (delegate research or review to a temporary worker). Worktrees isolate <em>file state</em> (physically separate working directories). Use subagents for brief investigations; use worktrees for parallel experiments.
+      </div>
+
+      <p>One of the most effective subagent uses is not making code faster, but <em>simulating different user roles</em>: a skeptical senior engineer, a new maintainer, a security reviewer, an ops person. Different perspectives catch trust-breaking issues like missing READMEs, side effects in status commands, and observability gaps.</p>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="3.3">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>3.3 Verification Structures</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part3.3.3"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part3.sections.3_3.content">
+      <p>Verification is what separates demos from production. A good verification plan answers: "What must pass before this task is done?"</p>
+
+      <p><strong>The <code>tasks/verify.md</code> template:</strong></p>
+      <pre><code># Verification Plan
+## Must Pass
+- [ ] Unit tests: `pnpm test -- signup`
+- [ ] Lint: `pnpm lint`
+- [ ] Type check: `pnpm typecheck`
+## Must Review (human)
+- [ ] Manual browser check on mobile
+- [ ] CTA text approved by stakeholder
+## Must Not Break
+- [ ] Existing auth flow unchanged
+- [ ] No new dependencies added</code></pre>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> Verification skills (checking that signup flows work end-to-end, that checkout states are correct, that CLI works in TTY environments) often have higher ROI than generation skills. A "well-written draft" is cheap — a "verified passing result" is expensive and valuable.
+      </div>
+
+      <div class="callout callout-warning">
+        <strong>&#9888;&#65039; Common Mistake:</strong> Treating test passage as the goal rather than maintainable implementation. Models can hardcode values or add special cases to make tests green. Your verification prompt should explicitly forbid shortcuts and require reporting when tests seem wrong.
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="3.4">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>3.4 Token Economics &amp; Cost Management</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part3.3.4"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part3.sections.3_4.content">
+      <p>Tokens are both a billing unit and a signal for how wide your task has spread. Even a one-line prompt sends much more: the question, conversation history, loaded files, CLAUDE.md, rules, tool outputs, and recent model output all enter the context window.</p>
+
+      <table>
+        <tr><th>Token Type</th><th>What It Includes</th></tr>
+        <tr><td><strong>Input tokens</strong></td><td>Prompts, files, conversation history, rule files, tool outputs</td></tr>
+        <tr><td><strong>Output tokens</strong></td><td>Explanations, code, summaries, tool call results</td></tr>
+      </table>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> "Saving tokens" is not about being stingy — it is about designing so Claude reads only what it needs. The <strong>Prompt Cache</strong> provides reuse benefits when similar backgrounds are sent repeatedly. Structure your context so the stable prefix (CLAUDE.md, rules) stays consistent and cacheable.
+      </div>
+
+      <p><strong>Cost is managed by structure, not by counting:</strong></p>
+      <ul>
+        <li>Reduce tool output verbosity (don't dump entire logs)</li>
+        <li>Keep sessions focused — don't mix unrelated tasks</li>
+        <li>Use <code>/compact</code> at strategic points, not as a last resort</li>
+        <li>Separate investigation from implementation into different sessions</li>
+        <li>Track cost with <code>/cost</code> to build intuition</li>
+      </ul>
+
+      <div class="callout callout-tip">
+        <strong>&#128161; Pro Tip:</strong> The <strong>Tool Result Budget</strong> concept means controlling how much context tool outputs consume. A test suite that dumps 500 lines of output eats your context fast. Configure tools to return summaries, not raw logs.
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="3.5">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>3.5 Session Management &amp; Resume Hygiene</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part3.3.5"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part3.sections.3_5.content">
+      <p><strong>Resume Hygiene</strong> means keeping only what the next session needs and discarding accumulated noise. Long sessions are not inherently better — they accumulate context rot.</p>
+
+      <p><strong>Session Memory template:</strong></p>
+      <pre><code># Current State
+- What I'm doing right now
+
+# Task Specification
+- What the user actually requested
+
+# Files and Functions
+- Important files and why they matter
+
+# Workflow
+- Frequently used commands and order
+
+# Errors &amp; Corrections
+- Failed attempts — do NOT repeat these
+
+# Key Results
+- Confirmed results and answers
+
+# Worklog
+- Recent steps (keep very short)</code></pre>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> Long sessions survive when information converges into five categories: current state, files, workflow, errors, and results. Everything else is noise. The <code>Errors &amp; Corrections</code> section is not a shame log — it is a re-failure prevention device.
+      </div>
+
+      <div class="callout callout-tip">
+        <strong>&#128161; Pro Tip:</strong> Use the status line (<code>/statusline</code>) as a dashboard. It shows working directory, Git branch, and context usage. When context usage climbs, save state to files and start a fresh session — don't push through until quality degrades.
+      </div>
+    </div>
+  </div>
+</section>

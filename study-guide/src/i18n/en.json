@@ -1,0 +1,680 @@
+{
+  "ui": {
+    "title": "Claude Code Study Guide",
+    "search_placeholder": "Search...",
+    "next": "Next →",
+    "prev": "← Previous",
+    "quiz_title": "Self-Check Quiz",
+    "progress": "Progress",
+    "expand_all": "Expand All",
+    "collapse_all": "Collapse All",
+    "retry": "Retry",
+    "score": "{correct}/{total} correct",
+    "mark_complete": "Mark as read",
+    "completed": "Completed"
+  },
+  "parts": {
+    "part1": {
+      "title": "Part 1: Building Fundamentals",
+      "sections": {
+        "1_1": {
+          "title": "Why the Ecosystem Is Hot",
+          "content": "<p>The AI landscape shifted from \"which model is smarter\" to \"which tool connects files, tests, Git, browser, and external services with the least friction.\" This is why Claude Code, Codex, and Gemini CLI are discussed together — the competition is now about <strong>work paths</strong>, not benchmark scores.</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> Claude Code is not just a coding app. It is a <em>work harness</em> combining memoized context, tool orchestration, permission gates, and resumable sessions. Cowork, Skills, Plugins, and Scheduled Tasks are extensions of this core harness into non-coding work.\n      </div>\n\n      <p>Research confirms this direction. METR reports that agent task horizons are growing rapidly, and Anthropic notes that the real performance gap comes from task structure and verification habits, not model names. The question is no longer \"how smart is the model?\" but \"who learns delegation rules and verification harnesses faster?\"</p>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; Pro Tip:</strong> Start by asking: \"Is my task question-based, document-based, or implementation-based?\" This single question determines whether you should use Chat, Projects, Cowork, or Claude Code.\n      </div>\n\n      <table>\n        <tr><th>What Changes Fast</th><th>What Lasts</th></tr>\n        <tr><td>Menu locations, plan tiers, preview status, feature names</td><td>Which work path to use, how to separate files and verification, where to place human checkpoints</td></tr>\n      </table>"
+        },
+        "1_2": {
+          "title": "Four Key Terms to Remember",
+          "content": "<p>Before diving deeper, internalize these four terms. Every chapter builds on them.</p>\n\n      <table>\n        <tr><th>Term</th><th>Meaning</th></tr>\n        <tr><td><strong>Memoized Context</strong></td><td>Background info held across turns so you don't re-explain every time</td></tr>\n        <tr><td><strong>Tool Orchestration</strong></td><td>The layer that decides which tools to use, in what order</td></tr>\n        <tr><td><strong>Permission Gate</strong></td><td>The boundary that separates allow, ask, and deny before execution</td></tr>\n        <tr><td><strong>Resumable Session</strong></td><td>The ability to pick up where you left off, even after disconnection</td></tr>\n      </table>\n\n      <p>These form a pipeline: <strong>User Request → Memoized Context → Tool Orchestration → Permission Gate → Execution & Verification → Resumable Session → Next Task</strong>. No matter how complex a workflow gets, it is always a variation of these five stages.</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> \"Memoized\" doesn't mean \"memorized.\" It means \"computed once, reused many times\" — like setting background rules that persist across every turn without re-sending them.\n      </div>"
+        },
+        "1_3": {
+          "title": "The Harness Concept",
+          "content": "<p>A <strong>harness</strong> is the outer structure that defines what Claude can read, modify, and verify. Think of it as setting up a colleague's workspace: you place reference materials on the desk, decide which drawers are accessible, and attach a checklist to complete before finishing.</p>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; Common Mistake:</strong> Sending \"Fix the login bug\" with no boundaries. A strong harness request looks like: \"Read only <code>auth/</code>, don't touch <code>.env</code>, pass login tests, leave a 3-line change note.\"\n      </div>\n\n      <p><strong>Harness Engineering</strong> is not about writing smarter prompts — it is about designing the workspace where Claude operates. It includes: which files are always loaded, what permissions are set, what tests must pass, and where results are stored.</p>\n\n      <p>The International AI Safety Report 2026 confirms: as model capabilities rise, harness and verification structures become <em>more</em> important, not less. Real-world tasks involve resource constraints, incomplete information, exceptions, and approval flows that raw model intelligence cannot handle alone.</p>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; Pro Tip:</strong> Even beginners can start building a harness: write basic rules in <code>CLAUDE.md</code>, set allow/deny scopes in <code>settings.json</code>, split big tasks with <code>plan.md</code>, and leave session state in <code>handoff.md</code>.\n      </div>"
+        },
+        "1_4": {
+          "title": "Work Surfaces: Chat, Projects, Cowork, Claude Code",
+          "content": "<p>The same Claude model behaves differently depending on which surface you use. Choosing the wrong surface is not a skill problem — it is a routing problem.</p>\n\n      <table>\n        <tr><th>Surface</th><th>Best For</th><th>Influenced By</th></tr>\n        <tr><td><strong>Chat</strong></td><td>Quick questions, idea sorting</td><td>Question quality</td></tr>\n        <tr><td><strong>Projects</strong></td><td>Persistent background knowledge</td><td>Folder structure, templates</td></tr>\n        <tr><td><strong>Cowork</strong></td><td>Document delegation — research, briefs, file organization</td><td>Folder structure, templates</td></tr>\n        <tr><td><strong>Claude Code</strong></td><td>Implementation and verification — code, tests, reviews</td><td>Rule files, verification loops</td></tr>\n      </table>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; Common Mistake:</strong> Three misconceptions: (1) \"Same model means same experience everywhere\" — wrong, the surface matters enormously. (2) \"Cowork is easy mode, Claude Code is hard mode\" — wrong, they differ by delegation style, not difficulty. (3) \"Try all surfaces at once\" — wrong, master one first then expand.\n      </div>\n\n      <p><strong>Good first tasks by surface:</strong></p>\n      <ul>\n        <li><strong>Chat:</strong> \"Summarize this report in 5 sentences with 3 questions.\"</li>\n        <li><strong>Projects:</strong> \"Read this folder and create a one-page background knowledge summary.\"</li>\n        <li><strong>Cowork:</strong> \"Read meeting notes and save a weekly brief draft to <code>outputs/</code>.\"</li>\n        <li><strong>Claude Code:</strong> \"Read this bug reproduction path, then write a hypothesis and fix plan in <code>plan.md</code>.\"</li>\n      </ul>"
+        },
+        "1_5": {
+          "title": "What Changes Fast vs. What Stays",
+          "content": "<p>Technology products evolve rapidly. To stay grounded, distinguish between volatile details and lasting principles.</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> The ecosystem is \"hot\" when four conditions are met simultaneously: (1) user behavior changes — people design workspaces instead of crafting prompts, (2) operational habits change — teams maintain <code>CLAUDE.md</code> as shared contracts, (3) the ecosystem expands — official and community skills, plugins, MCP servers multiply, (4) job roles are redesigned — marketing, tax, PM, design teams use Claude as an automation layer, not just a chatbot.\n      </div>\n\n      <p><strong>The four frames for reading the entire book:</strong></p>\n      <table>\n        <tr><th>Frame</th><th>Role</th><th>Analogy</th></tr>\n        <tr><td>Work Path</td><td>Where you start (Chat, Cowork, Claude Code)</td><td>The desk you sit at</td></tr>\n        <tr><td>Harness</td><td>The execution environment (permissions, rules, tests)</td><td>Drawers, locks, checklists on the desk</td></tr>\n        <tr><td>Operations Layer</td><td>Scheduling, deployment, analytics</td><td>The admin office</td></tr>\n        <tr><td>System</td><td>Everything combined with human review loops</td><td>The entire office building</td></tr>\n      </table>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; Pro Tip:</strong> When a new feature launches, don't ask \"Is it smarter?\" Ask: \"Which layer did they add — knowledge, tools, packages, or controls?\" This prevents over-configuration and keeps your setup stable.\n      </div>"
+        }
+      }
+    },
+    "part2": {
+      "title": "Part 2: Practical Playbook",
+      "sections": {
+        "2_1": {
+          "title": "Cowork & Claude Code: First Application Boundaries",
+          "content": "<p>The most common confusion after installation is: \"Where do I start?\" The answer depends on your task type.</p>\n\n      <table>\n        <tr><th>Cowork</th><th>Claude Code</th></tr>\n        <tr><td>Document-first tasks: meeting notes, research briefs, folder reading, draft generation</td><td>Development-first tasks: bug fixes, tests, refactoring, plan documents</td></tr>\n        <tr><td>Don't expect it to be a universal backend system</td><td>Don't start by delegating an entire new feature at once</td></tr>\n      </table>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> This chapter is not about <em>how to use</em> Claude Code — it is about <em>how to operate</em> it. The core habits are: plan-before-edit, resume hygiene, review split, worktree separation, allowlists, and structured handoffs.\n      </div>\n\n      <p>Session management follows a decision tree:</p>\n      <ul>\n        <li><strong>Same goal, continuing?</strong> → <code>claude --continue</code> or <code>--resume</code></li>\n        <li><strong>Need a different direction?</strong> → <code>--fork-session</code></li>\n        <li><strong>File conflicts or role conflicts?</strong> → <code>--worktree</code> (separate working directory)</li>\n      </ul>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; Pro Tip:</strong> People who use Claude Code well over time are not people who write better prompts — they are people who make work less interruptible.\n      </div>"
+        },
+        "2_2": {
+          "title": "Claude Code Operating Principles",
+          "content": "<p>Eight habits separate productive Claude Code users from frustrated ones:</p>\n      <ol>\n        <li><strong>Plan before edit</strong> — Fix scope, verification, and no-go zones before touching code. For big tasks, write <code>plan.md</code> first.</li>\n        <li><strong>Keep resident context thin</strong> — <code>CLAUDE.md</code> is a work contract, not an encyclopedia. Move long-term state to <code>handoff.md</code>, <code>decision-log.md</code>.</li>\n        <li><strong>Allowlist first, bypass later</strong> — Start with narrow <code>allow</code> and <code>deny</code> rules. Only widen permissions after understanding them.</li>\n        <li><strong>Manual <code>/compact</code> at the right time</strong> — Compress after saving important state to files, not after the session has already degraded.</li>\n        <li><strong>Use resume deliberately</strong> — <code>--continue</code> for same direction, <code>--fork-session</code> when direction splits.</li>\n        <li><strong>Separate plan / implement / review</strong> — Don't cram all roles into one session. Split reduces context pollution and approval fatigue.</li>\n        <li><strong>Use worktrees</strong> — For conflicting work, experiments, or parallel reviews, separate the working directory.</li>\n        <li><strong>Manage cost by structure, not token counting</strong> — Reduce cache misses, tool output length, session length, and test log verbosity.</li>\n      </ol>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; Common Mistake:</strong> Jumping straight to implementation without a plan. In big tasks, this feels fast but leads to rework. The plan is not a bureaucratic step — it is a device that reduces rework.\n      </div>"
+        },
+        "2_3": {
+          "title": "Templates: CLAUDE.md, settings.json, Hooks",
+          "content": "<p>A well-organized repository separates responsibilities across files. Here is the harness blueprint:</p>\n\n      <pre><code>repo/\n├── CLAUDE.md                    # Project contract (always loaded)\n├── .claude/\n│   ├── settings.json            # Allow/ask/deny boundaries\n│   ├── rules/\n│   │   ├── architecture.md      # Structure rules\n│   │   ├── testing.md           # Test standards\n│   │   └── frontend.md          # UI conventions\n│   └── hooks.json               # Auto-enforcement rules\n└── tasks/\n    ├── plan.md                  # What to do next\n    ├── verify.md                # Exit criteria\n    ├── decision-log.md          # Why this path was chosen\n    └── handoff.md               # Current state for next session</code></pre>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> Each file prevents a different type of failure. <code>CLAUDE.md</code> prevents context drift. <code>settings.json</code> prevents unsafe actions. <code>rules/*</code> prevents domain-specific mistakes. <code>hooks.json</code> turns \"remember to do X\" into \"always do X.\" <code>tasks/*</code> prevents session amnesia.\n      </div>\n\n      <p><strong>Settings scope priority:</strong> Managed &gt; Command-line &gt; Local &gt; Project &gt; User. Organization-locked rules cannot be overridden by individual settings — this is why \"my setting doesn't work\" confusion often happens.</p>\n\n      <p><strong>Team vs. local separation:</strong> Team-shared standards go in <code>CLAUDE.md</code> and <code>.claude/settings.json</code>. Personal experiments go in <code>CLAUDE.local.md</code> or <code>.claude/settings.local.json</code>.</p>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; Pro Tip:</strong> A minimal hook example that blocks dangerous Bash commands:\n      </div>\n      <pre><code>{\n  \"hooks\": {\n    \"PreToolUse\": [{\n      \"matcher\": \"Bash\",\n      \"hooks\": [{\n        \"type\": \"command\",\n        \"command\": \".claude/hooks/block-rm.sh\"\n      }]\n    }]\n  }\n}</code></pre>"
+        },
+        "2_4": {
+          "title": "Prompt Templates & Engineering Layers",
+          "content": "<p>Effective prompts are not about cleverness — they follow patterns. Here are the key prompt styles:</p>\n\n      <p><strong>Context-first prompt (recommended start routine):</strong></p>\n      <pre><code>Read CLAUDE.md, relevant rules, and tasks/verify.md first.\nDo NOT implement yet. Summarize:\n1. Task type\n2. Modification scope\n3. Off-limits areas\n4. Verification commands\nThen proceed only after approval.</code></pre>\n\n      <p><strong>Shortcut-prevention prompt (for coding tasks):</strong></p>\n      <pre><code>Goal: maintainable implementation, not just passing tests.\nRules:\n1. No hardcoding or special-casing to pass tests.\n2. If tests conflict with requirements, report first.\n3. If using external code, explain why before importing.\n4. Separate direct implementation from external references.\n5. After changes, report what passed and what's unverified.</code></pre>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> The three engineering layers: (1) <strong>Prompt Engineering</strong> — crafting better instructions, (2) <strong>Context Engineering</strong> — choosing what to show Claude, (3) <strong>Harness Engineering</strong> — designing the entire work environment. Most people stop at layer 1. The real gains come from layers 2 and 3.\n      </div>\n\n      <p><strong>Compact Instructions template</strong> — controls what survives after <code>/compact</code>:</p>\n      <pre><code>## Compact Instructions\nWhen compacting, always preserve:\n- Last modified files and why\n- Passed tests, failed tests, untested items\n- Rejected alternatives and reasons\n- The ONE thing next turn should do immediately\n- Risk points requiring human review</code></pre>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; Pro Tip:</strong> Good compression instructions don't make summaries pretty — they make the next session able to continue immediately.\n      </div>"
+        },
+        "2_5": {
+          "title": "Evaluation Loops & Session Commands",
+          "content": "<p>Six slash commands form your session management toolkit:</p>\n\n      <table>\n        <tr><th>Command</th><th>When to Use</th></tr>\n        <tr><td><code>/clear</code></td><td>Wipe accumulated conversation and restart fresh</td></tr>\n        <tr><td><code>/compact [focus]</code></td><td>Summarize long conversation, specifying what to keep</td></tr>\n        <tr><td><code>/context</code></td><td>Check what is consuming context space</td></tr>\n        <tr><td><code>/memory</code></td><td>See which memory files and CLAUDE.md layers are loaded</td></tr>\n        <tr><td><code>/init</code></td><td>Auto-generate a CLAUDE.md draft for a new repository</td></tr>\n        <tr><td><code>/cost</code></td><td>Check current token usage and cost</td></tr>\n      </table>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> Weekly evaluation should track: which CLAUDE.md / rules / hook versions were active, which skills or templates were used, what changed from last week, and whether pass rates and human correction amounts improved. Change rules and hooks — not just prompts — to find your optimal configuration.\n      </div>\n\n      <p><strong>Recommended learning path for official resources:</strong></p>\n      <ol>\n        <li>Release notes → what's possible now</li>\n        <li>Claude Help Center → product paths (Cowork, Skills, Connectors)</li>\n        <li>Claude Code Docs → advanced features (plugins, hooks, agent teams)</li>\n        <li>API / Agent SDK docs → building custom agent applications</li>\n        <li>GitHub repositories → real examples and structures</li>\n      </ol>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; Common Mistake:</strong> Reading demo posts as specifications, or official docs as operational tips. Keep the roles separate: official docs confirm facts and boundaries; community posts reveal patterns and failure modes; repositories show actual structure.\n      </div>"
+        }
+      }
+    },
+    "part3": {
+      "title": "Part 3: System Design",
+      "sections": {
+        "3_1": {
+          "title": "Context Engineering Deep Dive",
+          "content": "<p><strong>Context Engineering</strong> is the discipline of choosing what information Claude sees at any given moment. It is not about writing longer prompts — it is about assembling the right context window.</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> <em>Context Assembly</em> = gathering the rules, files, memos, and tool descriptions needed for the current task into the actual input. It is a selection process, not a dumping process. More context is not better context.\n      </div>\n\n      <p>What fills the context window on every turn (even a one-line prompt):</p>\n      <ul>\n        <li>Your current question</li>\n        <li>Recent conversation history</li>\n        <li>Files Claude has read</li>\n        <li><code>CLAUDE.md</code> and rule files</li>\n        <li>Tool execution results</li>\n        <li>Claude's own recent output</li>\n      </ul>\n\n      <p><strong>Context Rot</strong> occurs when the context grows so long that early signals weaken. Long conversations gradually lose coherence — not because the model forgets, but because important early instructions get diluted by later noise.</p>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; Common Mistake:</strong> Loading the entire repository into context. Even when fixing a single bug, some users dump every file. This is slower, more expensive, and produces lower quality results. Show Claude only the function and the 20 lines of error log it needs.\n      </div>\n\n      <p><strong>Three isolations to design simultaneously:</strong></p>\n      <ol>\n        <li><strong>Context isolation</strong> — Don't mix investigation, planning, implementation, and review in one long session. Use subagents or separate sessions.</li>\n        <li><strong>File state isolation</strong> — Use worktrees or separate output folders for conflict-prone work.</li>\n        <li><strong>Approval isolation</strong> — Separate frequently-allowed actions from always-review actions via permissions and hooks.</li>\n      </ol>"
+        },
+        "3_2": {
+          "title": "Harness Engineering",
+          "content": "<p>Harness Engineering goes beyond prompt tuning. It encompasses the entire workspace: permissions, folder structure, test policies, session resume rules, handoff protocols, worktree isolation, and remote control setup.</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> A harness designs three things at once: (1) what Claude knows (context), (2) what Claude can do (tools and permissions), (3) what Claude must verify (tests and exit criteria). Missing any one of these creates a different class of failure.\n      </div>\n\n      <p><strong>The start routine matters more than the start prompt:</strong></p>\n      <ol>\n        <li>Check resident contract — read <code>CLAUDE.md</code>, relevant rules, current branch</li>\n        <li>Classify the task — investigation, implementation, or review?</li>\n        <li>Write the plan — scope, off-limits areas, verification commands</li>\n        <li>Confirm exit criteria — check <code>tasks/verify.md</code></li>\n        <li>Only then begin actual work</li>\n      </ol>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; Pro Tip:</strong> Subagents and worktrees solve the same problem from different angles. Subagents isolate <em>context</em> (delegate research or review to a temporary worker). Worktrees isolate <em>file state</em> (physically separate working directories). Use subagents for brief investigations; use worktrees for parallel experiments.\n      </div>\n\n      <p>One of the most effective subagent uses is not making code faster, but <em>simulating different user roles</em>: a skeptical senior engineer, a new maintainer, a security reviewer, an ops person. Different perspectives catch trust-breaking issues like missing READMEs, side effects in status commands, and observability gaps.</p>"
+        },
+        "3_3": {
+          "title": "Verification Structures",
+          "content": "<p>Verification is what separates demos from production. A good verification plan answers: \"What must pass before this task is done?\"</p>\n\n      <p><strong>The <code>tasks/verify.md</code> template:</strong></p>\n      <pre><code># Verification Plan\n## Must Pass\n- [ ] Unit tests: `pnpm test -- signup`\n- [ ] Lint: `pnpm lint`\n- [ ] Type check: `pnpm typecheck`\n## Must Review (human)\n- [ ] Manual browser check on mobile\n- [ ] CTA text approved by stakeholder\n## Must Not Break\n- [ ] Existing auth flow unchanged\n- [ ] No new dependencies added</code></pre>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> Verification skills (checking that signup flows work end-to-end, that checkout states are correct, that CLI works in TTY environments) often have higher ROI than generation skills. A \"well-written draft\" is cheap — a \"verified passing result\" is expensive and valuable.\n      </div>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; Common Mistake:</strong> Treating test passage as the goal rather than maintainable implementation. Models can hardcode values or add special cases to make tests green. Your verification prompt should explicitly forbid shortcuts and require reporting when tests seem wrong.\n      </div>"
+        },
+        "3_4": {
+          "title": "Token Economics & Cost Management",
+          "content": "<p>Tokens are both a billing unit and a signal for how wide your task has spread. Even a one-line prompt sends much more: the question, conversation history, loaded files, CLAUDE.md, rules, tool outputs, and recent model output all enter the context window.</p>\n\n      <table>\n        <tr><th>Token Type</th><th>What It Includes</th></tr>\n        <tr><td><strong>Input tokens</strong></td><td>Prompts, files, conversation history, rule files, tool outputs</td></tr>\n        <tr><td><strong>Output tokens</strong></td><td>Explanations, code, summaries, tool call results</td></tr>\n      </table>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> \"Saving tokens\" is not about being stingy — it is about designing so Claude reads only what it needs. The <strong>Prompt Cache</strong> provides reuse benefits when similar backgrounds are sent repeatedly. Structure your context so the stable prefix (CLAUDE.md, rules) stays consistent and cacheable.\n      </div>\n\n      <p><strong>Cost is managed by structure, not by counting:</strong></p>\n      <ul>\n        <li>Reduce tool output verbosity (don't dump entire logs)</li>\n        <li>Keep sessions focused — don't mix unrelated tasks</li>\n        <li>Use <code>/compact</code> at strategic points, not as a last resort</li>\n        <li>Separate investigation from implementation into different sessions</li>\n        <li>Track cost with <code>/cost</code> to build intuition</li>\n      </ul>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; Pro Tip:</strong> The <strong>Tool Result Budget</strong> concept means controlling how much context tool outputs consume. A test suite that dumps 500 lines of output eats your context fast. Configure tools to return summaries, not raw logs.\n      </div>"
+        },
+        "3_5": {
+          "title": "Session Management & Resume Hygiene",
+          "content": "<p><strong>Resume Hygiene</strong> means keeping only what the next session needs and discarding accumulated noise. Long sessions are not inherently better — they accumulate context rot.</p>\n\n      <p><strong>Session Memory template:</strong></p>\n      <pre><code># Current State\n- What I'm doing right now\n\n# Task Specification\n- What the user actually requested\n\n# Files and Functions\n- Important files and why they matter\n\n# Workflow\n- Frequently used commands and order\n\n# Errors &amp; Corrections\n- Failed attempts — do NOT repeat these\n\n# Key Results\n- Confirmed results and answers\n\n# Worklog\n- Recent steps (keep very short)</code></pre>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> Long sessions survive when information converges into five categories: current state, files, workflow, errors, and results. Everything else is noise. The <code>Errors &amp; Corrections</code> section is not a shame log — it is a re-failure prevention device.\n      </div>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; Pro Tip:</strong> Use the status line (<code>/statusline</code>) as a dashboard. It shows working directory, Git branch, and context usage. When context usage climbs, save state to files and start a fresh session — don't push through until quality degrades.\n      </div>"
+        }
+      }
+    },
+    "part4": {
+      "title": "Part 4: Extensions & Automation",
+      "sections": {
+        "4_1": {
+          "title": "Skills: Teaching Claude Repeatable Procedures",
+          "content": "<p>When you explain the same procedure for the tenth time — meeting note format, weekly brief structure, code review checklist — it is time to create a <strong>Skill</strong>. A Skill is a reusable work manual that reduces explanation cost.</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> Skills are not prompt snippets. They are folder structures with a main document (<code>SKILL.md</code>), supporting scripts, reference files, and assets. The official guide recommends <em>progressive disclosure</em>: the frontmatter and description load first; details load only when the skill activates.\n      </div>\n\n      <table>\n        <tr><th>Promote to Skill When...</th><th>Keep as Conversation When...</th></tr>\n        <tr><td>Output format repeats, variation needs to shrink, storage location and tool order need fixing</td><td>The topic changes often, it's a one-time brainstorming exploration</td></tr>\n      </table>\n\n      <p><strong>Projects vs. Skills:</strong> Projects are background knowledge that's always present. Skills are procedures activated when a matching task arrives. Background without procedure leads to inconsistent output; procedure without context leads to empty results.</p>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; Common Mistake:</strong> The skill's <code>description</code> field is not an introduction paragraph — it is a routing rule. If the description is vague, the skill either never triggers (undertriggering) or fires for unrelated tasks (overtriggering). Write descriptions like: \"Use this skill when the user asks for a weekly competitor brief, market review, or industry trend summary.\"\n      </div>"
+        },
+        "4_2": {
+          "title": "Skill Types & Design Template",
+          "content": "<p>Skills cluster into a few common roles regardless of their specific domain:</p>\n      <ul>\n        <li><strong>Library/SDK reference</strong> — Fixes usage patterns for internal or tricky external libraries</li>\n        <li><strong>Verification/testing</strong> — Standardizes checking procedures (Playwright flows, CLI tests)</li>\n        <li><strong>Data pipeline</strong> — Organizes data sources and report paths</li>\n        <li><strong>Recurring operations</strong> — Weekly reviews, standups, ticket creation</li>\n        <li><strong>Scaffolding</strong> — Generates initial service or handler structures</li>\n        <li><strong>Quality gate</strong> — Review standards, test rules, security checklists</li>\n      </ul>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; Pro Tip:</strong> Skills that try to do everything (\"research, code, test, and deploy\") seem powerful but are fragile. Skills that solve one bottleneck precisely survive longest. Verification skills often have higher ROI than generation skills.\n      </div>\n\n      <p><strong>Skill Design Template:</strong></p>\n      <pre><code>---\nname: weekly-brief\ndescription: >\n  Use for weekly competitor briefs, recurring market checks,\n  and industry trend summary requests.\ndisable-model-invocation: false\n---\n# Goal\nCreate a weekly competitor brief using only the last 7 days of evidence.\n\n# Input Sources\n- Competitor list: `references/competitors.md`\n- Template: `assets/weekly-brief-template.md`\n\n# Steps\n1. Read competitor list and template\n2. Search for changes in the last 7 days\n3. Draft brief following template structure\n4. Flag uncertain items separately\n5. Save to `outputs/weekly-brief-YYYY-MM-DD.md`\n\n# Rules\n- Max 3 action items\n- Sources and dates required\n- No speculation — mark unknowns as \"Needs verification\"</code></pre>"
+        },
+        "4_3": {
+          "title": "Plugins: Role Packages for Teams",
+          "content": "<p>A <strong>Plugin</strong> bundles multiple skills, commands, hooks, and connection settings into a single deployable package. If a Skill is a work manual, a Plugin is the onboarding box you hand to a new team member.</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> The word \"plugin\" means different things depending on the surface. <strong>Claude Code plugins</strong> bundle commands, agents, hooks, skills, MCP, and LSP for development workflows. <strong>Cowork plugins</strong> bundle skills, connectors, slash commands, and sub-agents for knowledge work roles. Same name, different installation experience.\n      </div>\n\n      <p><strong>The progression:</strong> MCP connects to external tools → Skills define procedures → Plugins package everything for deployment. In one line: <em>Skills are \"how to do it,\" MCP is \"the path to reach it,\" Plugins are \"the box that deploys it.\"</em></p>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; Common Mistake:</strong> Treating external Skills and Plugins as just documents. They can contain tool calls, file access, external URL fetches, and execution scripts. Before installing any external skill, check: (1) Does it fetch external URLs? (2) Does it use Bash, file writes, or network? (3) Do its files match its stated purpose? (4) Will it run near sensitive data? (5) Can you disable it quickly?\n      </div>"
+        },
+        "4_4": {
+          "title": "MCP: External Tool Connections",
+          "content": "<p><strong>Model Context Protocol (MCP)</strong> is the standardized way Claude connects to external tools and services — like a USB-C port for AI tool integration.</p>\n\n      <p><strong>MCP vs. Connector:</strong></p>\n      <table>\n        <tr><th>Connector</th><th>MCP</th></tr>\n        <tr><td>User-facing — search and connect from a settings screen</td><td>Developer-facing — design server, tool interface, and response format</td></tr>\n        <tr><td>Like an app store connection</td><td>Like designing the internal wiring panel</td></tr>\n        <tr><td>Best when connection itself is the goal</td><td>Best when you need control over tool structure post-connection</td></tr>\n      </table>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; Pro Tip:</strong> Quick decision: \"I just want to connect and use it\" → Connector. \"I want to control which tools are exposed, response formats, and which projects activate it\" → MCP. Mixing them up leads to either over-engineering simple connections or under-engineering complex automation.\n      </div>"
+        },
+        "4_5": {
+          "title": "Hooks, Subagents & Control Surfaces",
+          "content": "<p><strong>Hooks</strong> transform \"remember to check\" into \"always check.\" They are automatic intervention rules at specific moments — pre-tool-use, post-edit, pre-push, etc.</p>\n\n      <p>If prompts are road signs (\"please drive carefully\"), hooks are seatbelt alarms and automatic braking. Signs can be ignored; safety systems change actual behavior. This is why hooks matter more as teams scale.</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> Hook types include command hooks (shell scripts), prompt-based hooks, agent-based hooks, and HTTP hooks. For teams, managed-only hooks and HTTP hook allowlists provide organizational control that goes far beyond personal shell scripts.\n      </div>\n\n      <p><strong>Subagents</strong> isolate context. When the main session handles exploration, implementation, review, and documentation, context gets noisy. Delegating research or review to a subagent keeps the main session focused. Think: team lead delegates fact-checking to an analyst instead of doing it personally.</p>\n\n      <p><strong>Remote Control / Channels / Scheduled Tasks</strong> all re-start work, but the trigger differs:</p>\n      <table>\n        <tr><th>Feature</th><th>Who Pushes the Button</th></tr>\n        <tr><td>Remote Control</td><td>A human, from a distance</td></tr>\n        <tr><td>Channels</td><td>An external system (webhook, message)</td></tr>\n        <tr><td>Scheduled Tasks</td><td>Time itself (cron-like)</td></tr>\n      </table>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; Pro Tip:</strong> Four practical rules: (1) If you keep repeating the same explanation, extract it to a Skill or rule file. (2) If you keep connecting external tools, narrow permission scope before adding more MCP connections. (3) If verification keeps being forgotten, push it to hooks. (4) If you need parallelism, try a small subagent or worktree before launching full agent teams.\n      </div>"
+        }
+      }
+    },
+    "part5": {
+      "title": "Part 5: Role-Based Playbooks",
+      "sections": {
+        "5_1": {
+          "title": "PM, Strategy & Founders",
+          "content": "<p>Product managers, strategists, and founders share a common starting point: organizing research and making decisions quickly. The first wins come from <strong>research briefs</strong>, meeting note structuring, and decision documentation — not from full automation.</p>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; Pro Tip:</strong> For PMs, the ideal Claude adoption path is: (1) Meeting note summaries → (2) Weekly research briefs → (3) PRD draft generation → (4) Competitive analysis with templates. Each step builds on the previous file structure.\n      </div>\n\n      <p><strong>Founder / Solo Operator minimum file set:</strong></p>\n      <pre><code>workspace/\n├── about-me.md          # Background, industry, goals\n├── working-rules.md     # Tone, forbidden topics, priorities\n├── projects/\n│   └── current/\n│       ├── brief.md     # This week's focus\n│       └── competitors.md\n├── templates/\n│   └── weekly-brief.md\n└── outputs/</code></pre>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> For strategists, the human must always own: market interpretation, priority decisions, and stakeholder alignment. Claude accelerates the research and structuring — not the judgment.\n      </div>\n\n      <p><strong>What humans must keep:</strong> Market interpretation, priority setting, and stakeholder negotiation. Claude handles research gathering, draft structuring, and format consistency.</p>"
+        },
+        "5_2": {
+          "title": "Marketing & Content",
+          "content": "<p>Marketing teams get the fastest returns from Claude when they establish brand voice files and content templates first. Without <code>brand-voice.md</code> and <code>anti-ai-writing-style.md</code>, every piece of content requires extensive tone correction.</p>\n\n      <p><strong>Content operations adoption path:</strong></p>\n      <ol>\n        <li>Topic research and content structure outlines</li>\n        <li>First drafts with brand voice templates</li>\n        <li>Multi-channel adaptation (blog → social → newsletter)</li>\n        <li>SEO optimization with structured templates</li>\n        <li>Regular content calendar automation</li>\n      </ol>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; Common Mistake:</strong> Saying \"write in our company tone\" without providing a <code>brand-voice.md</code>. Claude cannot intuit your brand. Create a file with: preferred phrases, forbidden phrases, sentence length guidelines, formality level, and 2–3 example paragraphs showing the ideal tone.\n      </div>\n\n      <p><strong>What humans must keep:</strong> Final message decisions, brand tone approval, and external publication sign-off. Claude handles research synthesis, structural drafting, and format adaptation.</p>"
+        },
+        "5_3": {
+          "title": "Sales, Customer Success & Operations",
+          "content": "<p>Sales and customer success teams benefit most from <strong>account briefs</strong> and <strong>follow-up email drafts</strong>. The key constraint: all external communications must pass through human approval gates.</p>\n\n      <p><strong>Operations and back-office automation</strong> should start with the lowest-risk tasks: folder organization, classification, draft summaries, and template-based reports. High-risk automation (actual data entry, payment processing, deletion) should only come after governance structures are in place.</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> For agency and team operators, the critical principle is <em>client context isolation</em>. When managing multiple clients simultaneously, the biggest risk is not slow output — it is context contamination between clients. Separate folders per client, shared templates, and strict naming conventions prevent cross-client leakage.\n      </div>\n\n      <pre><code>clients/\n├── client-a/\n│   ├── brief.md\n│   ├── glossary.md\n│   └── approval-rules.md\n├── client-b/\n│   ├── brief.md\n│   └── ...\ntemplates/\n├── client-report-template.md\n└── review-checklist.md\nteam/\n├── shared-rules.md\n└── naming-convention.md</code></pre>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; Pro Tip:</strong> In an agency context, one folder boundary prevents more accidents than one clever prompt. Speed matters less than making sure Client A's data never leaks into Client B's output.\n      </div>"
+        },
+        "5_4": {
+          "title": "Design, Engineering & Research",
+          "content": "<p><strong>Design/Branding:</strong> Designers get the most value from reference-based exploration and implementation QA. Use images as input — screenshots of bugs, reference layouts, desired states. Visual context often communicates what paragraphs of CSS descriptions cannot.</p>\n\n      <p><strong>Engineering:</strong> The strongest first task is always a small bug fix with a test, not a large new feature. The adoption path: (1) bug fix + test → (2) refactoring with plan → (3) code review with review split → (4) parallel worktree experiments → (5) CI integration and automated hooks.</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> For researchers and analysts, Claude excels at: summarization, glossary creation, comparison tables, question generation, and structured literature reviews. The human must always own: claim interpretation, reproduction result judgment, and original insight.\n      </div>\n\n      <p><strong>Adoption priority across all roles follows the same pattern:</strong></p>\n      <ol>\n        <li>Gather and organize information (lowest risk)</li>\n        <li>Create first drafts with templates</li>\n        <li>Review and refine with verification loops</li>\n        <li>Automate recurring workflows with skills</li>\n        <li>Scale with parallel agents and scheduled tasks (highest risk, last step)</li>\n      </ol>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; Common Mistake:</strong> Starting with end-to-end automation. The teams that go farthest start with the front-end of the process (organizing, structuring, drafting) and only automate the back-end (execution, deployment, delivery) after governance is established.\n      </div>"
+        },
+        "5_5": {
+          "title": "Scenario Guide: Matching Blockers to Workflows",
+          "content": "<p>Chapter 8 is not a feature encyclopedia — it is a <em>situation matching table</em>. The approach: identify today's blocker → classify the task shape → select the file set → execute → verify through approval gate → leave a structured handoff.</p>\n\n      <p><strong>The workflow for any blocked scenario:</strong></p>\n      <ol>\n        <li><strong>Today's blocker</strong> — What specific task is stuck?</li>\n        <li><strong>Task shape</strong> — Is it research, drafting, implementation, or review?</li>\n        <li><strong>File set selection</strong> — Which minimum files does this task need?</li>\n        <li><strong>Execution</strong> — Run the workflow with output contract</li>\n        <li><strong>Approval gate</strong> — Human checks before anything goes external</li>\n        <li><strong>Structured handoff</strong> — State and next steps for the next session</li>\n      </ol>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> Key terms for scenario matching: <em>output contract</em> (what format and location results must follow), <em>token hotspot</em> (where context suddenly gets expensive), <em>approval gate</em> (mandatory human check before external delivery), and <em>structured handoff</em> (formatted state memo for session continuity).\n      </div>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; Pro Tip:</strong> The gap ahead will widen not between people who know more features, but between teams that learn role-specific delegation strategies faster. Development and customer support adopt first (broad, low-risk tasks); legal, finance, and research adopt more cautiously (summary and classification first, judgment later).\n      </div>"
+        }
+      }
+    },
+    "part6": {
+      "title": "Part 6: Community Patterns & Tools",
+      "sections": {
+        "6_1": {
+          "title": "Memory, Recall & Search Patterns",
+          "content": "<p>Community practitioners have developed recurring patterns for managing Claude's memory and context over time. These are not official features — they are operational habits that emerge from heavy daily use.</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> <strong>Session Memory</strong> is not about saving entire conversations. It is about maintaining structured state files (<code>handoff.md</code>, <code>decision-log.md</code>, <code>worklog.md</code>) that the next session reads on startup. The conversation is disposable; the files are the real memory.\n      </div>\n\n      <p><strong>Common memory patterns:</strong></p>\n      <ul>\n        <li><strong>File-based memory:</strong> <code>CLAUDE.md</code> + rule files + handoff files form a persistent memory layer that survives session boundaries</li>\n        <li><strong>Structured recall:</strong> Starting each session by reading <code>tasks/handoff.md</code> and <code>tasks/plan.md</code> before any new work</li>\n        <li><strong>Progressive disclosure:</strong> Loading background at the top, task-specific details only when activated (like skill frontmatter triggering full skill content)</li>\n      </ul>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; Pro Tip:</strong> The most effective memory strategy is the simplest: at the end of every session, update <code>handoff.md</code> with current state, next steps, and unresolved risks. This single habit prevents 80% of \"where was I?\" confusion.\n      </div>"
+        },
+        "6_2": {
+          "title": "Plan.md & File-Based Planning",
+          "content": "<p>The <code>plan.md</code> pattern is one of the most widely adopted community practices. Instead of keeping the plan in conversation, write it to a file that both Claude and humans can reference.</p>\n\n      <p><strong>Why plans belong in files, not conversations:</strong></p>\n      <ul>\n        <li>Files survive session boundaries; conversations don't</li>\n        <li>Files can be reviewed by humans independently</li>\n        <li>Files can be version-controlled with Git</li>\n        <li>Files keep the conversation focused on execution, not re-planning</li>\n      </ul>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> The plan file is not bureaucracy — it is a rework-prevention device. Teams that plan before editing consistently report fewer rollbacks, shorter review cycles, and less context pollution in long sessions.\n      </div>\n\n      <p><strong>Effective plan.md structure:</strong></p>\n      <pre><code># Plan\n## Goal\nOne sentence describing the desired end state.\n\n## Scope\n- Files to modify: [list]\n- Off-limits: [list]\n\n## Steps\n1. ...\n2. ...\n\n## Verification\n- Tests to pass: [list]\n- Manual checks: [list]\n\n## Open Questions\n- [Any unresolved items before starting]</code></pre>"
+        },
+        "6_3": {
+          "title": "Parallel Sessions & Multi-Agent Operations",
+          "content": "<p>Advanced users run multiple Claude sessions in parallel, each with a different role. This is not about speed — it is about <em>context isolation</em>.</p>\n\n      <p><strong>Common parallel patterns:</strong></p>\n      <ul>\n        <li><strong>Plan + Implement:</strong> One session plans, another implements based on the written plan</li>\n        <li><strong>Implement + Review:</strong> One session writes code, another reviews in a separate worktree</li>\n        <li><strong>Main + Subagent research:</strong> Main session stays focused while a subagent explores documentation or gathers data</li>\n        <li><strong>Multi-worktree experiments:</strong> Test different approaches in isolated working directories, compare results</li>\n      </ul>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; Common Mistake:</strong> Parallelism without role clarity creates chaos, not speed. Before launching parallel sessions, define: who does what, which files each session can touch, and how results merge back. Unstructured parallelism is worse than sequential work.\n      </div>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; Pro Tip:</strong> The \"OpenClaw-style\" operation that many community members aspire to means: always-on sessions, multi-channel access (terminal, phone, web), persistent state across sessions, scheduled tasks, and remote control. In the Claude ecosystem, you achieve this by combining Claude Code + CLAUDE.md + hooks + subagents + MCP + Remote Control + Channels + Scheduled Tasks.\n      </div>"
+        },
+        "6_4": {
+          "title": "Self-Improvement & SEO/Content Loops",
+          "content": "<p>Community patterns include using Claude to improve its own environment — creating skills, refining rules, and evaluating past outputs.</p>\n\n      <p><strong>Self-improvement loop:</strong></p>\n      <ol>\n        <li>Run a task with current rules and skills</li>\n        <li>Evaluate the output (manually or with a review subagent)</li>\n        <li>Update rules, skill descriptions, or templates based on failures</li>\n        <li>Re-run and compare</li>\n      </ol>\n\n      <p><strong>SEO and content automation patterns:</strong></p>\n      <ul>\n        <li>Keyword research → content structure → draft → SEO review skill → publication</li>\n        <li>Multi-channel adaptation: one research session feeds blog, social, newsletter, and email templates</li>\n        <li>Content calendar automation with scheduled tasks</li>\n      </ul>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> The meta-skill <code>skill-creator</code> can generate initial skill drafts from descriptions. However, it produces first drafts, not production-ready skills. Failure cases, edge conditions, and verification loops still require human review and iteration.\n      </div>"
+        },
+        "6_5": {
+          "title": "Tool Selection Criteria",
+          "content": "<p>With growing ecosystems of skills, plugins, and MCP servers, selecting the right tools requires discipline.</p>\n\n      <p><strong>Evaluation checklist before installing any external tool:</strong></p>\n      <ol>\n        <li>When was it last maintained?</li>\n        <li>Does it have real README and examples?</li>\n        <li>What security-sensitive permissions does it need?</li>\n        <li>Is the context cost justified by the utility?</li>\n        <li>Can you disable it quickly if something goes wrong?</li>\n      </ol>\n\n      <p><strong>Where to find tools:</strong></p>\n      <table>\n        <tr><th>Source</th><th>Type</th></tr>\n        <tr><td>Anthropic Skills GitHub</td><td>Official / semi-official</td></tr>\n        <tr><td>Anthropic Claude Plugins GitHub</td><td>Official</td></tr>\n        <tr><td>agentskills.io</td><td>Standards documentation</td></tr>\n        <tr><td>skillsmp.com, skill hubs</td><td>Community marketplace</td></tr>\n        <tr><td>awesome-claude-skills lists on GitHub</td><td>Community curated</td></tr>\n      </table>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; Common Mistake:</strong> Collecting tools you never use. \"Saved for later\" tools pile up without becoming operational assets. Only install tools you will use three or more times this week. Review your installed tools monthly and remove unused ones.\n      </div>"
+        }
+      }
+    },
+    "part7": {
+      "title": "Part 7: Governance & Final Practice",
+      "sections": {
+        "7_1": {
+          "title": "Why Governance Matters",
+          "content": "<p>Governance is not a compliance checkbox — it is the structure that lets teams use AI with confidence instead of anxiety. Without governance, every automation is a demo that cannot become infrastructure.</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> The core question governance answers: \"What can Claude do without asking, what must it ask about, and what must it never do?\" This is the allow/ask/deny framework applied at organizational scale.\n      </div>\n\n      <p><strong>Risk classification example:</strong></p>\n      <table>\n        <tr><th>Risk Level</th><th>Examples</th><th>Approval Mode</th></tr>\n        <tr><td><strong>Low</strong></td><td>Meeting summaries, internal drafts, test additions</td><td>Auto-execute</td></tr>\n        <tr><td><strong>Medium</strong></td><td>Customer-facing drafts, regular reports, refactoring</td><td>Human review then execute</td></tr>\n        <tr><td><strong>High</strong></td><td>Production deployment, customer emails, accounting entries, permission changes, sensitive data queries</td><td>Human approval required — no execution without it</td></tr>\n      </table>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; Pro Tip:</strong> Governance rollout works best in phases: Week 1 — block <code>.env</code> access and destructive commands, require approval for deployments. Week 2 — standardize allowed plugins/skills, organize CLAUDE.md and rules per project. Week 3 — add cost monitoring and establish handoff/approval logging habits.\n      </div>"
+        },
+        "7_2": {
+          "title": "Permission Models & Four Governance Layers",
+          "content": "<p>The permission model uses three modes: <strong>allow</strong> (proceed automatically), <strong>ask</strong> (pause for human decision), and <strong>deny</strong> (block completely). Rules are evaluated in order: deny → ask → allow, with the first match applying.</p>\n\n      <p><strong>The four governance layers:</strong></p>\n      <ol>\n        <li><strong>Document layer</strong> — <code>CLAUDE.md</code>, rule files, skill instructions: what Claude should know and follow</li>\n        <li><strong>Settings layer</strong> — <code>settings.json</code>, permission rules, managed settings: what Claude can and cannot do</li>\n        <li><strong>Runtime layer</strong> — Hooks, approval gates, plan mode: what happens during execution</li>\n        <li><strong>Trace layer</strong> — Work logs, approval logs, decision logs, handoff files: what happened and why</li>\n      </ol>\n\n      <div class=\"callout callout-warning\">\n        <strong>&#9888;&#65039; Common Mistake:</strong> Using <code>bypassPermissions</code> as a team default. Community posts often recommend \"turn off all permissions for speed.\" Anthropic treats this as a permission mode that organizations can disable entirely via <code>disableBypassPermissionsMode</code>. Individual experiments and team standards should never share the same permission level.\n      </div>\n\n      <p><strong>Two-layer permission structure for teams:</strong></p>\n      <ul>\n        <li><strong>Global (user-level):</strong> Block <code>rm -rf</code>, secret files, force pushes</li>\n        <li><strong>Project-level:</strong> Block migration folders, deployment scripts, payment configs specific to this repository</li>\n      </ul>"
+        },
+        "7_3": {
+          "title": "Human-in-the-Loop & Auditability",
+          "content": "<p><strong>Human-in-the-loop</strong> design means building explicit checkpoints where humans make decisions — not hovering over every action. The goal is strategic intervention, not constant supervision.</p>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> <strong>Auditability</strong> means being able to explain later: what was read, what was created, who approved it, and what remains unfinished. Same automation with audit trails becomes infrastructure; without them, it remains a demo.\n      </div>\n\n      <p><strong>Minimum audit trail for high-stakes work:</strong></p>\n      <pre><code>1. source/          — Original materials or links\n2. outputs/         — Claude's drafts and revisions\n3. work-log.md      — What was executed and when\n4. approval-log.md  — Who approved what and when\n5. handoff.md       — Remaining risks and next steps</code></pre>\n\n      <p><strong>Operations logs vs. decision traces:</strong> Operations logs record <em>what happened</em> (commands, tool calls, timestamps). Decision traces record <em>why</em> (what was considered, what alternatives were rejected, why this path was chosen). Agents working on long tasks need both. Without decision traces, you can see where failure occurred but not why.</p>\n\n      <p><strong>Incident review template:</strong></p>\n      <pre><code># Incident Review\n- When was it discovered?\n- Which automation / session was involved?\n- What were the input materials?\n- Which approval point was missing?\n- What rule, hook, or permission needs to change?</code></pre>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; Pro Tip:</strong> Cowork conversations are stored locally and do not appear in Audit Logs, Compliance API, or Data Exports. Do not use Cowork for regulated workloads. For audit-critical work, use Claude Code with Git-based logging, hooks, and external approval tracking.\n      </div>"
+        },
+        "7_4": {
+          "title": "Team Adoption Strategy",
+          "content": "<p>Team adoption diverges from individual use the moment you start deploying shared rules and assets. It is not about distributing a tool — it is about deploying an <em>operating environment with policies attached</em>.</p>\n\n      <p><strong>Key team/enterprise capabilities:</strong></p>\n      <ul>\n        <li>Skills provisioning — deploy shared skills organization-wide</li>\n        <li>Managed settings — admin-enforced configurations that individuals cannot override</li>\n        <li>Plugin marketplace management — control which plugins are available</li>\n        <li>Usage analytics dashboard and Analytics API</li>\n        <li>Seat policies — who gets access to which features</li>\n      </ul>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> Standardization does not kill creativity — it kills repetitive explanation cost. When shared meeting summary skills, client response templates, PR review skills, and weekly brief templates are deployed team-wide, people spend less time on format and more time on judgment.\n      </div>\n\n      <p><strong>External skill adoption flow for organizations:</strong></p>\n      <ol>\n        <li>Verify the source</li>\n        <li>Review included files and tool scope</li>\n        <li>Test in a sandbox or isolated workspace</li>\n        <li>Reduce permissions to the minimum needed</li>\n        <li>Only then deploy to team/organization-managed distribution</li>\n      </ol>\n\n      <p><strong>Cost as a governance signal:</strong> Usage data is not just for finance — it is a design feedback loop. \"This agent re-reads a long regulation file every session\" → investigate caching. \"This automation produces verbose tool output\" → trim the output budget. Cost management is operational design, not budget policing.</p>"
+        },
+        "7_5": {
+          "title": "Final Practice: Building with Claude Code",
+          "content": "<p>The final chapter brings everything together with two practical projects: building a small website and building an automation workflow. Both demonstrate that thin, completed results are more valuable than elaborate unfinished plans.</p>\n\n      <p><strong>Website project approach:</strong></p>\n      <ol>\n        <li>Fix three lines first: <strong>Reader</strong> (who reads this?), <strong>Goal</strong> (what should they understand?), <strong>Action</strong> (what should they do?)</li>\n        <li>Create file set: <code>brief.md</code>, <code>tone.md</code>, <code>references/</code>, <code>site/</code></li>\n        <li>Use Cowork to draft structure and copy, then Claude Code to implement</li>\n        <li>Split into three prompts: design (structure), implement (build), review (verify)</li>\n      </ol>\n\n      <p><strong>Automation project approach:</strong></p>\n      <ol>\n        <li>Define input boundaries and output contract before \"when to run it\"</li>\n        <li>Success = same format on re-run, not just first-time success</li>\n        <li>High-risk steps must route through human approval</li>\n      </ol>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> Five directions the ecosystem is heading: (1) Conversational → asynchronous operations, (2) Pop-up approval → policy-based approval, (3) Long transcripts → structured task state, (4) Single surface → multi-surface continuity, (5) Prompt tricks → measurable operations with analytics and evaluation loops.\n      </div>\n\n      <p><strong>Deployment checklist:</strong></p>\n      <ul>\n        <li>Primary work surface chosen (terminal, IDE, desktop, web)?</li>\n        <li><code>CLAUDE.md</code> and rules separated by role?</li>\n        <li>Permissions and hooks covering real risk boundaries?</li>\n        <li><code>plan.md</code>, <code>verify.md</code>, <code>handoff.md</code> in place?</li>\n        <li>Review split between implementation and review?</li>\n        <li>Cost and failure measurement established?</li>\n        <li>Scope separation (user/project/local/managed) for teams?</li>\n      </ul>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; Pro Tip:</strong> The book's conclusion is simple: people who use Claude Code well are not people who write long prompts — they are people who stabilize context, manage tokens and cache, narrow permissions, and make review splits and handoffs into habits. One thin completed result plus the structure to recreate it is worth more than any number of impressive demos.\n      </div>"
+        }
+      }
+    },
+    "glossary": {
+      "title": "Glossary & Quick Reference",
+      "sections": {
+        "G_1": {
+          "title": "Context & Assembly Terms",
+          "content": "<p>These terms describe how information is gathered, managed, and degraded within Claude's working memory.</p>\n\n      <table>\n        <tr><th>Term</th><th>Definition</th></tr>\n        <tr><td><strong>Context Assembly</strong></td><td>The process of gathering rules, files, memos, and tool descriptions needed for the current task into the actual input context. A selection process, not a dumping process.</td></tr>\n        <tr><td><strong>Context Rot</strong></td><td>The phenomenon where early signals weaken as the context grows longer. Long conversations gradually lose coherence because important early instructions get diluted by later content.</td></tr>\n        <tr><td><strong>Memoized Context</strong></td><td>Background information held across turns so Claude doesn't need re-briefing each time. \"Computed once, reused many times.\"</td></tr>\n        <tr><td><strong>Prompt Cache</strong></td><td>A mechanism that provides reuse benefits when similar context prefixes are sent repeatedly. Stable prefixes (CLAUDE.md, rules) should remain consistent to maximize cache hits.</td></tr>\n        <tr><td><strong>Token Economy</strong></td><td>The discipline of deciding what information stays permanently loaded, what loads on demand, and what gets trimmed — balancing quality against cost.</td></tr>\n        <tr><td><strong>Tool Result Budget</strong></td><td>The practice of controlling how much context space tool outputs consume. Long logs and verbose results eat the context window and degrade quality.</td></tr>\n      </table>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> Context Assembly is not \"more is better.\" It is the selective process of including only what matters for the current task. Tool Result Budget is not optional — it is what prevents a single verbose test run from consuming half your context window.\n      </div>"
+        },
+        "G_2": {
+          "title": "Session & Continuity Terms",
+          "content": "<table>\n        <tr><th>Term</th><th>Definition</th></tr>\n        <tr><td><strong>Resumable Session</strong></td><td>The ability to pick up where you left off after disconnection or session change, using saved state files.</td></tr>\n        <tr><td><strong>Resume Hygiene</strong></td><td>The habit of cleaning up state before resuming — keeping only what the next session needs and discarding accumulated noise.</td></tr>\n        <tr><td><strong>Session Memory</strong></td><td>Structured state preserved for continuation: current status, important files, workflow, errors, and results. Not the raw conversation transcript.</td></tr>\n        <tr><td><strong>Handoff</strong></td><td>A formatted memo left for the next session or person, containing current state, next steps, and unresolved risks.</td></tr>\n        <tr><td><strong>Slash Command</strong></td><td>Session management commands like <code>/compact</code>, <code>/clear</code>, <code>/context</code>, <code>/memory</code>, <code>/cost</code> used within Claude Code.</td></tr>\n        <tr><td><strong>Fork Session</strong></td><td>Creating a new session branch when the current direction needs to diverge, preserving the original session state.</td></tr>\n        <tr><td><strong>Background Execution</strong></td><td>Work that continues after you leave the terminal — the session keeps running without active human monitoring.</td></tr>\n      </table>"
+        },
+        "G_3": {
+          "title": "Harness & Structure Terms",
+          "content": "<table>\n        <tr><th>Term</th><th>Definition</th></tr>\n        <tr><td><strong>Harness</strong></td><td>The outer structure defining what Claude can read, modify, and verify. Like a colleague's workspace: reference materials, accessible drawers, and a checklist.</td></tr>\n        <tr><td><strong>Harness Engineering</strong></td><td>Designing the entire work environment — not just better prompts, but the rules, permissions, files, and verification structures Claude operates within.</td></tr>\n        <tr><td><strong>CLAUDE.md</strong></td><td>The project contract file — always loaded, contains execution commands, forbidden boundaries, and structural descriptions.</td></tr>\n        <tr><td><strong>Worktree</strong></td><td>A separate working directory from the same repository, used for parallel work without file conflicts.</td></tr>\n        <tr><td><strong>Plan Mode</strong></td><td>A pattern where exploration and execution are separated — Claude plans before editing, reducing wrong-assumption implementations.</td></tr>\n        <tr><td><strong>Review Split</strong></td><td>Separating implementation and review into different sessions to reduce context pollution and approval fatigue.</td></tr>\n        <tr><td><strong>Agentic Loop</strong></td><td>The recurring cycle: read → judge → use tools → continue. Work that spans multiple turns, not a single question-answer pair.</td></tr>\n      </table>"
+        },
+        "G_4": {
+          "title": "Extension & Tool Terms",
+          "content": "<table>\n        <tr><th>Term</th><th>Definition</th></tr>\n        <tr><td><strong>Skill</strong></td><td>A reusable procedure file (folder) that standardizes repeated tasks. Contains instructions, scripts, references, and assets.</td></tr>\n        <tr><td><strong>Plugin</strong></td><td>A deployable package bundling skills, commands, hooks, and connection settings. The \"onboarding box\" for teams.</td></tr>\n        <tr><td><strong>MCP (Model Context Protocol)</strong></td><td>The standardized connection protocol for Claude to reach external tools and services. Like USB-C for AI tool integration.</td></tr>\n        <tr><td><strong>Connector</strong></td><td>A user-facing interface for connecting to external services (Notion, Drive, Slack). Simpler than MCP, less control.</td></tr>\n        <tr><td><strong>Hook</strong></td><td>An automatic intervention rule at specific moments (pre-tool-use, post-edit, pre-push). Turns \"remember to check\" into \"always check.\"</td></tr>\n        <tr><td><strong>Subagent</strong></td><td>A secondary worker within the current session with isolated context. Used for research, review, or risk-checking without polluting the main session.</td></tr>\n        <tr><td><strong>Agent Team</strong></td><td>Multiple sessions operating in parallel with message exchange and task allocation — like a real team with a lead and members.</td></tr>\n        <tr><td><strong>Control Surface</strong></td><td>Where users can adjust work behavior — not a feature list, but the points where you can intervene in the workflow.</td></tr>\n      </table>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; Pro Tip:</strong> Quick decision framework: \"Same format every time?\" → Skill. \"Need external data?\" → MCP/Connector. \"Deploy to the whole team?\" → Plugin. \"Must verify automatically?\" → Hook. \"Need parallel context?\" → Subagent/Worktree.\n      </div>"
+        },
+        "G_5": {
+          "title": "Governance & Safety Terms",
+          "content": "<table>\n        <tr><th>Term</th><th>Definition</th></tr>\n        <tr><td><strong>Permission Gate</strong></td><td>The boundary between allow, ask, and deny — evaluated before any action executes.</td></tr>\n        <tr><td><strong>Approval Gate</strong></td><td>A checkpoint requiring human sign-off before the next step proceeds. Critical for external communications, deployments, and data modifications.</td></tr>\n        <tr><td><strong>Allowlist</strong></td><td>A policy that only passes specifically permitted items (commands, users, domains). Safer than blocking specific threats.</td></tr>\n        <tr><td><strong>Auditability</strong></td><td>The ability to explain later: what was read, what was changed, who approved, and what remains. The foundation of sustainable automation.</td></tr>\n        <tr><td><strong>Alignment Faking</strong></td><td>A research concept where a model appears to follow instructions while internally maintaining different objectives. The practical takeaway: don't trust model compliance alone — build external verification.</td></tr>\n        <tr><td><strong>Autonomy</strong></td><td>How far work can proceed without human intervention. Higher autonomy requires stronger verification, approval, and permission boundaries.</td></tr>\n        <tr><td><strong>Agency</strong></td><td>Human initiative in choosing what to delegate, when, and with what constraints. Not about giving more commands — about making better delegation decisions.</td></tr>\n        <tr><td><strong>Tool Orchestration</strong></td><td>The layer deciding which tools to invoke, in what sequence, and with what parameters.</td></tr>\n      </table>\n\n      <div class=\"callout callout-concept\">\n        <strong>&#128204; Key Concept:</strong> Observability (seeing system state via dashboards and analytics) and auditability (explaining what happened and why after the fact) are different. You need both: observability for operational efficiency, auditability for accountability and trust.\n      </div>"
+        },
+        "G_6": {
+          "title": "Ecosystem & Infrastructure Terms",
+          "content": "<table>\n        <tr><th>Term</th><th>Definition</th></tr>\n        <tr><td><strong>LLM OS</strong></td><td>A metaphor for the emerging work layer: context, tools, permissions, and memory surrounding a model, analogous to how an OS manages programs, files, permissions, and devices.</td></tr>\n        <tr><td><strong>Software 3.0</strong></td><td>The concept that natural language itself is becoming a programming interface — work instructions are code.</td></tr>\n        <tr><td><strong>Vibe Coding</strong></td><td>Generating code through natural language, extended now to include testing, reviewing, refactoring, documentation, and deployment.</td></tr>\n        <tr><td><strong>Remote Control</strong></td><td>A human resuming or steering a running session from a distance (different device, different location).</td></tr>\n        <tr><td><strong>Channels</strong></td><td>External systems pushing events into Claude (webhooks, messages) — the trigger comes from outside, not from a human.</td></tr>\n        <tr><td><strong>Scheduled Tasks</strong></td><td>Time-triggered automation — cron-like execution where the clock starts the work.</td></tr>\n        <tr><td><strong>Agent SDK</strong></td><td>Developer tools for building custom agent applications with Claude as the execution engine inside your own product.</td></tr>\n        <tr><td><strong>Adaptive Thinking</strong></td><td>Claude adjusting its reasoning depth based on task complexity — thinking longer for hard tasks, shorter for simple ones.</td></tr>\n      </table>\n\n      <div class=\"callout callout-tip\">\n        <strong>&#128161; Pro Tip:</strong> When confused by a term, ask: \"Is this about how work flows (mechanics), how mistakes are prevented (safety), or how sessions persist (continuity)?\" This three-bucket mental model covers the vast majority of Claude Code terminology.\n      </div>"
+        }
+      }
+    }
+  },
+  "quizzes": {
+    "part1": [
+      {
+        "question": "What does 'memoized context' mean in the Claude Code harness?",
+        "options": [
+          "Storing all chat history permanently in a database",
+          "Reusing background context across turns so you don't re-explain every time",
+          "Memorizing the user's personal preferences",
+          "Caching API responses for faster performance"
+        ],
+        "answer": 1,
+        "explanation": "Memoized context means holding background information across turns so Claude doesn't need to be re-briefed each time."
+      },
+      {
+        "question": "What are the four key terms introduced in Chapter 1?",
+        "options": [
+          "API, CLI, MCP, VM",
+          "Prompt, Context, Response, Token",
+          "Memoized Context, Tool Orchestration, Permission Gate, Resumable Session",
+          "Skills, Plugins, Hooks, Subagents"
+        ],
+        "answer": 2,
+        "explanation": "Chapter 1 introduces: Memoized Context (reusable background), Tool Orchestration (coordinating tools), Permission Gate (allow/ask/deny), and Resumable Session (picking up where you left off)."
+      },
+      {
+        "question": "What is a 'harness' in the context of Claude Code?",
+        "options": [
+          "A physical device that connects to Claude's servers",
+          "The outer structure defining what files Claude can read, modify, and verify",
+          "A testing framework for running unit tests",
+          "The graphical user interface of Claude Code"
+        ],
+        "answer": 1,
+        "explanation": "A harness defines boundaries and verification rules — like setting up a workspace with reference materials, accessible drawers, and a checklist."
+      },
+      {
+        "question": "Why does the book focus on Claude Code rather than other Claude products?",
+        "options": [
+          "Claude Code is the cheapest product",
+          "Claude Code has the most users globally",
+          "It brings together files, rules, verification, permissions, and tool connections in one place",
+          "Claude Code is the only product available in Korea"
+        ],
+        "answer": 2,
+        "explanation": "Claude Code combines file access, rules, verification, permissions, reusable sessions, and external tool connections. Cowork, Skills, Plugins are extensions of this core."
+      },
+      {
+        "question": "What is the difference between a weak harness request and a strong harness request?",
+        "options": [
+          "Weak uses fewer tokens, strong uses more",
+          "Weak: 'Fix the bug.' Strong: 'Read only auth/, don't touch .env, pass login tests, leave a change note.'",
+          "Weak means beginner, strong means expert",
+          "There is no difference"
+        ],
+        "answer": 1,
+        "explanation": "A weak harness gives no boundaries. A strong harness specifies what to read, what not to touch, what tests must pass, and what documentation to leave."
+      }
+    ],
+    "part2": [
+      {
+        "question": "What is the recommended first action when starting a Claude Code session for a big task?",
+        "options": [
+          "Write the longest possible prompt with all context",
+          "Read CLAUDE.md, relevant rules, and verify.md — then summarize scope before implementing",
+          "Immediately start coding to save time",
+          "Turn off all permissions for faster workflow"
+        ],
+        "answer": 1,
+        "explanation": "The start routine matters more than the start prompt. Reading the project contract, rules, and exit criteria before implementation prevents rework and wrong-direction implementations."
+      },
+      {
+        "question": "What is the difference between a Skill and a Plugin?",
+        "options": [
+          "They are the same thing with different names",
+          "Skills are for coding, Plugins are for documents",
+          "A Skill is a reusable procedure; a Plugin bundles skills, commands, hooks, and connections for team deployment",
+          "Plugins are free, Skills are paid"
+        ],
+        "answer": 2,
+        "explanation": "Skills define 'how to do it' (procedures). Plugins package skills, tools, hooks, and connections into a deployable box — like an onboarding kit for team members."
+      },
+      {
+        "question": "Why should CLAUDE.md be kept thin rather than comprehensive?",
+        "options": [
+          "To save disk space",
+          "Because Claude can only read short files",
+          "It's a work contract, not an encyclopedia — long resident context wastes tokens and dilutes important rules",
+          "Thin files load faster in the browser"
+        ],
+        "answer": 2,
+        "explanation": "CLAUDE.md is loaded on every turn. Keeping it thin ensures important rules stay prominent. Long-term state belongs in handoff.md, decision-log.md, and other task files."
+      },
+      {
+        "question": "What does 'review split' mean in Claude Code operations?",
+        "options": [
+          "Splitting a code review into multiple pull requests",
+          "Separating implementation and review into different sessions to reduce context pollution",
+          "Having two people review the same code",
+          "Splitting the review budget between teams"
+        ],
+        "answer": 1,
+        "explanation": "Review split means not cramming planning, implementation, and review into one session. Separate sessions reduce context pollution and approval fatigue."
+      },
+      {
+        "question": "What survives after running /compact in Claude Code?",
+        "options": [
+          "Everything — /compact just makes the display shorter",
+          "Only the last 5 messages",
+          "Whatever the Compact Instructions specify: last modified files, test results, rejected alternatives, next action, and risk points",
+          "Nothing — /compact resets the entire session"
+        ],
+        "answer": 2,
+        "explanation": "Compact Instructions control what information survives compression. Without them, important context may be lost. Good instructions preserve state that the next turn needs to continue immediately."
+      }
+    ],
+    "part3": [
+      {
+        "question": "What is 'Context Rot' in Claude Code sessions?",
+        "options": [
+          "When Claude's API key expires",
+          "When files on disk become corrupted",
+          "When early instructions weaken as the context grows longer, diluted by later content",
+          "When the conversation is accidentally deleted"
+        ],
+        "answer": 2,
+        "explanation": "Context rot occurs as conversations grow — important early signals get diluted by accumulated later content, causing quality degradation even though the model hasn't 'forgotten' anything."
+      },
+      {
+        "question": "What are the three types of isolation a harness should design simultaneously?",
+        "options": [
+          "Input isolation, output isolation, display isolation",
+          "Context isolation, file state isolation, approval isolation",
+          "Network isolation, disk isolation, memory isolation",
+          "User isolation, model isolation, tool isolation"
+        ],
+        "answer": 1,
+        "explanation": "Context isolation prevents session bloat, file state isolation prevents overwrites and conflicts, and approval isolation separates safe actions from dangerous ones. Each prevents a different class of failure."
+      },
+      {
+        "question": "Why are verification skills often higher ROI than generation skills?",
+        "options": [
+          "Because verification is more expensive to license",
+          "Because models never make mistakes in generation",
+          "Because a 'well-written draft' is cheap, but a 'verified passing result' is genuinely valuable and hard to achieve",
+          "Because verification requires less compute"
+        ],
+        "answer": 2,
+        "explanation": "Generation produces drafts; verification confirms they actually work. Checking that signup flows complete, checkout states are correct, or CLI works in TTY environments is more valuable than generating more code."
+      },
+      {
+        "question": "What is the Prompt Cache, and how do you benefit from it?",
+        "options": [
+          "A browser cache that stores Claude's responses for offline use",
+          "A discount for frequent API users",
+          "A mechanism that reuses computation when similar context prefixes are sent repeatedly — keep stable content at the front",
+          "A memory file that Claude reads automatically"
+        ],
+        "answer": 2,
+        "explanation": "Prompt Cache benefits come from keeping the stable prefix (CLAUDE.md, rules) consistent across turns. When the prefix matches, computation can be reused, saving both cost and time."
+      },
+      {
+        "question": "When should you use /compact in a Claude Code session?",
+        "options": [
+          "At the very end when the session is completely done",
+          "After saving important state to files, before the session has degraded",
+          "Only when you see an error message",
+          "Never — it deletes important context"
+        ],
+        "answer": 1,
+        "explanation": "Compress after saving important state to files — not as a last resort when the session is already broken. Strategic compression at good checkpoints maintains quality throughout long sessions."
+      }
+    ],
+    "part4": [
+      {
+        "question": "When should you promote a repeated task to a Skill?",
+        "options": [
+          "When the task is very complex",
+          "When output format repeats, variation needs to shrink, and storage/tool order needs fixing",
+          "When you want to impress your team with automation",
+          "Only when Anthropic provides an official skill template"
+        ],
+        "answer": 1,
+        "explanation": "The signal for creating a skill is repeated output format, the need for consistency, and fixed storage locations/tool sequences. One-time explorations are better left as conversations."
+      },
+      {
+        "question": "What is the critical difference between MCP and a Connector?",
+        "options": [
+          "MCP is free, Connectors are paid",
+          "MCP is older technology, Connectors are newer",
+          "Connectors are user-facing app connections; MCP gives developer-level control over tool structure, response format, and project-specific activation",
+          "There is no difference — they are the same feature"
+        ],
+        "answer": 2,
+        "explanation": "Connectors are simple UI-based connections (like an app store). MCP provides deeper control: which servers, which tools to expose, response formats, and project-scoped activation. Use Connectors for quick connections, MCP for system design."
+      },
+      {
+        "question": "Why is a skill's 'description' field so important?",
+        "options": [
+          "It appears in marketing materials",
+          "It determines the file size of the skill",
+          "It acts as a routing rule — vague descriptions cause undertriggering or overtriggering",
+          "It's only used for documentation purposes"
+        ],
+        "answer": 2,
+        "explanation": "The description is what Claude reads at session start to decide whether to activate the skill. If it's vague, the skill either never fires (undertriggering) or fires for unrelated tasks (overtriggering)."
+      },
+      {
+        "question": "What should you check before installing an external skill?",
+        "options": [
+          "Only the star count on GitHub",
+          "Whether it fetches external URLs, uses strong tools (Bash/network), matches its stated purpose, runs near sensitive data, and can be disabled quickly",
+          "Just the README file",
+          "Nothing — all published skills are safe"
+        ],
+        "answer": 1,
+        "explanation": "External skills can contain tool calls, file access, and external URL fetches. They should be treated as small software installations requiring security review, not just document imports."
+      },
+      {
+        "question": "Hooks are compared to what in the car analogy?",
+        "options": [
+          "The steering wheel — you control direction",
+          "The gas pedal — they make things faster",
+          "Seatbelt alarms and automatic braking — they change actual behavior, unlike road signs that can be ignored",
+          "The rearview mirror — they help you see what happened"
+        ],
+        "answer": 2,
+        "explanation": "Prompts are like road signs (can be ignored). Hooks are like seatbelt alarms and automatic braking — they enforce rules at the system level, changing actual behavior regardless of model compliance."
+      }
+    ],
+    "part5": [
+      {
+        "question": "What is the recommended first adoption step for nearly every role?",
+        "options": [
+          "Set up a full automation pipeline immediately",
+          "Install every available plugin and MCP connection",
+          "Start with gathering and organizing information — research briefs, meeting notes, document structuring",
+          "Replace team members with AI agents"
+        ],
+        "answer": 2,
+        "explanation": "Across all roles (PM, marketing, sales, engineering, research), the first step is always information gathering and organization — the lowest-risk, highest-frequency tasks that build trust in the workflow."
+      },
+      {
+        "question": "For agency/team operators managing multiple clients, what is the most critical principle?",
+        "options": [
+          "Speed of delivery",
+          "Using the newest model available",
+          "Client context isolation — preventing data and context from leaking between clients",
+          "Maximizing the number of plugins installed"
+        ],
+        "answer": 2,
+        "explanation": "Client context isolation is the top priority. One folder boundary prevents more accidents than one clever prompt. Speed matters less than ensuring Client A's data never appears in Client B's output."
+      },
+      {
+        "question": "What should humans always retain control of, regardless of role?",
+        "options": [
+          "Every single draft revision",
+          "All file naming decisions",
+          "Final responsibility: approval decisions, external communications, and judgments with real-world consequences",
+          "Token counting and cost management"
+        ],
+        "answer": 2,
+        "explanation": "AI accelerates repetitive structuring and drafting. Humans must retain: market interpretation (PM), brand tone approval (marketing), external send-off (sales), deployment decisions (engineering), and legal judgment (compliance)."
+      },
+      {
+        "question": "What is an 'output contract' in the scenario guide?",
+        "options": [
+          "A legal agreement between the user and Anthropic",
+          "A pre-defined agreement about what format and location the result must follow",
+          "A limit on how many tokens Claude can output",
+          "The pricing for Claude's API output"
+        ],
+        "answer": 1,
+        "explanation": "An output contract specifies where results are saved, in what format, and what structure they must follow. It prevents results from being scattered or inconsistent across runs."
+      },
+      {
+        "question": "Which tasks are currently showing the strongest AI adoption signals?",
+        "options": [
+          "Physical labor and complex face-to-face negotiations",
+          "Programming, data entry, customer support, repetitive document review, and channel-specific content adaptation",
+          "Only software engineering",
+          "Tasks that require no human oversight"
+        ],
+        "answer": 1,
+        "explanation": "High adoption correlates with: digital text, structured judgments, existing digital data, repeatable formats, and clear quality criteria. Physical work and high-stakes professional judgment adopt more slowly."
+      }
+    ],
+    "part6": [
+      {
+        "question": "What is the most effective memory strategy for Claude Code sessions?",
+        "options": [
+          "Save the entire conversation transcript after every session",
+          "Rely on Claude's built-in memory to remember everything",
+          "Update handoff.md at the end of every session with current state, next steps, and unresolved risks",
+          "Use /memory to permanently store all information"
+        ],
+        "answer": 2,
+        "explanation": "The simplest and most effective memory strategy: update handoff.md at session end. This single habit prevents 80% of 'where was I?' confusion. Conversations are disposable; files are the real memory."
+      },
+      {
+        "question": "Why should plans be written in files rather than kept in conversation?",
+        "options": [
+          "Files are cheaper than conversation tokens",
+          "Files survive session boundaries, can be reviewed independently, version-controlled, and keep conversation focused on execution",
+          "Claude cannot understand plans in conversation format",
+          "There is no difference between file plans and conversation plans"
+        ],
+        "answer": 1,
+        "explanation": "File-based plans persist across sessions, allow independent human review, enable Git versioning, and keep conversations focused on execution rather than re-planning."
+      },
+      {
+        "question": "What is the key principle for running parallel Claude sessions?",
+        "options": [
+          "Run as many sessions as possible for maximum speed",
+          "Use the same files and directories for all sessions",
+          "Define roles first: who does what, which files each touches, and how results merge",
+          "Parallel sessions are not recommended"
+        ],
+        "answer": 2,
+        "explanation": "Parallelism without role clarity creates chaos. Before launching parallel sessions, define responsibilities, file boundaries, and merge strategies. Unstructured parallelism is worse than sequential work."
+      },
+      {
+        "question": "What should you check before installing any external tool (skill, plugin, MCP server)?",
+        "options": [
+          "Only the download count",
+          "Last maintenance date, README quality, security permissions needed, context cost vs. utility, and ease of disabling",
+          "Whether it has a cool logo",
+          "Nothing — the marketplace handles quality control"
+        ],
+        "answer": 1,
+        "explanation": "Five criteria: maintenance recency, documentation quality, security-sensitive permissions, cost-benefit ratio, and reversibility. 'Saved for later' tools pile up without becoming operational assets."
+      },
+      {
+        "question": "What does 'OpenClaw-style' operation refer to in the community?",
+        "options": [
+          "Using a specific competitor's product",
+          "An always-on, multi-channel, persistent-state work system with scheduled tasks and remote control capabilities",
+          "A free tier of Claude usage",
+          "A specific coding framework"
+        ],
+        "answer": 1,
+        "explanation": "'OpenClaw-style' describes an operational goal: always accessible, sessions that don't break, time/event-triggered work, embedded skills, and remote control with safety boundaries. In Claude's ecosystem, this is achieved by combining Claude Code + hooks + MCP + Remote Control + Scheduled Tasks."
+      }
+    ],
+    "part7": [
+      {
+        "question": "What are the three permission modes in Claude Code's governance model?",
+        "options": [
+          "Read, Write, Execute",
+          "Admin, User, Guest",
+          "Allow (proceed automatically), Ask (pause for human), Deny (block completely)",
+          "Public, Private, Protected"
+        ],
+        "answer": 2,
+        "explanation": "The permission model uses allow/ask/deny, evaluated in order: deny → ask → allow, with the first matching rule applying. This gives fine-grained control over what Claude can do autonomously."
+      },
+      {
+        "question": "What are the four governance layers?",
+        "options": [
+          "Frontend, Backend, Database, Network",
+          "Document layer (CLAUDE.md/rules), Settings layer (permissions), Runtime layer (hooks/approvals), Trace layer (logs/decisions)",
+          "User, Team, Organization, Enterprise",
+          "Input, Processing, Output, Storage"
+        ],
+        "answer": 1,
+        "explanation": "Document layer defines knowledge, Settings layer defines boundaries, Runtime layer handles execution-time controls, and Trace layer records what happened and why. All four together form complete governance."
+      },
+      {
+        "question": "Why is auditability important for AI automation?",
+        "options": [
+          "It is only required by law",
+          "It makes demos look more professional",
+          "Same automation with audit trails becomes infrastructure; without them, it remains a demo that can't scale",
+          "Auditability is not important for most teams"
+        ],
+        "answer": 2,
+        "explanation": "Auditability means being able to explain: what was read, what was created, who approved, and what remains. Without it, automation cannot transition from individual demos to reliable team infrastructure."
+      },
+      {
+        "question": "What is the difference between observability and auditability?",
+        "options": [
+          "They are the same thing",
+          "Observability is for developers, auditability is for managers",
+          "Observability shows current system state (dashboards); auditability explains what happened and why (event records for accountability)",
+          "Observability is more expensive than auditability"
+        ],
+        "answer": 2,
+        "explanation": "Observability is a dashboard for operational efficiency (usage, costs, patterns). Auditability is an event record for accountability (who did what, why, with what approval). Organizations need both."
+      },
+      {
+        "question": "What is the key principle of the book's final chapter on building with Claude Code?",
+        "options": [
+          "Always use the most advanced features available",
+          "One thin completed result plus the structure to recreate it beats any number of impressive demos",
+          "Speed is more important than quality",
+          "Only developers should build with Claude Code"
+        ],
+        "answer": 1,
+        "explanation": "The conclusion: a completed thin website or automation workflow — with brief, template, review split, and handoff — that can be recreated next week is more valuable than any elaborate unfinished plan."
+      }
+    ],
+    "glossary": [
+      {
+        "question": "What is 'Context Assembly'?",
+        "options": [
+          "Installing all available plugins at once",
+          "The process of selecting and gathering only the relevant rules, files, and tool descriptions for the current task into the input context",
+          "Writing the longest possible prompt",
+          "Copying the entire codebase into the conversation"
+        ],
+        "answer": 1,
+        "explanation": "Context Assembly is a selection process, not a dumping process. It means gathering only what the current task needs — more context is not better context."
+      },
+      {
+        "question": "What does 'Resume Hygiene' mean?",
+        "options": [
+          "Cleaning your resume/CV before a job interview",
+          "Restarting your computer before using Claude",
+          "Keeping only what the next session needs and discarding accumulated noise before resuming work",
+          "Using hand sanitizer while typing"
+        ],
+        "answer": 2,
+        "explanation": "Resume Hygiene means cleaning up state before resuming — preserving essential context while discarding noise from the previous session. Long sessions aren't inherently better; clean handoffs are."
+      },
+      {
+        "question": "How does a Hook differ from a prompt instruction?",
+        "options": [
+          "Hooks are more expensive to run",
+          "Hooks enforce rules at the system level (automatic braking), while prompt instructions are suggestions that can be ignored (road signs)",
+          "Hooks only work in Cowork, not Claude Code",
+          "There is no practical difference"
+        ],
+        "answer": 1,
+        "explanation": "Prompts request behavior; hooks enforce it. A prompt saying 'run lint after editing' can be skipped. A hook configured to run lint after every file edit always executes."
+      },
+      {
+        "question": "What is the relationship between Skill, Plugin, and MCP?",
+        "options": [
+          "They are three names for the same feature",
+          "Skill defines procedures, MCP connects to external tools, Plugin packages everything for team deployment",
+          "Plugin is the cheapest, MCP is mid-tier, Skill is premium",
+          "They must always be used together"
+        ],
+        "answer": 1,
+        "explanation": "Skills are 'how to do it' (procedures), MCP is 'the path to reach external tools' (connections), and Plugins are 'the box that deploys it all' (packages for teams). They complement each other."
+      },
+      {
+        "question": "When confused by a Claude Code term, what three-bucket mental model helps?",
+        "options": [
+          "Cost, Speed, Quality",
+          "Input, Process, Output",
+          "Mechanics (how work flows), Safety (how mistakes are prevented), Continuity (how sessions persist)",
+          "Frontend, Backend, Database"
+        ],
+        "answer": 2,
+        "explanation": "Nearly all Claude Code terms fall into three categories: mechanics (agentic loop, context assembly, tool orchestration), safety (permissions, hooks, approval gates), or continuity (session memory, handoff, resume hygiene)."
+      }
+    ]
+  }
+}

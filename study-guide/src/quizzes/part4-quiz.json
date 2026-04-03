@@ -1,0 +1,57 @@
+[
+  {
+    "question": "When should you promote a repeated task to a Skill?",
+    "options": [
+      "When the task is very complex",
+      "When output format repeats, variation needs to shrink, and storage/tool order needs fixing",
+      "When you want to impress your team with automation",
+      "Only when Anthropic provides an official skill template"
+    ],
+    "answer": 1,
+    "explanation": "The signal for creating a skill is repeated output format, the need for consistency, and fixed storage locations/tool sequences. One-time explorations are better left as conversations."
+  },
+  {
+    "question": "What is the critical difference between MCP and a Connector?",
+    "options": [
+      "MCP is free, Connectors are paid",
+      "MCP is older technology, Connectors are newer",
+      "Connectors are user-facing app connections; MCP gives developer-level control over tool structure, response format, and project-specific activation",
+      "There is no difference — they are the same feature"
+    ],
+    "answer": 2,
+    "explanation": "Connectors are simple UI-based connections (like an app store). MCP provides deeper control: which servers, which tools to expose, response formats, and project-scoped activation. Use Connectors for quick connections, MCP for system design."
+  },
+  {
+    "question": "Why is a skill's 'description' field so important?",
+    "options": [
+      "It appears in marketing materials",
+      "It determines the file size of the skill",
+      "It acts as a routing rule — vague descriptions cause undertriggering or overtriggering",
+      "It's only used for documentation purposes"
+    ],
+    "answer": 2,
+    "explanation": "The description is what Claude reads at session start to decide whether to activate the skill. If it's vague, the skill either never fires (undertriggering) or fires for unrelated tasks (overtriggering)."
+  },
+  {
+    "question": "What should you check before installing an external skill?",
+    "options": [
+      "Only the star count on GitHub",
+      "Whether it fetches external URLs, uses strong tools (Bash/network), matches its stated purpose, runs near sensitive data, and can be disabled quickly",
+      "Just the README file",
+      "Nothing — all published skills are safe"
+    ],
+    "answer": 1,
+    "explanation": "External skills can contain tool calls, file access, and external URL fetches. They should be treated as small software installations requiring security review, not just document imports."
+  },
+  {
+    "question": "Hooks are compared to what in the car analogy?",
+    "options": [
+      "The steering wheel — you control direction",
+      "The gas pedal — they make things faster",
+      "Seatbelt alarms and automatic braking — they change actual behavior, unlike road signs that can be ignored",
+      "The rearview mirror — they help you see what happened"
+    ],
+    "answer": 2,
+    "explanation": "Prompts are like road signs (can be ignored). Hooks are like seatbelt alarms and automatic braking — they enforce rules at the system level, changing actual behavior regardless of model compliance."
+  }
+]

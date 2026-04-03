@@ -1,0 +1,57 @@
+[
+  {
+    "question": "What does 'memoized context' mean in the Claude Code harness?",
+    "options": [
+      "Storing all chat history permanently in a database",
+      "Reusing background context across turns so you don't re-explain every time",
+      "Memorizing the user's personal preferences",
+      "Caching API responses for faster performance"
+    ],
+    "answer": 1,
+    "explanation": "Memoized context means holding background information across turns so Claude doesn't need to be re-briefed each time."
+  },
+  {
+    "question": "What are the four key terms introduced in Chapter 1?",
+    "options": [
+      "API, CLI, MCP, VM",
+      "Prompt, Context, Response, Token",
+      "Memoized Context, Tool Orchestration, Permission Gate, Resumable Session",
+      "Skills, Plugins, Hooks, Subagents"
+    ],
+    "answer": 2,
+    "explanation": "Chapter 1 introduces: Memoized Context (reusable background), Tool Orchestration (coordinating tools), Permission Gate (allow/ask/deny), and Resumable Session (picking up where you left off)."
+  },
+  {
+    "question": "What is a 'harness' in the context of Claude Code?",
+    "options": [
+      "A physical device that connects to Claude's servers",
+      "The outer structure defining what files Claude can read, modify, and verify",
+      "A testing framework for running unit tests",
+      "The graphical user interface of Claude Code"
+    ],
+    "answer": 1,
+    "explanation": "A harness defines boundaries and verification rules — like setting up a workspace with reference materials, accessible drawers, and a checklist."
+  },
+  {
+    "question": "Why does the book focus on Claude Code rather than other Claude products?",
+    "options": [
+      "Claude Code is the cheapest product",
+      "Claude Code has the most users globally",
+      "It brings together files, rules, verification, permissions, and tool connections in one place",
+      "Claude Code is the only product available in Korea"
+    ],
+    "answer": 2,
+    "explanation": "Claude Code combines file access, rules, verification, permissions, reusable sessions, and external tool connections. Cowork, Skills, Plugins are extensions of this core."
+  },
+  {
+    "question": "What is the difference between a weak harness request and a strong harness request?",
+    "options": [
+      "Weak uses fewer tokens, strong uses more",
+      "Weak: 'Fix the bug.' Strong: 'Read only auth/, don't touch .env, pass login tests, leave a change note.'",
+      "Weak means beginner, strong means expert",
+      "There is no difference"
+    ],
+    "answer": 1,
+    "explanation": "A weak harness gives no boundaries. A strong harness specifies what to read, what not to touch, what tests must pass, and what documentation to leave."
+  }
+]

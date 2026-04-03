@@ -1,0 +1,181 @@
+<section class="part" data-part="part7">
+  <div class="part-header">
+    <h2 data-i18n="parts.part7.title">Part 7: Governance &amp; Final Practice</h2>
+    <p class="part-subtitle">Chapters 11–12</p>
+    <div class="part-controls">
+      <button class="expand-all-btn" data-i18n="ui.expand_all">Expand All</button>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="7.1">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>7.1 Why Governance Matters</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part7.7.1"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part7.sections.7_1.content">
+      <p>Governance is not a compliance checkbox — it is the structure that lets teams use AI with confidence instead of anxiety. Without governance, every automation is a demo that cannot become infrastructure.</p>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> The core question governance answers: "What can Claude do without asking, what must it ask about, and what must it never do?" This is the allow/ask/deny framework applied at organizational scale.
+      </div>
+
+      <p><strong>Risk classification example:</strong></p>
+      <table>
+        <tr><th>Risk Level</th><th>Examples</th><th>Approval Mode</th></tr>
+        <tr><td><strong>Low</strong></td><td>Meeting summaries, internal drafts, test additions</td><td>Auto-execute</td></tr>
+        <tr><td><strong>Medium</strong></td><td>Customer-facing drafts, regular reports, refactoring</td><td>Human review then execute</td></tr>
+        <tr><td><strong>High</strong></td><td>Production deployment, customer emails, accounting entries, permission changes, sensitive data queries</td><td>Human approval required — no execution without it</td></tr>
+      </table>
+
+      <div class="callout callout-tip">
+        <strong>&#128161; Pro Tip:</strong> Governance rollout works best in phases: Week 1 — block <code>.env</code> access and destructive commands, require approval for deployments. Week 2 — standardize allowed plugins/skills, organize CLAUDE.md and rules per project. Week 3 — add cost monitoring and establish handoff/approval logging habits.
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="7.2">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>7.2 Permission Models &amp; Four Governance Layers</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part7.7.2"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part7.sections.7_2.content">
+      <p>The permission model uses three modes: <strong>allow</strong> (proceed automatically), <strong>ask</strong> (pause for human decision), and <strong>deny</strong> (block completely). Rules are evaluated in order: deny → ask → allow, with the first match applying.</p>
+
+      <p><strong>The four governance layers:</strong></p>
+      <ol>
+        <li><strong>Document layer</strong> — <code>CLAUDE.md</code>, rule files, skill instructions: what Claude should know and follow</li>
+        <li><strong>Settings layer</strong> — <code>settings.json</code>, permission rules, managed settings: what Claude can and cannot do</li>
+        <li><strong>Runtime layer</strong> — Hooks, approval gates, plan mode: what happens during execution</li>
+        <li><strong>Trace layer</strong> — Work logs, approval logs, decision logs, handoff files: what happened and why</li>
+      </ol>
+
+      <div class="callout callout-warning">
+        <strong>&#9888;&#65039; Common Mistake:</strong> Using <code>bypassPermissions</code> as a team default. Community posts often recommend "turn off all permissions for speed." Anthropic treats this as a permission mode that organizations can disable entirely via <code>disableBypassPermissionsMode</code>. Individual experiments and team standards should never share the same permission level.
+      </div>
+
+      <p><strong>Two-layer permission structure for teams:</strong></p>
+      <ul>
+        <li><strong>Global (user-level):</strong> Block <code>rm -rf</code>, secret files, force pushes</li>
+        <li><strong>Project-level:</strong> Block migration folders, deployment scripts, payment configs specific to this repository</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="7.3">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>7.3 Human-in-the-Loop &amp; Auditability</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part7.7.3"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part7.sections.7_3.content">
+      <p><strong>Human-in-the-loop</strong> design means building explicit checkpoints where humans make decisions — not hovering over every action. The goal is strategic intervention, not constant supervision.</p>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> <strong>Auditability</strong> means being able to explain later: what was read, what was created, who approved it, and what remains unfinished. Same automation with audit trails becomes infrastructure; without them, it remains a demo.
+      </div>
+
+      <p><strong>Minimum audit trail for high-stakes work:</strong></p>
+      <pre><code>1. source/          — Original materials or links
+2. outputs/         — Claude's drafts and revisions
+3. work-log.md      — What was executed and when
+4. approval-log.md  — Who approved what and when
+5. handoff.md       — Remaining risks and next steps</code></pre>
+
+      <p><strong>Operations logs vs. decision traces:</strong> Operations logs record <em>what happened</em> (commands, tool calls, timestamps). Decision traces record <em>why</em> (what was considered, what alternatives were rejected, why this path was chosen). Agents working on long tasks need both. Without decision traces, you can see where failure occurred but not why.</p>
+
+      <p><strong>Incident review template:</strong></p>
+      <pre><code># Incident Review
+- When was it discovered?
+- Which automation / session was involved?
+- What were the input materials?
+- Which approval point was missing?
+- What rule, hook, or permission needs to change?</code></pre>
+
+      <div class="callout callout-tip">
+        <strong>&#128161; Pro Tip:</strong> Cowork conversations are stored locally and do not appear in Audit Logs, Compliance API, or Data Exports. Do not use Cowork for regulated workloads. For audit-critical work, use Claude Code with Git-based logging, hooks, and external approval tracking.
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="7.4">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>7.4 Team Adoption Strategy</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part7.7.4"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part7.sections.7_4.content">
+      <p>Team adoption diverges from individual use the moment you start deploying shared rules and assets. It is not about distributing a tool — it is about deploying an <em>operating environment with policies attached</em>.</p>
+
+      <p><strong>Key team/enterprise capabilities:</strong></p>
+      <ul>
+        <li>Skills provisioning — deploy shared skills organization-wide</li>
+        <li>Managed settings — admin-enforced configurations that individuals cannot override</li>
+        <li>Plugin marketplace management — control which plugins are available</li>
+        <li>Usage analytics dashboard and Analytics API</li>
+        <li>Seat policies — who gets access to which features</li>
+      </ul>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> Standardization does not kill creativity — it kills repetitive explanation cost. When shared meeting summary skills, client response templates, PR review skills, and weekly brief templates are deployed team-wide, people spend less time on format and more time on judgment.
+      </div>
+
+      <p><strong>External skill adoption flow for organizations:</strong></p>
+      <ol>
+        <li>Verify the source</li>
+        <li>Review included files and tool scope</li>
+        <li>Test in a sandbox or isolated workspace</li>
+        <li>Reduce permissions to the minimum needed</li>
+        <li>Only then deploy to team/organization-managed distribution</li>
+      </ol>
+
+      <p><strong>Cost as a governance signal:</strong> Usage data is not just for finance — it is a design feedback loop. "This agent re-reads a long regulation file every session" → investigate caching. "This automation produces verbose tool output" → trim the output budget. Cost management is operational design, not budget policing.</p>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="7.5">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>7.5 Final Practice: Building with Claude Code</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part7.7.5"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part7.sections.7_5.content">
+      <p>The final chapter brings everything together with two practical projects: building a small website and building an automation workflow. Both demonstrate that thin, completed results are more valuable than elaborate unfinished plans.</p>
+
+      <p><strong>Website project approach:</strong></p>
+      <ol>
+        <li>Fix three lines first: <strong>Reader</strong> (who reads this?), <strong>Goal</strong> (what should they understand?), <strong>Action</strong> (what should they do?)</li>
+        <li>Create file set: <code>brief.md</code>, <code>tone.md</code>, <code>references/</code>, <code>site/</code></li>
+        <li>Use Cowork to draft structure and copy, then Claude Code to implement</li>
+        <li>Split into three prompts: design (structure), implement (build), review (verify)</li>
+      </ol>
+
+      <p><strong>Automation project approach:</strong></p>
+      <ol>
+        <li>Define input boundaries and output contract before "when to run it"</li>
+        <li>Success = same format on re-run, not just first-time success</li>
+        <li>High-risk steps must route through human approval</li>
+      </ol>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> Five directions the ecosystem is heading: (1) Conversational → asynchronous operations, (2) Pop-up approval → policy-based approval, (3) Long transcripts → structured task state, (4) Single surface → multi-surface continuity, (5) Prompt tricks → measurable operations with analytics and evaluation loops.
+      </div>
+
+      <p><strong>Deployment checklist:</strong></p>
+      <ul>
+        <li>Primary work surface chosen (terminal, IDE, desktop, web)?</li>
+        <li><code>CLAUDE.md</code> and rules separated by role?</li>
+        <li>Permissions and hooks covering real risk boundaries?</li>
+        <li><code>plan.md</code>, <code>verify.md</code>, <code>handoff.md</code> in place?</li>
+        <li>Review split between implementation and review?</li>
+        <li>Cost and failure measurement established?</li>
+        <li>Scope separation (user/project/local/managed) for teams?</li>
+      </ul>
+
+      <div class="callout callout-tip">
+        <strong>&#128161; Pro Tip:</strong> The book's conclusion is simple: people who use Claude Code well are not people who write long prompts — they are people who stabilize context, manage tokens and cache, narrow permissions, and make review splits and handoffs into habits. One thin completed result plus the structure to recreate it is worth more than any number of impressive demos.
+      </div>
+    </div>
+  </div>
+</section>

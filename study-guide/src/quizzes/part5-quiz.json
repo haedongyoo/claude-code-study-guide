@@ -1,0 +1,57 @@
+[
+  {
+    "question": "What is the recommended first adoption step for nearly every role?",
+    "options": [
+      "Set up a full automation pipeline immediately",
+      "Install every available plugin and MCP connection",
+      "Start with gathering and organizing information — research briefs, meeting notes, document structuring",
+      "Replace team members with AI agents"
+    ],
+    "answer": 2,
+    "explanation": "Across all roles (PM, marketing, sales, engineering, research), the first step is always information gathering and organization — the lowest-risk, highest-frequency tasks that build trust in the workflow."
+  },
+  {
+    "question": "For agency/team operators managing multiple clients, what is the most critical principle?",
+    "options": [
+      "Speed of delivery",
+      "Using the newest model available",
+      "Client context isolation — preventing data and context from leaking between clients",
+      "Maximizing the number of plugins installed"
+    ],
+    "answer": 2,
+    "explanation": "Client context isolation is the top priority. One folder boundary prevents more accidents than one clever prompt. Speed matters less than ensuring Client A's data never appears in Client B's output."
+  },
+  {
+    "question": "What should humans always retain control of, regardless of role?",
+    "options": [
+      "Every single draft revision",
+      "All file naming decisions",
+      "Final responsibility: approval decisions, external communications, and judgments with real-world consequences",
+      "Token counting and cost management"
+    ],
+    "answer": 2,
+    "explanation": "AI accelerates repetitive structuring and drafting. Humans must retain: market interpretation (PM), brand tone approval (marketing), external send-off (sales), deployment decisions (engineering), and legal judgment (compliance)."
+  },
+  {
+    "question": "What is an 'output contract' in the scenario guide?",
+    "options": [
+      "A legal agreement between the user and Anthropic",
+      "A pre-defined agreement about what format and location the result must follow",
+      "A limit on how many tokens Claude can output",
+      "The pricing for Claude's API output"
+    ],
+    "answer": 1,
+    "explanation": "An output contract specifies where results are saved, in what format, and what structure they must follow. It prevents results from being scattered or inconsistent across runs."
+  },
+  {
+    "question": "Which tasks are currently showing the strongest AI adoption signals?",
+    "options": [
+      "Physical labor and complex face-to-face negotiations",
+      "Programming, data entry, customer support, repetitive document review, and channel-specific content adaptation",
+      "Only software engineering",
+      "Tasks that require no human oversight"
+    ],
+    "answer": 1,
+    "explanation": "High adoption correlates with: digital text, structured judgments, existing digital data, repeatable formats, and clear quality criteria. Physical work and high-stakes professional judgment adopt more slowly."
+  }
+]

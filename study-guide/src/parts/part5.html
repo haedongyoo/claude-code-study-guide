@@ -1,0 +1,163 @@
+<section class="part" data-part="part5">
+  <div class="part-header">
+    <h2 data-i18n="parts.part5.title">Part 5: Role-Based Playbooks</h2>
+    <p class="part-subtitle">Chapters 7–8</p>
+    <div class="part-controls">
+      <button class="expand-all-btn" data-i18n="ui.expand_all">Expand All</button>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="5.1">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>5.1 PM, Strategy &amp; Founders</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part5.5.1"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part5.sections.5_1.content">
+      <p>Product managers, strategists, and founders share a common starting point: organizing research and making decisions quickly. The first wins come from <strong>research briefs</strong>, meeting note structuring, and decision documentation — not from full automation.</p>
+
+      <div class="callout callout-tip">
+        <strong>&#128161; Pro Tip:</strong> For PMs, the ideal Claude adoption path is: (1) Meeting note summaries → (2) Weekly research briefs → (3) PRD draft generation → (4) Competitive analysis with templates. Each step builds on the previous file structure.
+      </div>
+
+      <p><strong>Founder / Solo Operator minimum file set:</strong></p>
+      <pre><code>workspace/
+├── about-me.md          # Background, industry, goals
+├── working-rules.md     # Tone, forbidden topics, priorities
+├── projects/
+│   └── current/
+│       ├── brief.md     # This week's focus
+│       └── competitors.md
+├── templates/
+│   └── weekly-brief.md
+└── outputs/</code></pre>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> For strategists, the human must always own: market interpretation, priority decisions, and stakeholder alignment. Claude accelerates the research and structuring — not the judgment.
+      </div>
+
+      <p><strong>What humans must keep:</strong> Market interpretation, priority setting, and stakeholder negotiation. Claude handles research gathering, draft structuring, and format consistency.</p>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="5.2">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>5.2 Marketing &amp; Content</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part5.5.2"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part5.sections.5_2.content">
+      <p>Marketing teams get the fastest returns from Claude when they establish brand voice files and content templates first. Without <code>brand-voice.md</code> and <code>anti-ai-writing-style.md</code>, every piece of content requires extensive tone correction.</p>
+
+      <p><strong>Content operations adoption path:</strong></p>
+      <ol>
+        <li>Topic research and content structure outlines</li>
+        <li>First drafts with brand voice templates</li>
+        <li>Multi-channel adaptation (blog → social → newsletter)</li>
+        <li>SEO optimization with structured templates</li>
+        <li>Regular content calendar automation</li>
+      </ol>
+
+      <div class="callout callout-warning">
+        <strong>&#9888;&#65039; Common Mistake:</strong> Saying "write in our company tone" without providing a <code>brand-voice.md</code>. Claude cannot intuit your brand. Create a file with: preferred phrases, forbidden phrases, sentence length guidelines, formality level, and 2–3 example paragraphs showing the ideal tone.
+      </div>
+
+      <p><strong>What humans must keep:</strong> Final message decisions, brand tone approval, and external publication sign-off. Claude handles research synthesis, structural drafting, and format adaptation.</p>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="5.3">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>5.3 Sales, Customer Success &amp; Operations</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part5.5.3"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part5.sections.5_3.content">
+      <p>Sales and customer success teams benefit most from <strong>account briefs</strong> and <strong>follow-up email drafts</strong>. The key constraint: all external communications must pass through human approval gates.</p>
+
+      <p><strong>Operations and back-office automation</strong> should start with the lowest-risk tasks: folder organization, classification, draft summaries, and template-based reports. High-risk automation (actual data entry, payment processing, deletion) should only come after governance structures are in place.</p>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> For agency and team operators, the critical principle is <em>client context isolation</em>. When managing multiple clients simultaneously, the biggest risk is not slow output — it is context contamination between clients. Separate folders per client, shared templates, and strict naming conventions prevent cross-client leakage.
+      </div>
+
+      <pre><code>clients/
+├── client-a/
+│   ├── brief.md
+│   ├── glossary.md
+│   └── approval-rules.md
+├── client-b/
+│   ├── brief.md
+│   └── ...
+templates/
+├── client-report-template.md
+└── review-checklist.md
+team/
+├── shared-rules.md
+└── naming-convention.md</code></pre>
+
+      <div class="callout callout-tip">
+        <strong>&#128161; Pro Tip:</strong> In an agency context, one folder boundary prevents more accidents than one clever prompt. Speed matters less than making sure Client A's data never leaks into Client B's output.
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="5.4">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>5.4 Design, Engineering &amp; Research</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part5.5.4"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part5.sections.5_4.content">
+      <p><strong>Design/Branding:</strong> Designers get the most value from reference-based exploration and implementation QA. Use images as input — screenshots of bugs, reference layouts, desired states. Visual context often communicates what paragraphs of CSS descriptions cannot.</p>
+
+      <p><strong>Engineering:</strong> The strongest first task is always a small bug fix with a test, not a large new feature. The adoption path: (1) bug fix + test → (2) refactoring with plan → (3) code review with review split → (4) parallel worktree experiments → (5) CI integration and automated hooks.</p>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> For researchers and analysts, Claude excels at: summarization, glossary creation, comparison tables, question generation, and structured literature reviews. The human must always own: claim interpretation, reproduction result judgment, and original insight.
+      </div>
+
+      <p><strong>Adoption priority across all roles follows the same pattern:</strong></p>
+      <ol>
+        <li>Gather and organize information (lowest risk)</li>
+        <li>Create first drafts with templates</li>
+        <li>Review and refine with verification loops</li>
+        <li>Automate recurring workflows with skills</li>
+        <li>Scale with parallel agents and scheduled tasks (highest risk, last step)</li>
+      </ol>
+
+      <div class="callout callout-warning">
+        <strong>&#9888;&#65039; Common Mistake:</strong> Starting with end-to-end automation. The teams that go farthest start with the front-end of the process (organizing, structuring, drafting) and only automate the back-end (execution, deployment, delivery) after governance is established.
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="5.5">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>5.5 Scenario Guide: Matching Blockers to Workflows</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part5.5.5"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part5.sections.5_5.content">
+      <p>Chapter 8 is not a feature encyclopedia — it is a <em>situation matching table</em>. The approach: identify today's blocker → classify the task shape → select the file set → execute → verify through approval gate → leave a structured handoff.</p>
+
+      <p><strong>The workflow for any blocked scenario:</strong></p>
+      <ol>
+        <li><strong>Today's blocker</strong> — What specific task is stuck?</li>
+        <li><strong>Task shape</strong> — Is it research, drafting, implementation, or review?</li>
+        <li><strong>File set selection</strong> — Which minimum files does this task need?</li>
+        <li><strong>Execution</strong> — Run the workflow with output contract</li>
+        <li><strong>Approval gate</strong> — Human checks before anything goes external</li>
+        <li><strong>Structured handoff</strong> — State and next steps for the next session</li>
+      </ol>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> Key terms for scenario matching: <em>output contract</em> (what format and location results must follow), <em>token hotspot</em> (where context suddenly gets expensive), <em>approval gate</em> (mandatory human check before external delivery), and <em>structured handoff</em> (formatted state memo for session continuity).
+      </div>
+
+      <div class="callout callout-tip">
+        <strong>&#128161; Pro Tip:</strong> The gap ahead will widen not between people who know more features, but between teams that learn role-specific delegation strategies faster. Development and customer support adopt first (broad, low-risk tasks); legal, finance, and research adopt more cautiously (summary and classification first, judgment later).
+      </div>
+    </div>
+  </div>
+</section>

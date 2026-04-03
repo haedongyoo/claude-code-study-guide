@@ -1,0 +1,57 @@
+[
+  {
+    "question": "What is 'Context Rot' in Claude Code sessions?",
+    "options": [
+      "When Claude's API key expires",
+      "When files on disk become corrupted",
+      "When early instructions weaken as the context grows longer, diluted by later content",
+      "When the conversation is accidentally deleted"
+    ],
+    "answer": 2,
+    "explanation": "Context rot occurs as conversations grow — important early signals get diluted by accumulated later content, causing quality degradation even though the model hasn't 'forgotten' anything."
+  },
+  {
+    "question": "What are the three types of isolation a harness should design simultaneously?",
+    "options": [
+      "Input isolation, output isolation, display isolation",
+      "Context isolation, file state isolation, approval isolation",
+      "Network isolation, disk isolation, memory isolation",
+      "User isolation, model isolation, tool isolation"
+    ],
+    "answer": 1,
+    "explanation": "Context isolation prevents session bloat, file state isolation prevents overwrites and conflicts, and approval isolation separates safe actions from dangerous ones. Each prevents a different class of failure."
+  },
+  {
+    "question": "Why are verification skills often higher ROI than generation skills?",
+    "options": [
+      "Because verification is more expensive to license",
+      "Because models never make mistakes in generation",
+      "Because a 'well-written draft' is cheap, but a 'verified passing result' is genuinely valuable and hard to achieve",
+      "Because verification requires less compute"
+    ],
+    "answer": 2,
+    "explanation": "Generation produces drafts; verification confirms they actually work. Checking that signup flows complete, checkout states are correct, or CLI works in TTY environments is more valuable than generating more code."
+  },
+  {
+    "question": "What is the Prompt Cache, and how do you benefit from it?",
+    "options": [
+      "A browser cache that stores Claude's responses for offline use",
+      "A discount for frequent API users",
+      "A mechanism that reuses computation when similar context prefixes are sent repeatedly — keep stable content at the front",
+      "A memory file that Claude reads automatically"
+    ],
+    "answer": 2,
+    "explanation": "Prompt Cache benefits come from keeping the stable prefix (CLAUDE.md, rules) consistent across turns. When the prefix matches, computation can be reused, saving both cost and time."
+  },
+  {
+    "question": "When should you use /compact in a Claude Code session?",
+    "options": [
+      "At the very end when the session is completely done",
+      "After saving important state to files, before the session has degraded",
+      "Only when you see an error message",
+      "Never — it deletes important context"
+    ],
+    "answer": 1,
+    "explanation": "Compress after saving important state to files — not as a last resort when the session is already broken. Strategic compression at good checkpoints maintains quality throughout long sessions."
+  }
+]

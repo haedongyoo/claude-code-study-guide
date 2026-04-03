@@ -1,0 +1,57 @@
+[
+  {
+    "question": "What is 'Context Assembly'?",
+    "options": [
+      "Installing all available plugins at once",
+      "The process of selecting and gathering only the relevant rules, files, and tool descriptions for the current task into the input context",
+      "Writing the longest possible prompt",
+      "Copying the entire codebase into the conversation"
+    ],
+    "answer": 1,
+    "explanation": "Context Assembly is a selection process, not a dumping process. It means gathering only what the current task needs — more context is not better context."
+  },
+  {
+    "question": "What does 'Resume Hygiene' mean?",
+    "options": [
+      "Cleaning your resume/CV before a job interview",
+      "Restarting your computer before using Claude",
+      "Keeping only what the next session needs and discarding accumulated noise before resuming work",
+      "Using hand sanitizer while typing"
+    ],
+    "answer": 2,
+    "explanation": "Resume Hygiene means cleaning up state before resuming — preserving essential context while discarding noise from the previous session. Long sessions aren't inherently better; clean handoffs are."
+  },
+  {
+    "question": "How does a Hook differ from a prompt instruction?",
+    "options": [
+      "Hooks are more expensive to run",
+      "Hooks enforce rules at the system level (automatic braking), while prompt instructions are suggestions that can be ignored (road signs)",
+      "Hooks only work in Cowork, not Claude Code",
+      "There is no practical difference"
+    ],
+    "answer": 1,
+    "explanation": "Prompts request behavior; hooks enforce it. A prompt saying 'run lint after editing' can be skipped. A hook configured to run lint after every file edit always executes."
+  },
+  {
+    "question": "What is the relationship between Skill, Plugin, and MCP?",
+    "options": [
+      "They are three names for the same feature",
+      "Skill defines procedures, MCP connects to external tools, Plugin packages everything for team deployment",
+      "Plugin is the cheapest, MCP is mid-tier, Skill is premium",
+      "They must always be used together"
+    ],
+    "answer": 1,
+    "explanation": "Skills are 'how to do it' (procedures), MCP is 'the path to reach external tools' (connections), and Plugins are 'the box that deploys it all' (packages for teams). They complement each other."
+  },
+  {
+    "question": "When confused by a Claude Code term, what three-bucket mental model helps?",
+    "options": [
+      "Cost, Speed, Quality",
+      "Input, Process, Output",
+      "Mechanics (how work flows), Safety (how mistakes are prevented), Continuity (how sessions persist)",
+      "Frontend, Backend, Database"
+    ],
+    "answer": 2,
+    "explanation": "Nearly all Claude Code terms fall into three categories: mechanics (agentic loop, context assembly, tool orchestration), safety (permissions, hooks, approval gates), or continuity (session memory, handoff, resume hygiene)."
+  }
+]

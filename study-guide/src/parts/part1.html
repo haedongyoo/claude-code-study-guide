@@ -1,0 +1,142 @@
+<section class="part" data-part="part1">
+  <div class="part-header">
+    <h2 data-i18n="parts.part1.title">Part 1: Building Fundamentals</h2>
+    <p class="part-subtitle">Chapters 1–2</p>
+    <div class="part-controls">
+      <button class="expand-all-btn" data-i18n="ui.expand_all">Expand All</button>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="1.1">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>1.1 Why the Ecosystem Is Hot</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part1.1.1"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part1.sections.1_1.content">
+      <p>The AI landscape shifted from "which model is smarter" to "which tool connects files, tests, Git, browser, and external services with the least friction." This is why Claude Code, Codex, and Gemini CLI are discussed together — the competition is now about <strong>work paths</strong>, not benchmark scores.</p>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> Claude Code is not just a coding app. It is a <em>work harness</em> combining memoized context, tool orchestration, permission gates, and resumable sessions. Cowork, Skills, Plugins, and Scheduled Tasks are extensions of this core harness into non-coding work.
+      </div>
+
+      <p>Research confirms this direction. METR reports that agent task horizons are growing rapidly, and Anthropic notes that the real performance gap comes from task structure and verification habits, not model names. The question is no longer "how smart is the model?" but "who learns delegation rules and verification harnesses faster?"</p>
+
+      <div class="callout callout-tip">
+        <strong>&#128161; Pro Tip:</strong> Start by asking: "Is my task question-based, document-based, or implementation-based?" This single question determines whether you should use Chat, Projects, Cowork, or Claude Code.
+      </div>
+
+      <table>
+        <tr><th>What Changes Fast</th><th>What Lasts</th></tr>
+        <tr><td>Menu locations, plan tiers, preview status, feature names</td><td>Which work path to use, how to separate files and verification, where to place human checkpoints</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="1.2">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>1.2 Four Key Terms to Remember</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part1.1.2"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part1.sections.1_2.content">
+      <p>Before diving deeper, internalize these four terms. Every chapter builds on them.</p>
+
+      <table>
+        <tr><th>Term</th><th>Meaning</th></tr>
+        <tr><td><strong>Memoized Context</strong></td><td>Background info held across turns so you don't re-explain every time</td></tr>
+        <tr><td><strong>Tool Orchestration</strong></td><td>The layer that decides which tools to use, in what order</td></tr>
+        <tr><td><strong>Permission Gate</strong></td><td>The boundary that separates allow, ask, and deny before execution</td></tr>
+        <tr><td><strong>Resumable Session</strong></td><td>The ability to pick up where you left off, even after disconnection</td></tr>
+      </table>
+
+      <p>These form a pipeline: <strong>User Request → Memoized Context → Tool Orchestration → Permission Gate → Execution & Verification → Resumable Session → Next Task</strong>. No matter how complex a workflow gets, it is always a variation of these five stages.</p>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> "Memoized" doesn't mean "memorized." It means "computed once, reused many times" — like setting background rules that persist across every turn without re-sending them.
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="1.3">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>1.3 The Harness Concept</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part1.1.3"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part1.sections.1_3.content">
+      <p>A <strong>harness</strong> is the outer structure that defines what Claude can read, modify, and verify. Think of it as setting up a colleague's workspace: you place reference materials on the desk, decide which drawers are accessible, and attach a checklist to complete before finishing.</p>
+
+      <div class="callout callout-warning">
+        <strong>&#9888;&#65039; Common Mistake:</strong> Sending "Fix the login bug" with no boundaries. A strong harness request looks like: "Read only <code>auth/</code>, don't touch <code>.env</code>, pass login tests, leave a 3-line change note."
+      </div>
+
+      <p><strong>Harness Engineering</strong> is not about writing smarter prompts — it is about designing the workspace where Claude operates. It includes: which files are always loaded, what permissions are set, what tests must pass, and where results are stored.</p>
+
+      <p>The International AI Safety Report 2026 confirms: as model capabilities rise, harness and verification structures become <em>more</em> important, not less. Real-world tasks involve resource constraints, incomplete information, exceptions, and approval flows that raw model intelligence cannot handle alone.</p>
+
+      <div class="callout callout-tip">
+        <strong>&#128161; Pro Tip:</strong> Even beginners can start building a harness: write basic rules in <code>CLAUDE.md</code>, set allow/deny scopes in <code>settings.json</code>, split big tasks with <code>plan.md</code>, and leave session state in <code>handoff.md</code>.
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="1.4">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>1.4 Work Surfaces: Chat, Projects, Cowork, Claude Code</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part1.1.4"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part1.sections.1_4.content">
+      <p>The same Claude model behaves differently depending on which surface you use. Choosing the wrong surface is not a skill problem — it is a routing problem.</p>
+
+      <table>
+        <tr><th>Surface</th><th>Best For</th><th>Influenced By</th></tr>
+        <tr><td><strong>Chat</strong></td><td>Quick questions, idea sorting</td><td>Question quality</td></tr>
+        <tr><td><strong>Projects</strong></td><td>Persistent background knowledge</td><td>Folder structure, templates</td></tr>
+        <tr><td><strong>Cowork</strong></td><td>Document delegation — research, briefs, file organization</td><td>Folder structure, templates</td></tr>
+        <tr><td><strong>Claude Code</strong></td><td>Implementation and verification — code, tests, reviews</td><td>Rule files, verification loops</td></tr>
+      </table>
+
+      <div class="callout callout-warning">
+        <strong>&#9888;&#65039; Common Mistake:</strong> Three misconceptions: (1) "Same model means same experience everywhere" — wrong, the surface matters enormously. (2) "Cowork is easy mode, Claude Code is hard mode" — wrong, they differ by delegation style, not difficulty. (3) "Try all surfaces at once" — wrong, master one first then expand.
+      </div>
+
+      <p><strong>Good first tasks by surface:</strong></p>
+      <ul>
+        <li><strong>Chat:</strong> "Summarize this report in 5 sentences with 3 questions."</li>
+        <li><strong>Projects:</strong> "Read this folder and create a one-page background knowledge summary."</li>
+        <li><strong>Cowork:</strong> "Read meeting notes and save a weekly brief draft to <code>outputs/</code>."</li>
+        <li><strong>Claude Code:</strong> "Read this bug reproduction path, then write a hypothesis and fix plan in <code>plan.md</code>."</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="1.5">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>1.5 What Changes Fast vs. What Stays</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part1.1.5"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part1.sections.1_5.content">
+      <p>Technology products evolve rapidly. To stay grounded, distinguish between volatile details and lasting principles.</p>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> The ecosystem is "hot" when four conditions are met simultaneously: (1) user behavior changes — people design workspaces instead of crafting prompts, (2) operational habits change — teams maintain <code>CLAUDE.md</code> as shared contracts, (3) the ecosystem expands — official and community skills, plugins, MCP servers multiply, (4) job roles are redesigned — marketing, tax, PM, design teams use Claude as an automation layer, not just a chatbot.
+      </div>
+
+      <p><strong>The four frames for reading the entire book:</strong></p>
+      <table>
+        <tr><th>Frame</th><th>Role</th><th>Analogy</th></tr>
+        <tr><td>Work Path</td><td>Where you start (Chat, Cowork, Claude Code)</td><td>The desk you sit at</td></tr>
+        <tr><td>Harness</td><td>The execution environment (permissions, rules, tests)</td><td>Drawers, locks, checklists on the desk</td></tr>
+        <tr><td>Operations Layer</td><td>Scheduling, deployment, analytics</td><td>The admin office</td></tr>
+        <tr><td>System</td><td>Everything combined with human review loops</td><td>The entire office building</td></tr>
+      </table>
+
+      <div class="callout callout-tip">
+        <strong>&#128161; Pro Tip:</strong> When a new feature launches, don't ask "Is it smarter?" Ask: "Which layer did they add — knowledge, tools, packages, or controls?" This prevents over-configuration and keeps your setup stable.
+      </div>
+    </div>
+  </div>
+</section>

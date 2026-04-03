@@ -1,0 +1,160 @@
+<section class="part" data-part="part4">
+  <div class="part-header">
+    <h2 data-i18n="parts.part4.title">Part 4: Extensions &amp; Automation</h2>
+    <p class="part-subtitle">Chapter 6</p>
+    <div class="part-controls">
+      <button class="expand-all-btn" data-i18n="ui.expand_all">Expand All</button>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="4.1">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>4.1 Skills: Teaching Claude Repeatable Procedures</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part4.4.1"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part4.sections.4_1.content">
+      <p>When you explain the same procedure for the tenth time — meeting note format, weekly brief structure, code review checklist — it is time to create a <strong>Skill</strong>. A Skill is a reusable work manual that reduces explanation cost.</p>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> Skills are not prompt snippets. They are folder structures with a main document (<code>SKILL.md</code>), supporting scripts, reference files, and assets. The official guide recommends <em>progressive disclosure</em>: the frontmatter and description load first; details load only when the skill activates.
+      </div>
+
+      <table>
+        <tr><th>Promote to Skill When...</th><th>Keep as Conversation When...</th></tr>
+        <tr><td>Output format repeats, variation needs to shrink, storage location and tool order need fixing</td><td>The topic changes often, it's a one-time brainstorming exploration</td></tr>
+      </table>
+
+      <p><strong>Projects vs. Skills:</strong> Projects are background knowledge that's always present. Skills are procedures activated when a matching task arrives. Background without procedure leads to inconsistent output; procedure without context leads to empty results.</p>
+
+      <div class="callout callout-warning">
+        <strong>&#9888;&#65039; Common Mistake:</strong> The skill's <code>description</code> field is not an introduction paragraph — it is a routing rule. If the description is vague, the skill either never triggers (undertriggering) or fires for unrelated tasks (overtriggering). Write descriptions like: "Use this skill when the user asks for a weekly competitor brief, market review, or industry trend summary."
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="4.2">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>4.2 Skill Types &amp; Design Template</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part4.4.2"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part4.sections.4_2.content">
+      <p>Skills cluster into a few common roles regardless of their specific domain:</p>
+      <ul>
+        <li><strong>Library/SDK reference</strong> — Fixes usage patterns for internal or tricky external libraries</li>
+        <li><strong>Verification/testing</strong> — Standardizes checking procedures (Playwright flows, CLI tests)</li>
+        <li><strong>Data pipeline</strong> — Organizes data sources and report paths</li>
+        <li><strong>Recurring operations</strong> — Weekly reviews, standups, ticket creation</li>
+        <li><strong>Scaffolding</strong> — Generates initial service or handler structures</li>
+        <li><strong>Quality gate</strong> — Review standards, test rules, security checklists</li>
+      </ul>
+
+      <div class="callout callout-tip">
+        <strong>&#128161; Pro Tip:</strong> Skills that try to do everything ("research, code, test, and deploy") seem powerful but are fragile. Skills that solve one bottleneck precisely survive longest. Verification skills often have higher ROI than generation skills.
+      </div>
+
+      <p><strong>Skill Design Template:</strong></p>
+      <pre><code>---
+name: weekly-brief
+description: >
+  Use for weekly competitor briefs, recurring market checks,
+  and industry trend summary requests.
+disable-model-invocation: false
+---
+# Goal
+Create a weekly competitor brief using only the last 7 days of evidence.
+
+# Input Sources
+- Competitor list: `references/competitors.md`
+- Template: `assets/weekly-brief-template.md`
+
+# Steps
+1. Read competitor list and template
+2. Search for changes in the last 7 days
+3. Draft brief following template structure
+4. Flag uncertain items separately
+5. Save to `outputs/weekly-brief-YYYY-MM-DD.md`
+
+# Rules
+- Max 3 action items
+- Sources and dates required
+- No speculation — mark unknowns as "Needs verification"</code></pre>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="4.3">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>4.3 Plugins: Role Packages for Teams</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part4.4.3"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part4.sections.4_3.content">
+      <p>A <strong>Plugin</strong> bundles multiple skills, commands, hooks, and connection settings into a single deployable package. If a Skill is a work manual, a Plugin is the onboarding box you hand to a new team member.</p>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> The word "plugin" means different things depending on the surface. <strong>Claude Code plugins</strong> bundle commands, agents, hooks, skills, MCP, and LSP for development workflows. <strong>Cowork plugins</strong> bundle skills, connectors, slash commands, and sub-agents for knowledge work roles. Same name, different installation experience.
+      </div>
+
+      <p><strong>The progression:</strong> MCP connects to external tools → Skills define procedures → Plugins package everything for deployment. In one line: <em>Skills are "how to do it," MCP is "the path to reach it," Plugins are "the box that deploys it."</em></p>
+
+      <div class="callout callout-warning">
+        <strong>&#9888;&#65039; Common Mistake:</strong> Treating external Skills and Plugins as just documents. They can contain tool calls, file access, external URL fetches, and execution scripts. Before installing any external skill, check: (1) Does it fetch external URLs? (2) Does it use Bash, file writes, or network? (3) Do its files match its stated purpose? (4) Will it run near sensitive data? (5) Can you disable it quickly?
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="4.4">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>4.4 MCP: External Tool Connections</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part4.4.4"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part4.sections.4_4.content">
+      <p><strong>Model Context Protocol (MCP)</strong> is the standardized way Claude connects to external tools and services — like a USB-C port for AI tool integration.</p>
+
+      <p><strong>MCP vs. Connector:</strong></p>
+      <table>
+        <tr><th>Connector</th><th>MCP</th></tr>
+        <tr><td>User-facing — search and connect from a settings screen</td><td>Developer-facing — design server, tool interface, and response format</td></tr>
+        <tr><td>Like an app store connection</td><td>Like designing the internal wiring panel</td></tr>
+        <tr><td>Best when connection itself is the goal</td><td>Best when you need control over tool structure post-connection</td></tr>
+      </table>
+
+      <div class="callout callout-tip">
+        <strong>&#128161; Pro Tip:</strong> Quick decision: "I just want to connect and use it" → Connector. "I want to control which tools are exposed, response formats, and which projects activate it" → MCP. Mixing them up leads to either over-engineering simple connections or under-engineering complex automation.
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion" data-section="4.5">
+    <button class="accordion-header">
+      <span class="accordion-icon">&#9662;</span>
+      <span>4.5 Hooks, Subagents &amp; Control Surfaces</span>
+      <label class="section-check"><input type="checkbox" class="section-checkbox" data-section-id="part4.4.5"></label>
+    </button>
+    <div class="accordion-body" data-i18n-html="parts.part4.sections.4_5.content">
+      <p><strong>Hooks</strong> transform "remember to check" into "always check." They are automatic intervention rules at specific moments — pre-tool-use, post-edit, pre-push, etc.</p>
+
+      <p>If prompts are road signs ("please drive carefully"), hooks are seatbelt alarms and automatic braking. Signs can be ignored; safety systems change actual behavior. This is why hooks matter more as teams scale.</p>
+
+      <div class="callout callout-concept">
+        <strong>&#128204; Key Concept:</strong> Hook types include command hooks (shell scripts), prompt-based hooks, agent-based hooks, and HTTP hooks. For teams, managed-only hooks and HTTP hook allowlists provide organizational control that goes far beyond personal shell scripts.
+      </div>
+
+      <p><strong>Subagents</strong> isolate context. When the main session handles exploration, implementation, review, and documentation, context gets noisy. Delegating research or review to a subagent keeps the main session focused. Think: team lead delegates fact-checking to an analyst instead of doing it personally.</p>
+
+      <p><strong>Remote Control / Channels / Scheduled Tasks</strong> all re-start work, but the trigger differs:</p>
+      <table>
+        <tr><th>Feature</th><th>Who Pushes the Button</th></tr>
+        <tr><td>Remote Control</td><td>A human, from a distance</td></tr>
+        <tr><td>Channels</td><td>An external system (webhook, message)</td></tr>
+        <tr><td>Scheduled Tasks</td><td>Time itself (cron-like)</td></tr>
+      </table>
+
+      <div class="callout callout-tip">
+        <strong>&#128161; Pro Tip:</strong> Four practical rules: (1) If you keep repeating the same explanation, extract it to a Skill or rule file. (2) If you keep connecting external tools, narrow permission scope before adding more MCP connections. (3) If verification keeps being forgotten, push it to hooks. (4) If you need parallelism, try a small subagent or worktree before launching full agent teams.
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,57 @@
+[
+  {
+    "question": "What is the most effective memory strategy for Claude Code sessions?",
+    "options": [
+      "Save the entire conversation transcript after every session",
+      "Rely on Claude's built-in memory to remember everything",
+      "Update handoff.md at the end of every session with current state, next steps, and unresolved risks",
+      "Use /memory to permanently store all information"
+    ],
+    "answer": 2,
+    "explanation": "The simplest and most effective memory strategy: update handoff.md at session end. This single habit prevents 80% of 'where was I?' confusion. Conversations are disposable; files are the real memory."
+  },
+  {
+    "question": "Why should plans be written in files rather than kept in conversation?",
+    "options": [
+      "Files are cheaper than conversation tokens",
+      "Files survive session boundaries, can be reviewed independently, version-controlled, and keep conversation focused on execution",
+      "Claude cannot understand plans in conversation format",
+      "There is no difference between file plans and conversation plans"
+    ],
+    "answer": 1,
+    "explanation": "File-based plans persist across sessions, allow independent human review, enable Git versioning, and keep conversations focused on execution rather than re-planning."
+  },
+  {
+    "question": "What is the key principle for running parallel Claude sessions?",
+    "options": [
+      "Run as many sessions as possible for maximum speed",
+      "Use the same files and directories for all sessions",
+      "Define roles first: who does what, which files each touches, and how results merge",
+      "Parallel sessions are not recommended"
+    ],
+    "answer": 2,
+    "explanation": "Parallelism without role clarity creates chaos. Before launching parallel sessions, define responsibilities, file boundaries, and merge strategies. Unstructured parallelism is worse than sequential work."
+  },
+  {
+    "question": "What should you check before installing any external tool (skill, plugin, MCP server)?",
+    "options": [
+      "Only the download count",
+      "Last maintenance date, README quality, security permissions needed, context cost vs. utility, and ease of disabling",
+      "Whether it has a cool logo",
+      "Nothing — the marketplace handles quality control"
+    ],
+    "answer": 1,
+    "explanation": "Five criteria: maintenance recency, documentation quality, security-sensitive permissions, cost-benefit ratio, and reversibility. 'Saved for later' tools pile up without becoming operational assets."
+  },
+  {
+    "question": "What does 'OpenClaw-style' operation refer to in the community?",
+    "options": [
+      "Using a specific competitor's product",
+      "An always-on, multi-channel, persistent-state work system with scheduled tasks and remote control capabilities",
+      "A free tier of Claude usage",
+      "A specific coding framework"
+    ],
+    "answer": 1,
+    "explanation": "'OpenClaw-style' describes an operational goal: always accessible, sessions that don't break, time/event-triggered work, embedded skills, and remote control with safety boundaries. In Claude's ecosystem, this is achieved by combining Claude Code + hooks + MCP + Remote Control + Scheduled Tasks."
+  }
+]

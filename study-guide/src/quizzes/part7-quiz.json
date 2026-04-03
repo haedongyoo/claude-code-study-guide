@@ -1,0 +1,57 @@
+[
+  {
+    "question": "What are the three permission modes in Claude Code's governance model?",
+    "options": [
+      "Read, Write, Execute",
+      "Admin, User, Guest",
+      "Allow (proceed automatically), Ask (pause for human), Deny (block completely)",
+      "Public, Private, Protected"
+    ],
+    "answer": 2,
+    "explanation": "The permission model uses allow/ask/deny, evaluated in order: deny → ask → allow, with the first matching rule applying. This gives fine-grained control over what Claude can do autonomously."
+  },
+  {
+    "question": "What are the four governance layers?",
+    "options": [
+      "Frontend, Backend, Database, Network",
+      "Document layer (CLAUDE.md/rules), Settings layer (permissions), Runtime layer (hooks/approvals), Trace layer (logs/decisions)",
+      "User, Team, Organization, Enterprise",
+      "Input, Processing, Output, Storage"
+    ],
+    "answer": 1,
+    "explanation": "Document layer defines knowledge, Settings layer defines boundaries, Runtime layer handles execution-time controls, and Trace layer records what happened and why. All four together form complete governance."
+  },
+  {
+    "question": "Why is auditability important for AI automation?",
+    "options": [
+      "It is only required by law",
+      "It makes demos look more professional",
+      "Same automation with audit trails becomes infrastructure; without them, it remains a demo that can't scale",
+      "Auditability is not important for most teams"
+    ],
+    "answer": 2,
+    "explanation": "Auditability means being able to explain: what was read, what was created, who approved, and what remains. Without it, automation cannot transition from individual demos to reliable team infrastructure."
+  },
+  {
+    "question": "What is the difference between observability and auditability?",
+    "options": [
+      "They are the same thing",
+      "Observability is for developers, auditability is for managers",
+      "Observability shows current system state (dashboards); auditability explains what happened and why (event records for accountability)",
+      "Observability is more expensive than auditability"
+    ],
+    "answer": 2,
+    "explanation": "Observability is a dashboard for operational efficiency (usage, costs, patterns). Auditability is an event record for accountability (who did what, why, with what approval). Organizations need both."
+  },
+  {
+    "question": "What is the key principle of the book's final chapter on building with Claude Code?",
+    "options": [
+      "Always use the most advanced features available",
+      "One thin completed result plus the structure to recreate it beats any number of impressive demos",
+      "Speed is more important than quality",
+      "Only developers should build with Claude Code"
+    ],
+    "answer": 1,
+    "explanation": "The conclusion: a completed thin website or automation workflow — with brief, template, review split, and handoff — that can be recreated next week is more valuable than any elaborate unfinished plan."
+  }
+]
